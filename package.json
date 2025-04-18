@@ -20,6 +20,7 @@
     "@angular/router": "^19.2.7",
     "@primeng/themes": "^19.1.0",
     "angular-tabler-icons": "^3.26.0",
+    "dotenv": "^16.5.0",
     "prettier": "^3.5.3",
     "primeng": "^19.1.0",
     "rxjs": "~7.8.0",
