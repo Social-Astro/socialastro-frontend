@@ -1,0 +1,7 @@
+<div class="group">
+    @for (topic of topics(); track topic.id) {
+    <topics-card [topic]="topic" (deleted)="deleteTopic(topic)"></topics-card>
+    }@empty {
+    <p>Sin datos</p>
+    }
+</div>

@@ -1,0 +1,39 @@
+<div class="container-fluid text-center" style="margin-top: 1.5rem; ">
+    <div class="row">
+        <div class="col-12 col-md-8 m-4 fondo-card">
+            <router-outlet></router-outlet>
+        </div>
+        <!-- TODO: No definitivo -->
+        <div class="col-12 col-md-3 m-4">
+            <div class="row fondo-card">
+                <div class="col m-3">
+                    <h2 style="font-size: large;">Panel de mando</h2>
+                    @if (showForm()) {
+                    <div class="col-12">
+                        <topics-form (saved)="showTopicsForm(false)"></topics-form>
+                    </div>
+                    }@else {
+                    <button class="btn btn-outline-info" (click)="showTopicsForm(true)">
+                        Agregar galaxia
+                    </button>
+                    }
+                </div>
+            </div>
+            <div class="row fondo-card">
+                <div class="col m-3" style="border: 2px solid rgb(26, 100, 78);">
+                    Post recientes. PRÓXIMAMENTE
+                </div>
+            </div>
+            <div class="row fondo-card">
+                <div class="col m-3" style="border: 2px solid rgb(26, 100, 78);">
+                    Más comentados. PRÓXIMAMENTE
+                </div>
+            </div>
+            <div class="row fondo-card">
+                <div class="col m-3" style="border: 2px solid rgb(26, 100, 78);">
+                    Otra cosa. PRÓXIMAMENTE
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

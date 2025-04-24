@@ -1,0 +1,12 @@
+<form (ngSubmit)="addTopic()" [formGroup]="topicForm" class="mt-4">
+    <label for="title" class="form-label">Nombre</label>
+    <input type="text" class="form-control" name="title" formControlName="title" />
+    <label for="desc" class="form-label">Descripción</label>
+    <input type="text" class="form-control" name="desc" formControlName="description" />
+    <button type="submit" class="btn btn-outlined-primary m-2">
+        Guardar
+    </button>
+    <button class="btn btn-outlined-danger m-2">
+        Cancelar
+    </button>
+</form>

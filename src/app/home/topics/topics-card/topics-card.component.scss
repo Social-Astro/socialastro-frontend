@@ -1,0 +1,42 @@
+@use "sass:math";
+
+@keyframes float {
+    0% {
+        transform: translatey(0px);
+    }
+
+    50% {
+        transform: translatey(-20px);
+    }
+
+    100% {
+
+        transform: translatey(0px);
+    }
+}
+
+.card {
+    height: fit-content;
+    background: none;
+    border: 0;
+    transform: scale(.8);
+    animation: float 6s ease-in-out infinite;
+    /* TODO: Hacerlo para que varíe la velocidad de cada card -> for */
+}
+
+.card-content {
+    background-color: rgb(45, 28, 115);
+    border-radius: 100px;
+    padding: 1rem;
+    margin: .5rem;
+    color: rgb(177, 177, 177);
+    width: fit-content;
+
+    &>img {
+        transform: scale(70%);
+    }
+
+    &:hover {
+        filter: brightness(1.75);
+    }
+}

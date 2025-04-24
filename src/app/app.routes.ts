@@ -2,8 +2,10 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
     {
-        // path: 'home',
-        // loadChildren: () => import('./home/home.routes').then((h) => h.homeRoutes)
+        path: 'home',
+        loadComponent: () =>
+            import('./home/home.component').then((h) => h.HomeComponent),
+        loadChildren: () => import('./home/home.routes').then((h) => h.homeRoutes)
     },
     {
         path: 'auth',
