@@ -1,1 +1,37 @@
-<p>login-page works!</p>
+<div class="card login-card text-center mb-3" style="width: 27rem">
+    <div class="card-body">
+        <h5 class="card-title my-4">Adéntrate en la galaxia</h5>
+        <form action="#" id="form-login" class="mt-4" [formGroup]="loginForm" (ngSubmit)="login()">
+            <div class="mb-3">
+                <label for="username" class="form-label">Usuario</label>
+                <input type="username" class="form-control" id="username" formControlName="username" name="username" placeholder="Usuario" [validationClasses]="{ valid: 'is-valid', invalid: 'is-invalid' }" />
+                @let usernameErrors = loginForm.get('username')?.errors;
+                @if (usernameErrors?.['required']) {
+                    <div class="invalid-feedback">El usuario es requerido</div>
+                }
+            </div>
+            <div class="mb-3">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" name="password" formControlName="password" id="password" placeholder="Contraseña" [validationClasses]="{ valid: 'is-valid', invalid: 'is-invalid' }" />
+                @let passwordErrors = loginForm.get('password')?.errors;
+                @if (passwordErrors?.['required']) {
+                    <div class="invalid-feedback">La contraseña es requerida</div>
+                }
+            </div>
+            <p class="text-danger" id="errorInfo"></p>
+            <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">
+                <img src="assets/neon/neon_rocket_login.png" alt="Login" style="width: 18px; height: 18px; margin-right: 4px" />
+                Despegar
+            </button>
+            <span class="mx-4"></span>
+            <a class="btn btn-secondary" [routerLink]="['/auth/register']">
+                <img src="assets/neon/neon_spaceship_register.png" alt="Register" style="width: 18px; height: 18px; margin-right: 4px" class="img-wallpaper" />
+                Crear Nave
+            </a>
+        </form>
+    </div>
+</div>
+
+<div class="icon-large-container" style="position: fixed; bottom: 40px; right: 0%">
+    <img src="assets/neon/neon_rocket_login.png" alt="Login Icon" style="width: 25rem; opacity: 0.8" />
+</div>
