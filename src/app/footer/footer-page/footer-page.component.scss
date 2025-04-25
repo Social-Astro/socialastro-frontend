@@ -1,0 +1,10 @@
+footer {
+    backdrop-filter: blur(50px);
+    box-shadow: 40px 0px 0px rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(13, 0, 50, 0.5);
+    // background: linear-gradient(to bottom, $violin-color, darken($violin-color, 15%));
+    color: white;
+    padding: 5rem 5rem;
+    font-size: 0.9rem;
+    z-index: 1050;
+}
