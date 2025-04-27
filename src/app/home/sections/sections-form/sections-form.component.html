@@ -1,4 +1,4 @@
-<form (ngSubmit)="addTopic()" [formGroup]="topicForm" class="mt-4 row">
+<form (ngSubmit)="addSection()" [formGroup]="sectionForm" class="mt-4 row">
     <div class="col-6">
         <label for="title" class="form-label">Nombre</label>
         <input type="text" class="form-control input" name="title" formControlName="title"
@@ -10,7 +10,7 @@
             [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" />
     </div>
     <div class="d-flex">
-        <button type="submit" class="btn btn-outlined-primary m-2" [disabled]="topicForm.invalid">
+        <button type="submit" class="btn btn-outlined-primary m-2" [disabled]="sectionForm.invalid">
             Guardar
         </button>
         <button type="button" class="btn btn-outlined-danger m-2" (click)="hideForm()">

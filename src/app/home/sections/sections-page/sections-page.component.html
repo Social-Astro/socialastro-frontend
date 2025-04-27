@@ -1,0 +1,34 @@
+<!-- TODO: Solo visible si el usuario logueado es admin o moderador-->
+@if (true && topic()) {
+<div class="fondo-card">
+    <h2 style="font-size: large;">Panel de mando</h2>
+    @if (showForm()) {
+    <div class="col-12">
+        <sections-form [topic]="topic()" (saved)="showSectionForm()" (hide)="showSectionForm()"></sections-form>
+    </div>
+    }@else {
+    <button class="btn btn-outline-info" (click)="showSectionForm()">
+        <img src="assets/neon/neon_system_section.png" alt="Icono sections" width="25px;">
+        Agregar sistema
+    </button>
+    }
+</div>
+}
+<div class="fondo-card">
+    <h2 style="text-align: left;">
+        @if(topic()) {
+        {{ topic().title }}
+        } @else {
+        Secciones
+        }
+    </h2>
+    <div class="contenido header mb-3">
+        <p class="tema">Tema</p>
+        <p class="titulo">Nombre</p>
+        <p class="desc">Descripción</p>
+        <p class="otros">#</p>
+    </div>
+    @for (section of sections(); track section.id) {
+    <sections-card [section]="section" (deleted)="deleteSection()" (edited)="sectionsResource.reload()"></sections-card>
+    }
+</div>

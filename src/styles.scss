@@ -2,9 +2,14 @@
 @import 'variables';
 
 /* Importa las variables de Bootstrap */
+@import "bootstrap/dist/css/bootstrap.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
 @import 'bootstrap/scss/functions';
 @import 'bootstrap/scss/variables';
 @import 'bootstrap/scss/bootstrap';
+
+@import "primeicons/primeicons.css";
 
 /* Tipografía */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
@@ -40,6 +45,7 @@ body {
     color: white !important;
     border: none;
     transition: background-color 0.3s ease;
+
     &:hover {
         background: $inverted-color !important;
     }
@@ -74,19 +80,25 @@ h3,
 h4,
 h5,
 h6 {
-    font-weight: 700; /* Mayor peso para destacar */
-    line-height: 1.4; /* Espaciado entre líneas ajustado */
-    color: #ffffff; /* Color blanco para encabezados */
+    font-weight: 700;
+    /* Mayor peso para destacar */
+    line-height: 1.4;
+    /* Espaciado entre líneas ajustado */
+    color: #ffffff;
+    /* Color blanco para encabezados */
 }
 
 /* Ajustes para enlaces */
 a {
-    color: #00a217; /* Color verde para enlaces */
-    text-decoration: none; /* Sin subrayado */
+    color: #00a217;
+    /* Color verde para enlaces */
+    text-decoration: none;
+    /* Sin subrayado */
 }
 
 a:hover {
-    text-decoration: underline; /* Subrayado al pasar el cursor */
+    text-decoration: underline;
+    /* Subrayado al pasar el cursor */
 }
 
 .card {

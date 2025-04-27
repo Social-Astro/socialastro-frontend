@@ -5,7 +5,7 @@ export const homeRoutes: Routes = [
         path: 'topics',
         loadChildren: () =>
             import('./topics/topics.routes').then((r) => r.topicsRoutes),
-        title: 'Temas * Social Astro'
+        title: 'Temas ** Social Astro'
     },
     {
         path: 'sections',

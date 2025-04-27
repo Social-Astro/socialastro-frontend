@@ -1,12 +1,13 @@
-import { Component, DestroyRef, effect, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { TopicsCardComponent } from '../topics-card/topics-card.component';
 import { TopicsService } from '../../services/topics.service';
 import { Topic } from '../../interfaces/topics';
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { TopicsFormComponent } from '../topics-form/topics-form.component';
 
 @Component({
   selector: 'topics-page',
-  imports: [TopicsCardComponent],
+  imports: [TopicsCardComponent, TopicsFormComponent],
   templateUrl: './topics-page.component.html',
   styleUrl: './topics-page.component.scss'
 })
@@ -15,10 +16,16 @@ export class TopicsPageComponent {
   readonly #destroyRef = inject(DestroyRef);
 
   topics = signal<Topic[]>([]);
+  showForm = signal(false);
 
   constructor() {
-    this.getTopics(); //TODO: Hacerlo reactivo. Tendré que mover el form a dentro de este componente. Hacer más adelante cuanto tenga más claro el diseño
-    console.log("Topics: ", this.topics());
+    this.getTopics();
+  }
+
+  showTopicsForm() {
+    if (this.showForm() === true)
+      this.getTopics();
+    this.showForm.update((state) => !state);
   }
 
   getTopics() {
