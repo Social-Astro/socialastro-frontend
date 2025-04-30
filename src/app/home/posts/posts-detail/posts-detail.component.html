@@ -1,0 +1,46 @@
+<div class="post-header row mb-2">
+    <h2 class="pb-2">{{ post().title }}</h2>
+</div>
+<div class="post-content row mb-3">
+    <div class="col-2 fondo-card usuario m-3">
+        <!-- TODO: Sustituir por avatar -->
+        <div style="background-color: black; width: 80px; height: 80px;">
+            Avatar simulación
+        </div>
+        <!-- TODO: Enlace a perfil -->
+        <p class="mb-0">{{ post().content.user.username }}</p>
+        <!-- TODO: Sustituir por logro destacado  -->
+        <small>Logro destacado</small>
+        <hr>
+        <!-- TODO: Sustituir por posts totales del usuario  -->
+        <p style=" font-size: small; font-weight: bold;">Planetas visitados: 3445</p>
+    </div>
+    <div class="col-9 fondo-card texto m-3">
+        <div class="infor d-flex justify-content-between">
+            <p>{{ post().content.likes }} <i class="bi bi-heart"></i></p>
+            <p>{{ post().content.createdAt | date: 'h:mm a - dd/MM/yyyy' }}</p>
+        </div>
+        <p>
+            {{ post().content.description }}
+            <!-- Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+            totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
+            dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,
+            sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam
+            est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius
+            modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima
+            veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea
+            commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil
+            molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? -->
+        </p>
+        <!-- TODO: Editar y borrar para autor -->
+        <div class="acciones">
+            <button class="btn">
+                Acciones
+            </button>
+        </div>
+    </div>
+</div>
+<p-divider type="dashed" />
+@for (comment of comments(); track comment.id){
+<comments [comment]="comment" (deleted)="deleteComment()"></comments>
+}

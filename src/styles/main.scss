@@ -13,7 +13,8 @@ body {
     font-family: 'Roboto', sans-serif;
     background-image: url('/assets/background/fondo.png');
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: repeat-y;
+    /* background-repeat: no-repeat; */
     background-position: center;
     min-height: 100vh;
     margin: 0;

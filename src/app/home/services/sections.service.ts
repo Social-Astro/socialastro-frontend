@@ -16,13 +16,13 @@ export class SectionsService {
     }
 
     getSectionsByTopic(id: number) {
-        return this.#http.get<Section[]>(`topics/${id}/${this.#sectionsUrl}`)
+        return this.#http.get<Section[]>(`${this.#sectionsUrl}/${id}/topic`)
             .pipe(map((resp) => resp));
     }
 
     getSection(id: number): Observable<Section> {
-        return this.#http.get<SingleSectionResponse>(`${this.#sectionsUrl}/${id}`)
-            .pipe(map((resp) => resp.section));
+        return this.#http.get<Section>(`${this.#sectionsUrl}/${id}`)
+            .pipe(map((resp) => resp));
     }
 
     addSection(section: NewSection): Observable<Section> {

@@ -1,5 +1,6 @@
+<!-- TODO: EL DISEÑO DE ESTA PARTE HAY QUE CAMBIARLO ENTERO, PERO NO SE ME OCURRÍAN FORMAS DE MOSTRAR LOS DATOS YA, CREO QUE ME VOY A SUICIDAR-->
 <!-- TODO: Solo visible si el usuario logueado es admin o moderador-->
-@if (true && topic()) {
+@if (topic()) {
 <div class="fondo-card">
     <h2 style="font-size: large;">Panel de mando</h2>
     @if (showForm()) {
@@ -16,6 +17,7 @@
 }
 <div class="fondo-card">
     <h2 style="text-align: left;">
+        <img class="image" src="assets/neon/neon_galaxy_topic.png" alt="Icono topics" width="40px">
         @if(topic()) {
         {{ topic().title }}
         } @else {

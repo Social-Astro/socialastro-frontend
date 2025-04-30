@@ -1,10 +1,12 @@
 <div class="contenido secciones">
     @if (!edit()){
-    <p class="tema">
+    <div>
         <img class="image" src="assets/neon/neon_system_section.png" alt="Icono sections" style="width: 40px;">
-        <!-- TODO: Falta por añadir nombre del topic -->
-    </p>
-    <p class="titulo">{{ section().title }}</p>
+        <p class="tema">{{section().topic.title}}</p>
+    </div>
+    <a [routerLink]="['/home/sections', section().id]">
+        <p class="titulo">{{ section().title }}</p>
+    </a>
     <p class="desc">{{ section().description }}</p>
     <div class="otros settings">
         <p-button (click)="op.toggle($event)" icon="pi pi-cog" [rounded]="true" size="small" severity="help" />

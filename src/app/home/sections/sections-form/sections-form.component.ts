@@ -1,16 +1,17 @@
-import { Component, DestroyRef, effect, inject, input, output } from '@angular/core';
-import { NgModel, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, DestroyRef, effect, inject, input, output, signal } from '@angular/core';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ValidationClassesDirective } from '../../../shared/directives/validation-classes.directive';
 import { SectionsService } from '../../services/sections.service';
 import { NewSection } from '../../interfaces/sections';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Topic } from '../../interfaces/topics';
 import { TopicsService } from '../../services/topics.service';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'sections-form',
   standalone: true,
-  imports: [ReactiveFormsModule, ValidationClassesDirective],
+  imports: [ReactiveFormsModule, ValidationClassesDirective, NgClass],
   templateUrl: './sections-form.component.html',
   styleUrl: './sections-form.component.scss'
 })
@@ -21,17 +22,32 @@ export class SectionsFormComponent {
   readonly #fb = inject(NonNullableFormBuilder);
 
   topic = input.required<Topic>();
+  topicAux = signal<Topic | null>(null);
   allTopics: Topic[] = [];
 
+  showSelect = signal(false);
   saved = output<void>();
   hide = output<void>();
 
   sectionForm = this.#fb.group({
     title: ['', [Validators.required]],
-    description: ['', [Validators.required]]
+    description: ['', [Validators.required]],
+    topic: ['']
   })
 
-  addSection() {
+  constructor() {
+    effect(() => {
+      if (!this.topic()) {
+        this.#topicsService.getTopics()
+          .pipe(takeUntilDestroyed(this.#destroyRef))
+          .subscribe((resp) => this.allTopics = resp);
+
+        this.showSelect.set(true);
+      }
+    })
+  }
+
+  async addSection() {
     const newSection: NewSection = {
       title: this.sectionForm.get('title')!.getRawValue(),
       description: this.sectionForm.get('description')!.getRawValue(),

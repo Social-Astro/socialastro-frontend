@@ -9,12 +9,12 @@
         <input type="text" class="form-control input" name="desc" formControlName="description"
             [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" />
     </div>
-    <div class="d-flex">
+    <div class="d-flex justify-content-center">
         <button type="submit" class="btn btn-outlined-primary m-2" [disabled]="topicForm.invalid">
             Guardar
         </button>
         <button type="button" class="btn btn-outlined-danger m-2" (click)="hideForm()">
-            Cancelar
+            Abortar misión
         </button>
     </div>
 </form>

@@ -1,0 +1,29 @@
+<div class="fondo-card d-flex p-4 justify-content-between">
+    <!-- TODO: Input de búsqueda con debounce, no icono de buscar -->
+    <!-- Botón que lleva al form de añadir nuevo post -->
+    <h2 style="text-align: left;">
+        <img class="image" src="assets/neon/neon_system_section.png" alt="Icono sections" style="width: 40px;">
+        @if(section()) {
+        {{ section().title }}
+        } @else {
+        Posts
+        }
+    </h2>
+    <button class="btn btn-primary" (click)="goAddPost()">
+        <img src="assets/neon/neon_planet_post.png" alt="Icono post" width="25px;">
+        Terraformar
+    </button>
+</div>
+
+<!-- Hacerlo en formato tabla, pero que si se hace muy pequeño pase a card -->
+<div class="fondo-card">
+    <!-- Poner los campos necesarios para post -->
+    <div class="header d-none d-md-flex justify-content-around">
+        <p class="info">Información</p>
+        <p class="user">Astronauta</p>
+        <p class="extra">Última visita</p>
+    </div>
+    @for (post of posts(); track post.id) {
+    <posts-card [post]="post" (deleted)="deletePost()"></posts-card>
+    }
+</div>

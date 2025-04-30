@@ -1,0 +1,40 @@
+<div class="fondo-card">
+    <form (ngSubmit)="sendPost()" [formGroup]="postForm" class="mt-4">
+        <div class="mb-3">
+            <label for="title" class="form-label">Título</label>
+            <input type="text" class="form-control" name="title" formControlName="title"
+                [validationClasses]="{valid: 'is-valid', invalid:'is-invalid'}" />
+            @let titleErrors = postForm.get('title')?.errors;
+            @if(titleErrors?.['required']) {
+            <div class="invalid-feedback">Introduce título</div>
+            }
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Descripción</label>
+            <textarea class="form-control" name="description" formControlName="description"
+                [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" rows="3">
+          </textarea>
+            @let descErrors = postForm.get('description')?.errors;
+            @if(descErrors?.['required']) {
+            <div class="invalid-feedback">Description is required</div>
+            }
+        </div>
+        <div class="mb-3">
+            <label for="multimedia" class="form-label">Multimedia</label>
+            <input type="file" class="form-control" name="multimedia" formControlName="multimedia" #fileImage
+                encodeBase64 (encoded)="imageBase64 = $event"
+                [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" />
+        </div>
+        @if(imageBase64) {
+        <img [src]="imageBase64" [alt]="postForm.get('title')" id="imgPreview" class="img-thumbnail mb-3" />
+        }
+        <div>
+            <!--<load-button type="submit" [loading]="loading()" (submit)="loading.set(!loading())" [formInvalid]="editForm.touched && editForm.invalid">
+            Edit
+            </load-button> -->
+            <button type="submit" class="btn btn-primary" [disabled]="postForm.invalid">{{ this.post() ? "Editar
+                planeta" :
+                "Terraformar" }}</button>
+        </div>
+    </form>
+</div>
