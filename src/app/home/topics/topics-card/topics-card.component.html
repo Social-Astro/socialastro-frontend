@@ -1,9 +1,25 @@
-<div class="card">
-    <div class="card-content">
-        <img class="card-img-top" src="assets/normal/normal_galaxy_topic.png" alt="Icono topics" />
-        <div class="card-body">
+<div class="topic">
+    <div class="topic-content">
+        <a [routerLink]="['/home/topics', topic().id]"><img class="card-img-top" src="assets/neon/neon_galaxy_topic.png" alt="Icono topics" /></a>
+        <div class="topic-body">
             @if (!edit()) {
-                <p class="card-title" style="font-size: x-large">{{ topic().title }}</p>
+                <a [routerLink]="['/home/topics', topic().id]">
+                    <p class="topic-title" style="font-size: x-large">{{ topic().title }}</p>
+                </a>
+                <!-- TODO: Solo visible si es admin o mod -->
+                <div class="settings">
+                    <p-button (click)="op.toggle($event)" icon="pi pi-cog" [rounded]="true" size="small" severity="help" />
+                    <p-popover #op>
+                        <div class="flex gap-6">
+                            <button class="btn btn-sm m-1" (click)="showEditForm()">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-sm m-1" (click)="deleteTopic()">
+                                <i class="bi bi-trash-fill"></i>
+                            </button>
+                        </div>
+                    </p-popover>
+                </div>
             } @else {
                 <form (ngSubmit)="editTitle()" [formGroup]="editForm" class="mt-4">
                     <input type="text" class="form-control" name="title" formControlName="title" />
@@ -17,6 +33,15 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
                             <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
                         </svg>
+                    </button>
+                </form>
+                <form (ngSubmit)="editTitle()" [formGroup]="editForm" class="mt-4">
+                    <input type="text" class="form-control form-control-sm input" name="title" formControlName="title" [validationClasses]="{ valid: 'is-valid', invalid: 'is-invalid' }" />
+                    <button class="btn m-1" type="submit" [disabled]="editForm.invalid">
+                        <i class="bi bi-floppy"></i>
+                    </button>
+                    <button type="button" class="btn m-1" (click)="showEditForm()">
+                        <i class="bi bi-x"></i>
                     </button>
                 </form>
             }

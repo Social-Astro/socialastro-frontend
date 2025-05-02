@@ -5,18 +5,19 @@ export const homeRoutes: Routes = [
         path: 'topics',
         loadChildren: () => import('./topics/topics.routes').then((r) => r.topicsRoutes),
         title: 'Temas * Social Astro'
+        loadChildren: () =>
+            import('./topics/topics.routes').then((r) => r.topicsRoutes),
+        title: 'Temas ** Social Astro'
     },
-    // {
-    //     path: 'sections',
-    //     loadChildren: () =>
-    //         import('./sections/section.routes').then((s) => s.sectionRoutes),
-    //     // TODO: Modificar al ir haciendo. Añadir título en componente
-    // },
-    // {
-    //     path: 'posts',
-    //     loadComponent: () =>
-    //         import('./posts/posts.component').then((p) => p.PostsComponent),
-    //     // TODO: Modificar al ir haciendo. Añadir título en componente
-    // },
+    {
+        path: 'sections',
+        loadChildren: () =>
+            import('./sections/section.routes').then((s) => s.sectionRoutes),
+    },
+    {
+        path: 'posts',
+        loadChildren: () =>
+            import('./posts/posts.routes').then((p) => p.postsRoutes),
+    },
     { path: '', redirectTo: '/home/topics', pathMatch: 'full' }
 ];

@@ -6,6 +6,7 @@ export interface NewTopic {
 
 export interface Topic extends NewTopic {
     id: number
+    sections: []
 }
 
 export interface TopicsResponse {

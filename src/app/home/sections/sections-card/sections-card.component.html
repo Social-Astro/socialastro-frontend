@@ -1,0 +1,40 @@
+<div class="contenido secciones">
+    @if (!edit()){
+    <div>
+        <img class="image" src="assets/neon/neon_system_section.png" alt="Icono sections" style="width: 40px;">
+        <p class="tema">{{section().topic.title}}</p>
+    </div>
+    <a [routerLink]="['/home/sections', section().id]">
+        <p class="titulo">{{ section().title }}</p>
+    </a>
+    <p class="desc">{{ section().description }}</p>
+    <div class="otros settings">
+        <p-button (click)="op.toggle($event)" icon="pi pi-cog" [rounded]="true" size="small" severity="help" />
+        <p-popover #op>
+            <div class="flex gap-6">
+                <button class="btn btn-sm m-1" (click)="showEditForm()">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-sm m-1" (click)="deleteSection()">
+                    <i class="bi bi-trash-fill"></i>
+                </button>
+            </div>
+        </p-popover>
+    </div>
+    } @else {
+    <form (ngSubmit)="editSection()" [formGroup]="editForm" class="mt-4 d-flex">
+        <input type="text" class="form-control input titulo" name="title" formControlName="title"
+            [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" />
+        <input type="text" class="form-control input desc" name="description" formControlName="description"
+            [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" />
+        <div class="d-flex otros">
+            <button class="btn m-1" type="submit" [disabled]="editForm.invalid">
+                <i class="bi bi-floppy"></i>
+            </button>
+            <button type="button" class="btn m-1" (click)="showEditForm()">
+                <i class="bi bi-x"></i>
+            </button>
+        </div>
+    </form>
+    }
+</div>

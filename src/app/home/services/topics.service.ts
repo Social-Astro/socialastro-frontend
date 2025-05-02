@@ -16,8 +16,8 @@ export class TopicsService {
     }
 
     getTopic(id: number): Observable<Topic> {
-        return this.#http.get<SingleTopicResponse>(`${this.#topicsUrl}/${id}`)
-            .pipe(map((resp) => resp.topic));
+        return this.#http.get<Topic>(`${this.#topicsUrl}/${id}`)
+            .pipe(map((resp) => resp));
     }
 
     addTopic(topic: NewTopic): Observable<Topic> {

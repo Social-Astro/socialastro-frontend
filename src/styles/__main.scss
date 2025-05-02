@@ -20,7 +20,8 @@ body {
     font-family: 'Roboto', sans-serif;
     background-image: url('/assets/background/fondo.png');
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: repeat-y;
+    /* background-repeat: no-repeat; */
     background-position: center;
     min-height: 100vh;
     height: 100%;
@@ -48,6 +49,7 @@ app-root {
     color: white !important;
     border: none;
     transition: background-color 0.3s ease;
+
     &:hover {
         background: $inverted-green-color !important;
     }

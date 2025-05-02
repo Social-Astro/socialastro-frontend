@@ -1,21 +1,22 @@
 <div>
     <top-menu-page></top-menu-page>
-</div>
-<div class="row">
-    @if (isLoggedin()) {
-        <div class="col-2 d-none d-md-block">
-            <left-menu-page></left-menu-page>
+    <div class="container-fluid"></div>
+    <div class="row">
+        @if (isLoggedin()) {
+            <div class="col-2 d-none d-md-block">
+                <left-menu-page></left-menu-page>
+            </div>
+        }
+        <div class="col-8">
+            <router-outlet></router-outlet>
         </div>
-    }
-    <div class="col-8">
-        <router-outlet></router-outlet>
+        @if (isLoggedin()) {
+            <div class="col-2 d-none d-md-block">
+                <right-menu-page></right-menu-page>
+            </div>
+        }
     </div>
-    @if (isLoggedin()) {
-        <div class="col-2 d-none d-md-block">
-            <right-menu-page></right-menu-page>
-        </div>
-    }
-</div>
-<div>
-    <footer-page></footer-page>
+    <div>
+        <footer-page></footer-page>
+    </div>
 </div>

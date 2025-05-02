@@ -1,0 +1,38 @@
+@import '../posts-page/posts-page.component.scss';
+
+.post-header {
+    background: linear-gradient(to bottom, rgba(13, 0, 50, 0.8), rgba(0, 0, 0, 0.8));
+    color: white;
+    border-radius: 25px;
+    padding-top: .7rem;
+
+    h2 {
+        padding-left: 1.5rem;
+        font-size: larger;
+    }
+}
+
+.post-content,
+.respuesta {
+    .usuario {
+        text-align: center;
+        max-height: fit-content;
+    }
+
+    .texto {
+        background-image: url('/assets/background/interfaz.jpg');
+        background-size: contain;
+        background-color: rgba(233, 187, 235, 0.757);
+        background-blend-mode: lighten;
+        color: purple;
+    }
+
+    .infor {
+        text-align: right;
+        font-size: small;
+    }
+
+    .acciones {
+        text-align: right;
+    }
+}

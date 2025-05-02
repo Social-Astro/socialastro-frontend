@@ -32,5 +32,3 @@ export const routes: Routes = [
         redirectTo: '/home'
     }
 ];
-/* { path: '', redirectTo: '/home/topics', pathMatch: 'full' },
-{ path: '**', redirectTo: '/home/topics' }, */
