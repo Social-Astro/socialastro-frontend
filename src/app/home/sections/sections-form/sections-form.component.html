@@ -1,0 +1,32 @@
+<form (ngSubmit)="addSection()" [formGroup]="sectionForm" class="mt-4 row">
+    <div class="col-6">
+        <label for="title" class="form-label">Nombre</label>
+        <input type="text" class="form-control input" name="title" formControlName="title"
+            [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" />
+    </div>
+    @if (showSelect()){
+    <div class="col-6">
+        <label for="topic" class="form-label">Tema</label>
+        <select name="topic" class="form-control input" formControlName="topic">
+            @for (topic of allTopics; track topic.id){
+            <option value="{{ topic.id }}">{{ topic.title }}</option>
+            }
+        </select>
+    </div>
+    }
+    <div [ngClass]=" { 
+        'col-12': showSelect(), 
+        'col-6': !showSelect() }">
+        <label for="desc" class="form-label">Descripción</label>
+        <input type="text" class="form-control input" name="desc" formControlName="description"
+            [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" />
+    </div>
+    <div class="col-12 d-flex justify-content-center">
+        <button type="submit" class="btn btn-outlined-primary m-2" [disabled]="sectionForm.invalid">
+            Guardar
+        </button>
+        <button type="button" class="btn btn-outlined-danger m-2" (click)="hideForm()">
+            Abortar misión
+        </button>
+    </div>
+</form>

@@ -1,0 +1,73 @@
+@use "sass:math";
+
+@keyframes float {
+    0% {
+        transform: translatey(0px);
+    }
+
+    50% {
+        transform: translatey(-20px);
+    }
+
+    100% {
+
+        transform: translatey(0px);
+    }
+}
+
+.topic {
+    background: none;
+    border: 0;
+    transform: scale(.8);
+    animation: float 6s ease-in-out infinite;
+}
+
+.topic-content {
+    background: linear-gradient(to bottom, rgba(13, 0, 50, 0.8), rgba(0, 0, 0, 0.8));
+    border-radius: 100px;
+    padding: 1rem;
+    margin: .5rem;
+    color: rgb(177, 177, 177);
+    width: fit-content;
+    height: fit-content;
+
+    .topic-body {
+        position: relative;
+        bottom: 1rem;
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        .topic-title {
+            /* $grayscale-color */
+            color: #8c6e8c;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+
+        .settings {
+            position: absolute;
+            right: 0;
+        }
+
+        .input {
+            background-color: transparent;
+            color: #d6a3d6;
+        }
+
+        .btn {
+            border-radius: 20px;
+        }
+    }
+
+    img {
+        transform: scale(70%);
+    }
+
+    &:hover {
+        filter: brightness(1.75);
+    }
+}

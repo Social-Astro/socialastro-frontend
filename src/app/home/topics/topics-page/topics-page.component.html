@@ -1,0 +1,23 @@
+<!-- TODO: Solo visible si el usuario logueado es admin o moderador-->
+@if (true) {
+<div class="fondo-card">
+    <h2 style="font-size: large;">Panel de mando</h2>
+    @if (showForm()) {
+    <div class="col-12">
+        <topics-form (saved)="showTopicsForm()" (hide)="showTopicsForm()"></topics-form>
+    </div>
+    }@else {
+    <button class="btn btn-outline-info" (click)="showTopicsForm()">
+        <img src="assets/neon/neon_galaxy_topic.png" alt="Icono topics" width="25px;">
+        Agregar galaxia
+    </button>
+    }
+</div>
+}
+<div class="group fondo-card">
+    @for (topic of topics(); track topic.id) {
+    <topics-card class="topic-card" [topic]="topic" (deleted)="deleteTopic(topic)"></topics-card>
+    }@empty {
+    <p>Sin datos</p>
+    }
+</div>

@@ -1,0 +1,87 @@
+@import '__variables';
+/* Importa las variables de Bootstrap */
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/functions';
+
+/* Tipografía */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-image: url('/assets/background/fondo.png');
+    background-size: cover;
+    background-repeat: repeat-y;
+    /* background-repeat: no-repeat; */
+    background-position: center;
+    min-height: 100vh;
+    height: 100%;
+    margin: 0;
+}
+
+app-root {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+}
+
+.btn,
+.navCircles {
+    width: 150px;
+    height: 40px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background: $saturated-25-green-color !important;
+    color: white !important;
+    border: none;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background: $inverted-green-color !important;
+    }
+    img {
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+    }
+}
+
+/* Ajustes para encabezados */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    line-height: 1.4;
+    color: #ffffff;
+}
+
+/* Ajustes para enlaces */
+a {
+    color: #00a217;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.img-wallpaper {
+    z-index: 0;
+}

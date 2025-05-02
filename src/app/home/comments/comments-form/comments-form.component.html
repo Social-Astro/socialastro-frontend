@@ -1,0 +1,28 @@
+<form (ngSubmit)="sendComment()" [formGroup]="commentForm" class="mt-4">
+    <div class="mb-3">
+        <label for="comment" class="form-label">Comentario</label>
+        <textarea class="form-control" name="comment" formControlName="description"
+            [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" rows="3">
+      </textarea>
+        @let comErrors = commentForm.get('comment')?.errors;
+        @if(comErrors?.['required']) {
+        <div class="invalid-feedback">¡Escribe un comentario!</div>
+        }
+    </div>
+    <div class="mb-3">
+        <label for="multimedia" class="form-label">Multimedia</label>
+        <input type="file" class="form-control" name="multimedia" formControlName="multimedia" #fileImage encodeBase64
+            (encoded)="imageBase64 = $event" [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" />
+    </div>
+    @if(imageBase64) {
+    <img [src]="imageBase64" [alt]="commentForm.get('title')" id="imgPreview" class="img-thumbnail mb-3" />
+    }
+    <div>
+        <!--<load-button type="submit" [loading]="loading()" (submit)="loading.set(!loading())" [formInvalid]="editForm.touched && editForm.invalid">
+        Edit
+        </load-button> -->
+        <button type="submit" class="btn btn-primary" [disabled]="commentForm.invalid">
+            {{ this.comment() ? "Editar estación espacial" :
+            "Aterrizar" }}</button>
+    </div>
+</form>

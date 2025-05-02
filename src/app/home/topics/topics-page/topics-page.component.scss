@@ -1,0 +1,32 @@
+@use "sass:math";
+@import '../../home.component.scss';
+
+@keyframes float {
+    0% {
+        transform: translatey(0px);
+    }
+
+    50% {
+        transform: translatey(-20px);
+    }
+
+    100% {
+
+        transform: translatey(0px);
+    }
+}
+
+.group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+
+    /* TODO: Hay que poner manualmente cuántas repeticiones, buscar otra forma, porque el número depende de la BBDD */
+    @for $i from 1 through 15 {
+        & .topic-card:nth-child(#{$i}) {
+            animation: float #{math.random(5)*5}s ease-in-out infinite;
+            animation-delay: #{math.random(9)}s;
+        }
+    }
+}
