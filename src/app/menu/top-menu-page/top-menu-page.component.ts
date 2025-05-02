@@ -1,6 +1,5 @@
-import { Component, computed, inject } from '@angular/core';
-import { RouterLink, Router } from '@angular/router';
-import { map } from 'rxjs';
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { AuthService } from '../../auth/services/auth.service';
 
 @Component({
