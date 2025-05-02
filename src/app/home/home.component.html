@@ -3,17 +3,27 @@
         <div class="col-12 col-md-8 m-4">
             <router-outlet></router-outlet>
         </div>
-        <!-- TODO: No definitivo -->
+        <!-- TODO: Darle estilo y formato -->
         <div class="col-12 col-md-3 m-4">
             <div class="row fondo-card">
-                <div class="col m-3" style="border: 2px solid rgb(26, 100, 78);">
-                    Post recientes. PRÓXIMAMENTE
-                </div>
+                <h3 style="font-size: medium;">Últimos planetas formados</h3>
+                <ul>
+                    @for (post of ordenadosFecha; track post.id) {
+                    <a [routerLink]="['/home/posts', post.id]">
+                        <li>{{ post.title }} - {{ post.content.createdAt | date: 'h:mm dd/MM/yyyy' }}</li>
+                    </a>
+                    }
+                </ul>
             </div>
             <div class="row fondo-card">
-                <div class="col m-3" style="border: 2px solid rgb(26, 100, 78);">
-                    Más comentados. PRÓXIMAMENTE
-                </div>
+                <h3 style="font-size: medium;">Planetas más visitados</h3>
+                <ul>
+                    @for (post of ordenadosComentarios; track post.id) {
+                    <a [routerLink]="['/home/posts', post.id]">
+                        <li>{{ post.title }} - {{ post.comments.length }}</li>
+                    </a>
+                    }
+                </ul>
             </div>
             <div class="row fondo-card">
                 <div class="col m-3" style="border: 2px solid rgb(26, 100, 78);">

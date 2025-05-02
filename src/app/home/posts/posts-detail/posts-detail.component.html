@@ -1,3 +1,7 @@
+<!-- TODO: Ver dónde colocamos esto -->
+<div class="col-12 fondo-card">
+    <comments-form [post]="post()" (added)="actualize()"></comments-form>
+</div>
 <div class="post-header row mb-2">
     <h2 class="pb-2">{{ post().title }}</h2>
 </div>
@@ -22,7 +26,13 @@
         </div>
         <p>
             {{ post().content.description }}
-            <!-- Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+        </p>
+        @if (post().content.multimedia) {
+        <div>
+            <img [src]="post().content.multimedia" alt="Multimedia">
+        </div>
+        }
+        <!-- Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
             totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
             dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,
             sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam
@@ -31,16 +41,18 @@
             veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea
             commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil
             molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur? -->
-        </p>
         <!-- TODO: Editar y borrar para autor -->
         <div class="acciones">
-            <button class="btn">
-                Acciones
+            <button class="btn m-2" (click)="editPost()">
+                <img src="assets/neon/neon_gun_edit.png" alt="Botón editar" title="Editar" width="40px">
+            </button>
+            <button class="btn m-2" (click)="deletePost()">
+                <img src="assets/neon/neon_meteor_delete.png" alt="Botón borrar" title="Borrar" width="40px">
             </button>
         </div>
     </div>
 </div>
 <p-divider type="dashed" />
 @for (comment of comments(); track comment.id){
-<comments [comment]="comment" (deleted)="deleteComment()"></comments>
+<comments [comment]="comment" (edited)="actualize()" (deleted)="actualize()"></comments>
 }

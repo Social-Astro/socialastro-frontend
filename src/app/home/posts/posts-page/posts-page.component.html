@@ -24,6 +24,8 @@
         <p class="extra">Última visita</p>
     </div>
     @for (post of posts(); track post.id) {
-    <posts-card [post]="post" (deleted)="deletePost()"></posts-card>
+    <a [routerLink]="['/home/posts', post.id]">
+        <posts-card [post]="post" (deleted)="deletePost()"></posts-card>
+    </a>
     }
 </div>

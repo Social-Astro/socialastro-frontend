@@ -16,7 +16,7 @@
           </textarea>
             @let descErrors = postForm.get('description')?.errors;
             @if(descErrors?.['required']) {
-            <div class="invalid-feedback">Description is required</div>
+            <div class="invalid-feedback">Introduce una descripción</div>
             }
         </div>
         <div class="mb-3">
@@ -32,9 +32,10 @@
             <!--<load-button type="submit" [loading]="loading()" (submit)="loading.set(!loading())" [formInvalid]="editForm.touched && editForm.invalid">
             Edit
             </load-button> -->
-            <button type="submit" class="btn btn-primary" [disabled]="postForm.invalid">{{ this.post() ? "Editar
-                planeta" :
-                "Terraformar" }}</button>
+            <button type="submit" class="btn btn-primary" [disabled]="postForm.invalid">
+                {{ this.post() ? "Editar planeta" :
+                "Terraformar" }}
+            </button>
         </div>
     </form>
 </div>

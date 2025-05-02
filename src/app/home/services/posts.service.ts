@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
-import { NewPost, Post, SinglePostResponse } from '../interfaces/post';
+import { EditPost, NewPost, Post, SinglePostResponse } from '../interfaces/post';
 
 @Injectable({
     providedIn: 'root'
@@ -31,8 +31,8 @@ export class PostsService {
     }
 
     editPost(post: NewPost, id: number): Observable<Post> {
-        return this.#http.put<SinglePostResponse>(`${this.#postsUrl}/${id}`, post)
-            .pipe(map((resp) => resp.post));
+        return this.#http.put<Post>(`${this.#postsUrl}/${id}`, post)
+            .pipe(map((resp) => resp));
     }
 
     deletePost(id: number): Observable<void> {

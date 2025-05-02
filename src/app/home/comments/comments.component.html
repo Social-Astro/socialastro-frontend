@@ -4,6 +4,9 @@
             <p>{{ comment().content.likes }} <i class="bi bi-heart"></i></p>
             <p>{{ comment().content.createdAt | date: 'h:mm a - dd/MM/yyyy' }}</p>
         </div>
+        @if (showEdit()) {
+        <comments-form [post]="comment().post" [comment]="comment()" (edited)="editComment()"></comments-form>
+        }@else {
         <p>
             {{ comment().content.description }}
             <!-- "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
@@ -16,11 +19,20 @@
             commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil
             molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?" -->
         </p>
+        @if (comment().content.multimedia) {
+        <div>
+            <img [src]="comment().content.multimedia" alt="Multimedia">
+        </div>
+        }
         <div class="acciones">
-            <button class="btn btn-warning">
-                Acciones
+            <button class="btn m-2" (click)="showEdit.set(true)">
+                <img src="assets/neon/neon_gun_edit.png" alt="Botón editar" title="Editar" width="40px">
+            </button>
+            <button class="btn m-2" (click)="deleteComment()">
+                <img src="assets/neon/neon_meteor_delete.png" alt="Botón borrar" title="Borrar" width="40px">
             </button>
         </div>
+        }
     </div>
 
     <div class="col-2 fondo-card usuario m-3">
@@ -28,7 +40,7 @@
         <div style="background-color: black; width: 80px; height: 80px;">
             Avatar simulación
         </div>
-        <!-- TODO: Enlace a perfil -->
+        <!-- TODO: Enlace a perfil. -->
         <p class="mb-0">{{ comment().content.user.username }}</p>
         <!-- TODO: Sustituir por logro destacado  -->
         <small>Logro destacado</small>

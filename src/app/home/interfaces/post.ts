@@ -15,7 +15,8 @@ export interface EditPost {
 }
 
 export interface Post extends NewPost {
-    id: number
+    id: number,
+    comments: Comment[]
 }
 
 export interface PostsResponse {

@@ -4,12 +4,12 @@ import { Title } from "@angular/platform-browser";
 import { rxResource } from "@angular/core/rxjs-interop";
 import { PostsService } from "../../services/posts.service";
 import { PostsCardComponent } from "../posts-card/posts-card.component";
-import { Router } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 
 @Component({
   selector: 'posts-page',
   standalone: true,
-  imports: [PostsCardComponent],
+  imports: [PostsCardComponent, RouterLink],
   templateUrl: './posts-page.component.html',
   styleUrl: './posts-page.component.scss'
 })

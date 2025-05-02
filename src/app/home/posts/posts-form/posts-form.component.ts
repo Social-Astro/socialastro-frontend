@@ -1,4 +1,4 @@
-import { Component, DestroyRef, effect, inject, input } from '@angular/core';
+import { Component, DestroyRef, effect, inject, input, signal } from '@angular/core';
 import { NewPost, Post } from '../../interfaces/post';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EncodeBase64Directive } from '../../../shared/directives/encode-base64.directive';
@@ -8,6 +8,7 @@ import { PostsService } from '../../services/posts.service';
 import { Title } from '@angular/platform-browser';
 import { Section } from '../../interfaces/sections';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { User } from '../../../interfaces/user';
 
 @Component({
   selector: 'posts-form',
@@ -48,20 +49,37 @@ export class PostsFormComponent {
         this.#title.setTitle(this.post().title + ' | Edit');
         this.postForm.get('title')!.setValue(this.post().title);
         this.postForm.get('description')!.setValue(this.post().content.description);
+        this.imageBase64 = this.post().content.multimedia;
       }
     })
   }
 
   sendPost() {
+    //TODO: Necesario para pruebas
+    const userPruebas: User = {
+      id: 1,
+      username: 'admin',
+      password: '',
+      name: 'admin',
+      email: 'admin@gmail.com',
+      avatar: '',
+      header: '',
+      bio: '',
+      role: '1',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      friend_ids: []
+    };
+
     const newPost: NewPost = {
       title: this.postForm.get('title')?.getRawValue(),
-      section: this.section(),
+      section: this.section() ? this.section() : this.post().section,
       content: {
         description: this.postForm.get('description')?.getRawValue(),
-        createdAt: new Date(),
+        createdAt: this.post() ? this.post().content.createdAt : new Date(),
         multimedia: this.imageBase64,
         likes: 0,
-        user: undefined
+        user: userPruebas
       }
     };
 
@@ -69,9 +87,10 @@ export class PostsFormComponent {
       this.#postsService.editPost(newPost, this.post().id)
         .pipe(takeUntilDestroyed(this.#destroyRef))
         .subscribe({
-          next: () => {
+          next: (resp) => {
+            console.log(resp);
             this.saved = true;
-            this.#router.navigate(['/sections', this.section().id]);
+            this.#router.navigate(['/home/posts', this.post().id]);
           },
           error: (error) => console.log(error.error.message)
         });
@@ -82,7 +101,7 @@ export class PostsFormComponent {
         .subscribe({
           next: (resp) => {
             this.saved = true;
-            this.#router.navigate(['/sections', this.section().id]);
+            this.#router.navigate(['/home/sections', this.section().id]);
           },
           error: (error) => console.log(error.error.message)
         });
