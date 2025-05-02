@@ -1,15 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FooterPageComponent } from './footer/footer-page/footer-page.component';
-import { TopMenuPageComponent } from './top-menu/top-menu-page/top-menu-page.component';
+import { TopMenuPageComponent } from './menu/top-menu-page/top-menu-page.component';
+import { LeftMenuPageComponent } from './menu/left-menu-page/left-menu-page.component';
+import { RightMenuPageComponent } from './menu/right-menu-page/right-menu-page.component';
+import { AuthService } from './auth/services/auth.service';
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet, FooterPageComponent, TopMenuPageComponent],
+    imports: [RouterOutlet, FooterPageComponent, TopMenuPageComponent, LeftMenuPageComponent, RightMenuPageComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
 export class AppComponent {
     title = 'socialastro-frontend';
+
+    private readonly authService = inject(AuthService);
+
+    isLoggedin = this.authService.logged;
+
+    logout() {
+        this.authService.logout();
+    }
 }

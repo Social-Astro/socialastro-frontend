@@ -1,12 +1,11 @@
-import { Routes } from "@angular/router";
+import { Routes } from '@angular/router';
 
 export const topicsRoutes: Routes = [
     {
         path: '',
-        loadComponent: () =>
-            import('./topics-page/topics-page.component').then((t) => t.TopicsPageComponent),
+        loadComponent: () => import('./topics-page/topics-page.component').then((t) => t.TopicsPageComponent),
         title: 'Temas ** Social Astro **'
-    },
+    }
     /*    {
             path: 'add',
             loadComponent: () =>
@@ -21,10 +20,10 @@ export const topicsRoutes: Routes = [
             title: 'Editar tema ** Social Astro **'
             // TODO: Guard de admin/mod. Añadir resolver
         }, */
-    {
-        path: ':id',
-        loadComponent: () =>
-            import('../sections/sections-page/sections-page.component').then((s) => s.SectionsPageComponent),
-        // TODO: Se le tendrá que pasar el id del topic para que cargue esos elementos de la sección. Title dinámico
-    }
-]
+    // {
+    //     path: ':id',
+    //     loadComponent: () =>
+    //         import('../sections/sections-page/sections-page.component').then((s) => s.SectionsPageComponent),
+    //     // TODO: Se le tendrá que pasar el id del topic para que cargue esos elementos de la sección. Title dinámico
+    // }
+];

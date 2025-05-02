@@ -1,6 +1,6 @@
-<div class="card login-card text-center mb-3" style="width: 27rem">
+<div class="text-center mb-3 register-card">
     <div class="card-body">
-        <h5 class="card-title my-4">Adéntrate en la galaxia</h5>
+        <h5 class="card-title">Adéntrate en la galaxia</h5>
         <form action="#" id="form-login" class="mt-4" [formGroup]="loginForm" (ngSubmit)="login()">
             <div class="mb-3">
                 <label for="username" class="form-label">Usuario</label>
@@ -19,19 +19,18 @@
                 }
             </div>
             <p class="text-danger" id="errorInfo"></p>
-            <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">
-                <img src="assets/neon/neon_rocket_login.png" alt="Login" style="width: 18px; height: 18px; margin-right: 4px" />
+            <button type="submit" class="btn btn-primary my-1" [disabled]="loginForm.invalid">
+                <img src="assets/normal/normal_rocket_login.png" alt="Login" />
                 Despegar
             </button>
             <span class="mx-4"></span>
             <a class="btn btn-secondary" [routerLink]="['/auth/register']">
-                <img src="assets/neon/neon_spaceship_register.png" alt="Register" style="width: 18px; height: 18px; margin-right: 4px" class="img-wallpaper" />
+                <img src="assets/normal/normal_spaceship_register.png" alt="Register" class="img-wallpaper" />
                 Crear Nave
             </a>
         </form>
     </div>
 </div>
-
 <div class="icon-large-container" style="position: fixed; bottom: 40px; right: 0%">
-    <img src="assets/neon/neon_rocket_login.png" alt="Login Icon" style="width: 25rem; opacity: 0.8" />
+    <img src="assets/normal/normal_rocket_login.png" alt="Login Icon" style="width: 25rem; opacity: 0.8" />
 </div>

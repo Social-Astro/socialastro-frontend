@@ -10,6 +10,7 @@ import { SingleUserResponse, TokenResponse } from '../../interfaces/response';
 export class AuthService {
     #http = inject(HttpClient);
     #logged = signal(false);
+    #currentUser: User | null = null;
 
     get logged() {
         return this.#logged.asReadonly();
