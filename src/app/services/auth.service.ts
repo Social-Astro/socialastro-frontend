@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
-import { User, UserLogin } from '../../interfaces/user';
-import { SingleUserResponse, TokenResponse } from '../../interfaces/response';
+import { SingleUserResponse, TokenResponse } from '../interfaces/response';
+import { User, UserLogin } from '../interfaces/user';
 
 @Injectable({
     providedIn: 'root'
@@ -58,6 +58,7 @@ export class AuthService {
         return this.#http.post<SingleUserResponse>('auth/register', user).pipe(map((resp) => resp.user));
     }
 
+    // TODO: #8 Implement from the backend to return the current logged in user
     getCurrentUser(): Observable<User> {
         return this.#http.get<SingleUserResponse>('users/me').pipe(map((response) => response.user));
     }

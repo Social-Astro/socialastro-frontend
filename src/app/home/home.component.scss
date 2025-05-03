@@ -1,9 +1,14 @@
 .fondo-card {
-    background-color: rgba(119, 16, 145, 0.562);
+    // background-color: rgba(119, 16, 145, 0.562);
     border-radius: 20px;
     padding: 1.8rem;
     margin-bottom: 1rem;
-    color: rgb(212, 212, 212);
+    opacity: 0.9;
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(13, 0, 50, 0.5);
+    background: linear-gradient(to bottom, rgba(13, 0, 50, 0.8), rgba(0, 0, 0, 0.8));
+    color: white;
+    // color: rgb(212, 212, 212);
 }
 
 ul {

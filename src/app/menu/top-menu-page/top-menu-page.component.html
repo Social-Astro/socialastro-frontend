@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg" style="color: white; font-size: 0.9rem">
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="#">
+            <img src="assets/logo.png" alt="Logo" style="width: 36px; height: 36px; margin-right: 8px" />
+            <span style="font-size: 1.4rem; font-weight: bold; color: white">Social Astro</span>
+        </a>
+        @if (!isLoggedin()) {
+            <div class="d-flex d-lg-none btn" style="gap: 8px">
+                <a class="nav-link navCircles" [routerLink]="['/auth/login']" style="border-radius: 50%; padding: 8px">
+                    <img src="assets/normal/normal_rocket_login.png" alt="Login" style="width: 28px; height: 28px" />
+                </a>
+                <a class="nav-link navCircles" [routerLink]="['/auth/register']" style="border-radius: 50%; padding: 8px">
+                    <img src="assets/normal/normal_spaceship_register.png" alt="Register" style="width: 28px; height: 28px" />
+                </a>
+            </div>
+        }
+        <div class="collapse navbar-collapse d-none d-lg-block" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                @if (!isLoggedin()) {
+                    <li class="nav-item">
+                        <a class="btn me-2 d-flex align-items-center" [routerLink]="['/auth/login']">
+                            <img src="assets/normal/normal_rocket_login.png" alt="Login" />
+                            Despegar
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn d-flex align-items-center" [routerLink]="['/auth/register']">
+                            <img src="assets/normal/normal_spaceship_register.png" alt="Register" class="img-wallpaper" />
+                            Crear Nave
+                        </a>
+                    </li>
+                }
+                @if (isLoggedin()) {
+                    <li class="nav-item">
+                        <a class="btn me-2 d-flex align-items-center" [routerLink]="['/profile']">
+                            <img src="assets/normal/normal_spaceman_perfil.png" alt="Login" />
+                            Perfil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn d-flex align-items-center" [routerLink]="['/auth/login']" (click)="logout()">
+                            <img src="assets/normal/normal_meteor_logout.png" alt="Register" class="img-wallpaper" />
+                            Salir
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>

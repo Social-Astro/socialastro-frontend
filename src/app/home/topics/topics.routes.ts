@@ -1,5 +1,5 @@
-import { Routes } from "@angular/router";
-import { topicsResolver } from "../resolvers/topics.resolver";
+import { Routes } from '@angular/router';
+import { topicsResolver } from '../resolvers/topics.resolver';
 
 export const topicsRoutes: Routes = [
     {
@@ -10,8 +10,8 @@ export const topicsRoutes: Routes = [
     {
         path: ':id',
         resolve: {
-            topic: topicsResolver,
+            topic: topicsResolver
         },
         loadComponent: () => import('../sections/sections-page/sections-page.component').then((s) => s.SectionsPageComponent),
     }
-]
+];
