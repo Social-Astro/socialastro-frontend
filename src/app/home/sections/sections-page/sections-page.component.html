@@ -1,11 +1,11 @@
 <!-- TODO: EL DISEÑO DE ESTA PARTE HAY QUE CAMBIARLO ENTERO, PERO NO SE ME OCURRÍAN FORMAS DE MOSTRAR LOS DATOS YA, CREO QUE ME VOY A SUICIDAR-->
-<!-- TODO: Solo visible si el usuario logueado es admin o moderador-->
-@if (topic()) {
+<!-- TODO: Solo visible si el usuario logueado es admin o moderador. Modificar cuando esté hecha autenticación y roles-->
+@if (true) {
 <div class="fondo-card">
     <h2 style="font-size: large;">Panel de mando</h2>
     @if (showForm()) {
     <div class="col-12">
-        <sections-form [topic]="topic()" (saved)="showSectionForm()" (hide)="showSectionForm()"></sections-form>
+        <sections-form [topic]="topic()!" (saved)="showSectionForm()" (hide)="showSectionForm()"></sections-form>
     </div>
     }@else {
     <button class="btn btn-outline-info" (click)="showSectionForm()">
@@ -19,18 +19,12 @@
     <h2 style="text-align: left;">
         <img class="image" src="assets/neon/neon_galaxy_topic.png" alt="Icono topics" width="40px">
         @if(topic()) {
-        {{ topic().title }}
+        {{ topic()!.title }}
         } @else {
         Secciones
         }
     </h2>
-    <div class="contenido header mb-3">
-        <p class="tema">Tema</p>
-        <p class="titulo">Nombre</p>
-        <p class="desc">Descripción</p>
-        <p class="otros">#</p>
-    </div>
     @for (section of sections(); track section.id) {
-    <sections-card [section]="section" (deleted)="deleteSection()" (edited)="sectionsResource.reload()"></sections-card>
+    <sections-card [section]="section" (deleted)="deleteSection()" (edited)="initialize()"></sections-card>
     }
 </div>

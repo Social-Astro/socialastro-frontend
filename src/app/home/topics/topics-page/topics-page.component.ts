@@ -23,7 +23,7 @@ export class TopicsPageComponent {
   }
 
   showTopicsForm() {
-    if (this.showForm() === true)
+    if (this.showForm())
       this.getTopics();
     this.showForm.update((state) => !state);
   }

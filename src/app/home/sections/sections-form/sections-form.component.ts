@@ -2,7 +2,7 @@ import { Component, DestroyRef, effect, inject, input, output, signal } from '@a
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ValidationClassesDirective } from '../../../shared/directives/validation-classes.directive';
 import { SectionsService } from '../../services/sections.service';
-import { NewSection } from '../../interfaces/sections';
+import { NewSection, Section } from '../../interfaces/sections';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Topic } from '../../interfaces/topics';
 import { TopicsService } from '../../services/topics.service';
@@ -21,13 +21,16 @@ export class SectionsFormComponent {
   readonly #destroyRef = inject(DestroyRef);
   readonly #fb = inject(NonNullableFormBuilder);
 
-  topic = input.required<Topic>();
-  topicAux = signal<Topic | null>(null);
+  topic = input<Topic>();
   allTopics: Topic[] = [];
+
+  section = input<Section>();
 
   showSelect = signal(false);
   saved = output<void>();
   hide = output<void>();
+
+  partial = false;
 
   sectionForm = this.#fb.group({
     title: ['', [Validators.required]],
@@ -44,25 +47,44 @@ export class SectionsFormComponent {
 
         this.showSelect.set(true);
       }
+
+      if (this.section()) {
+        this.sectionForm.get('title')!.setValue(this.section()!.title);
+        this.sectionForm.get('description')!.setValue(this.section()!.description);
+        this.partial = true;
+      }
     })
   }
 
-  async addSection() {
+  async sendSection() {
+    const actualTopic = this.topic() ? this.topic() : this.allTopics.find((f) => f.id === +this.sectionForm.get('topic')!.getRawValue());
+
     const newSection: NewSection = {
       title: this.sectionForm.get('title')!.getRawValue(),
       description: this.sectionForm.get('description')!.getRawValue(),
       image: '',
-      topic: this.topic()
+      topic: actualTopic!
     };
 
-    this.#sectionsService.addSection(newSection)
-      .pipe(takeUntilDestroyed(this.#destroyRef))
-      .subscribe({
-        next: () => {
-          this.saved.emit();
-        },
-        error: (error) => console.log(error.error.message)
-      })
+    if (this.partial) {
+      this.#sectionsService.editSection(newSection, this.section()!.id)
+        .pipe(takeUntilDestroyed(this.#destroyRef))
+        .subscribe({
+          next: () => {
+            this.saved.emit();
+          },
+          error: (error) => console.log(error.error.message)
+        })
+    } else {
+      this.#sectionsService.addSection(newSection)
+        .pipe(takeUntilDestroyed(this.#destroyRef))
+        .subscribe({
+          next: () => {
+            this.saved.emit();
+          },
+          error: (error) => console.log(error.error.message)
+        });
+    }
   }
 
   hideForm() {

@@ -1,5 +1,21 @@
 <div class="topic">
     <div class="topic-content">
+        <!-- TODO: Solo visible si es admin o mod. Modificar cuando esté hecha autenticación y roles  -->
+        @if(true && !edit()) {
+        <div class="settings">
+            <p-button (click)="op.toggle($event)" icon="pi pi-cog" [rounded]="true" size="small" severity="help" />
+            <p-popover #op>
+                <div class="flex gap-6">
+                    <button class="btn btn-sm m-1" (click)="showEditForm()">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-sm m-1" (click)="deleteTopic()">
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
+                </div>
+            </p-popover>
+        </div>
+        }
         <a [routerLink]="['/home/topics', topic().id]"><img class="card-img-top" src="assets/neon/neon_galaxy_topic.png"
                 alt="Icono topics"></a>
         <div class="topic-body">
@@ -7,31 +23,8 @@
             <a [routerLink]="['/home/topics', topic().id]">
                 <p class="topic-title" style="font-size: x-large;">{{ topic().title }}</p>
             </a>
-            <!-- TODO: Solo visible si es admin o mod -->
-            <div class="settings">
-                <p-button (click)="op.toggle($event)" icon="pi pi-cog" [rounded]="true" size="small" severity="help" />
-                <p-popover #op>
-                    <div class="flex gap-6">
-                        <button class="btn btn-sm m-1" (click)="showEditForm()">
-                            <i class="bi bi-pencil"></i>
-                        </button>
-                        <button class="btn btn-sm m-1" (click)="deleteTopic()">
-                            <i class="bi bi-trash-fill"></i>
-                        </button>
-                    </div>
-                </p-popover>
-            </div>
             } @else {
-            <form (ngSubmit)="editTitle()" [formGroup]="editForm" class="mt-4">
-                <input type="text" class="form-control form-control-sm input" name="title" formControlName="title"
-                    [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" />
-                <button class="btn m-1" type="submit" [disabled]="editForm.invalid">
-                    <i class="bi bi-floppy"></i>
-                </button>
-                <button type="button" class="btn m-1" (click)="showEditForm()">
-                    <i class="bi bi-x"></i>
-                </button>
-            </form>
+            <topics-form [topic]="topic()" (saved)="showEditForm()" (hide)="showEditForm()"></topics-form>
             }
         </div>
     </div>

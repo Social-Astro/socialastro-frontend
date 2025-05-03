@@ -1,4 +1,5 @@
-<form (ngSubmit)="addSection()" [formGroup]="sectionForm" class="mt-4 row">
+<form (ngSubmit)="sendSection()" [formGroup]="sectionForm" class="mt-4" [ngClass]="{ 'row': '!partial'}">
+    @if (!partial){
     <div class="col-6">
         <label for="title" class="form-label">Nombre</label>
         <input type="text" class="form-control input" name="title" formControlName="title"
@@ -29,4 +30,20 @@
             Abortar misión
         </button>
     </div>
+    }@else {
+    <form (ngSubmit)="sendSection()" [formGroup]="sectionForm" class="mt-4 d-flex">
+        <input type="text" class="form-control input titulo" name="title" formControlName="title"
+            [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" />
+        <input type="text" class="form-control input desc" name="description" formControlName="description"
+            [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" />
+        <div class="d-flex otros">
+            <button class="btn m-1" type="submit" [disabled]="sectionForm.invalid">
+                <i class="bi bi-floppy"></i>
+            </button>
+            <button type="button" class="btn m-1" (click)="hideForm()">
+                <i class="bi bi-x"></i>
+            </button>
+        </div>
+    </form>
+    }
 </form>

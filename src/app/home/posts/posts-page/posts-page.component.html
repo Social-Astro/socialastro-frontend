@@ -1,6 +1,4 @@
 <div class="fondo-card d-flex p-4 justify-content-between">
-    <!-- TODO: Input de búsqueda con debounce, no icono de buscar -->
-    <!-- Botón que lleva al form de añadir nuevo post -->
     <h2 style="text-align: left;">
         <img class="image" src="assets/neon/neon_system_section.png" alt="Icono sections" style="width: 40px;">
         @if(section()) {
@@ -9,6 +7,11 @@
         Posts
         }
     </h2>
+    <!-- Botón que lleva al form de añadir nuevo post -->
+    <form class="d-flex mt-2">
+        <input class="form-control me-2 input" type="text" placeholder="Escanear planetas" aria-label="Search"
+            [formControl]="searchControl">
+    </form>
     <button class="btn btn-primary" (click)="goAddPost()">
         <img src="assets/neon/neon_planet_post.png" alt="Icono post" width="25px;">
         Terraformar

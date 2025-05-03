@@ -1,15 +1,17 @@
 import { Component, computed, effect, inject, input } from "@angular/core";
 import { Section } from "../../interfaces/sections";
 import { Title } from "@angular/platform-browser";
-import { rxResource } from "@angular/core/rxjs-interop";
+import { rxResource, toSignal } from "@angular/core/rxjs-interop";
 import { PostsService } from "../../services/posts.service";
 import { PostsCardComponent } from "../posts-card/posts-card.component";
 import { Router, RouterLink } from "@angular/router";
+import { FormControl, ReactiveFormsModule } from "@angular/forms";
+import { debounceTime, distinctUntilChanged } from "rxjs";
 
 @Component({
   selector: 'posts-page',
   standalone: true,
-  imports: [PostsCardComponent, RouterLink],
+  imports: [PostsCardComponent, RouterLink, ReactiveFormsModule],
   templateUrl: './posts-page.component.html',
   styleUrl: './posts-page.component.scss'
 })
@@ -26,6 +28,17 @@ export class PostsPageComponent {
   });
 
   posts = computed(() => this.postsResource.value());
+
+  //TODO: Añadir el parámetro de búsqueda directamente en el back, e incluirlo arriba en el método que recupera los datos
+  searchControl = new FormControl('');
+  search = toSignal(
+    this.searchControl.valueChanges.pipe(
+      debounceTime(600),
+      distinctUntilChanged(),
+    ),
+    { initialValue: '' }
+  )
+
 
   constructor() {
     effect(() => {

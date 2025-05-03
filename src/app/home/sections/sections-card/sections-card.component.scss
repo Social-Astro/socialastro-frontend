@@ -1,7 +1,40 @@
 @import '../sections-page/sections-page.component.scss';
 
-.input {
-    background-color: transparent;
-    color: #d6a3d6;
-    border-radius: 15px;
+.contenido {
+    display: grid;
+    grid-column: repeat(4, 1fr);
+    background: linear-gradient(to bottom, rgba(13, 0, 50, 0.8), rgba(0, 0, 0, 0.8));
+    border-radius: 25px;
+    height: fit-content;
+
+    & * {
+        padding-top: .7rem;
+    }
+
+    .tema {
+        grid-column: 1;
+    }
+
+    .titulo {
+        grid-column: 2;
+    }
+
+    .desc {
+        grid-column: 3;
+    }
+
+    .otros {
+        grid-column: 5;
+        text-align: right;
+        margin-right: 2em;
+    }
+
+    &:not(.header):hover {
+        filter: brightness(1.75);
+    }
+}
+
+.secciones {
+    background: linear-gradient(to bottom, rgba(142, 110, 230, 0.8), rgba(0, 0, 0, 0));
+    margin: .5rem;
 }

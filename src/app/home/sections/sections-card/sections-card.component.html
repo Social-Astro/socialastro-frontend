@@ -22,19 +22,7 @@
         </p-popover>
     </div>
     } @else {
-    <form (ngSubmit)="editSection()" [formGroup]="editForm" class="mt-4 d-flex">
-        <input type="text" class="form-control input titulo" name="title" formControlName="title"
-            [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" />
-        <input type="text" class="form-control input desc" name="description" formControlName="description"
-            [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" />
-        <div class="d-flex otros">
-            <button class="btn m-1" type="submit" [disabled]="editForm.invalid">
-                <i class="bi bi-floppy"></i>
-            </button>
-            <button type="button" class="btn m-1" (click)="showEditForm()">
-                <i class="bi bi-x"></i>
-            </button>
-        </div>
-    </form>
+    <sections-form [topic]="section().topic" [section]="section()" (saved)="showEditForm()"
+        (hide)="showEditForm()"></sections-form>
     }
 </div>

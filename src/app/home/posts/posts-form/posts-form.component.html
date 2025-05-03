@@ -28,13 +28,13 @@
         @if(imageBase64) {
         <img [src]="imageBase64" [alt]="postForm.get('title')" id="imgPreview" class="img-thumbnail mb-3" />
         }
-        <div>
-            <!--<load-button type="submit" [loading]="loading()" (submit)="loading.set(!loading())" [formInvalid]="editForm.touched && editForm.invalid">
-            Edit
-            </load-button> -->
-            <button type="submit" class="btn btn-primary" [disabled]="postForm.invalid">
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn m-2" [disabled]="postForm.invalid">
                 {{ this.post() ? "Editar planeta" :
                 "Terraformar" }}
+            </button>
+            <button type="button" class="btn m-2" (click)="canDeactivate()">
+                Abortar misión
             </button>
         </div>
     </form>

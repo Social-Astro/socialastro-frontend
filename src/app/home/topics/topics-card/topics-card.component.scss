@@ -30,6 +30,15 @@
     color: rgb(177, 177, 177);
     width: fit-content;
     height: fit-content;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+
+    .settings {
+        position: absolute;
+        right: 38%;
+        bottom: 5%;
+    }
 
     .topic-body {
         position: relative;
@@ -48,10 +57,6 @@
             }
         }
 
-        .settings {
-            position: absolute;
-            right: 0;
-        }
 
         .input {
             background-color: transparent;
@@ -67,7 +72,30 @@
         transform: scale(70%);
     }
 
+    &::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(0deg,
+                transparent,
+                transparent 30%,
+                rgba(214, 163, 214, 0.3));
+        transform: rotate(-45deg);
+        transition: all 0.5s ease;
+        opacity: 0;
+    }
+
     &:hover {
         filter: brightness(1.75);
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(214, 163, 214, 0.5);
+    }
+
+    &:hover::before {
+        opacity: 1;
+        transform: rotate(-45deg) translateY(100%);
     }
 }

@@ -3,25 +3,31 @@
         <div class="col-12 col-md-8 m-4">
             <router-outlet></router-outlet>
         </div>
-        <!-- TODO: Darle estilo y formato -->
+        <!-- TODO: Terminar estilo y formato -->
         <div class="col-12 col-md-3 m-4">
             <div class="row fondo-card">
                 <h3 style="font-size: medium;">Últimos planetas formados</h3>
                 <ul>
-                    @for (post of ordenadosFecha; track post.id) {
-                    <a [routerLink]="['/home/posts', post.id]">
-                        <li>{{ post.title }} - {{ post.content.createdAt | date: 'h:mm dd/MM/yyyy' }}</li>
-                    </a>
+                    @for (post of ordenadosFecha(); track post.id) {
+                    <li class="underline">
+                        <a [routerLink]="['/home/posts', post.id]">
+                            <span>{{ post.title }}</span>
+                            <span>{{ post.content.createdAt | date: 'h:mm dd/MM/yyyy' }}</span>
+                        </a>
+                    </li>
                     }
                 </ul>
             </div>
             <div class="row fondo-card">
                 <h3 style="font-size: medium;">Planetas más visitados</h3>
                 <ul>
-                    @for (post of ordenadosComentarios; track post.id) {
-                    <a [routerLink]="['/home/posts', post.id]">
-                        <li>{{ post.title }} - {{ post.comments.length }}</li>
-                    </a>
+                    @for (post of ordenadosComentarios(); track post.id) {
+                    <li class="underline">
+                        <a [routerLink]="['/home/posts', post.id]">
+                            <span>{{ post.title }}</span>
+                            <span>{{ post.comments.length }}</span>
+                        </a>
+                    </li>
                     }
                 </ul>
             </div>

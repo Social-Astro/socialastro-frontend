@@ -7,6 +7,7 @@ import { DatePipe } from "@angular/common";
 
 @Component({
     selector: 'home',
+    standalone: true,
     imports: [RouterOutlet, DatePipe, RouterLink],
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss'
@@ -16,10 +17,11 @@ export class HomeComponent {
     readonly #destroyRef = inject(DestroyRef);
 
     posts = signal<Post[]>([]);
-    ordenadosFecha: Post[] = [];
-    ordenadosComentarios: Post[] = [];
+    ordenadosFecha = signal<Post[]>([]);
+    ordenadosComentarios = signal<Post[]>([]);
 
     constructor() {
+        // TODO: Que se actualice al momento al corregir el todo de abajo
         this.getPosts();
     }
 
@@ -41,15 +43,15 @@ export class HomeComponent {
     // TODO: Molaría conseguir que estos métodos se pudieran sacar por la base de datos directamente
     ordenarPorFecha() {
         console.log(this.posts());
-        this.ordenadosFecha = this.posts().slice().sort((a: Post, b: Post) => b.content.createdAt.toString().localeCompare(a.content.createdAt.toString()));
-        this.ordenadosFecha.splice(2);
-        console.log('FECHA: ', this.ordenadosFecha);
+        this.ordenadosFecha.set(this.posts().slice().sort((a: Post, b: Post) => b.content.createdAt.toString().localeCompare(a.content.createdAt.toString())));
+        this.ordenadosFecha.update((actual) => actual.splice(0, 2));
+        console.log('FECHA: ', this.ordenadosFecha());
         console.log('posts', this.posts());
     }
 
     ordenarPorComentarios() {
-        this.ordenadosComentarios = this.posts().slice().sort((a: Post, b: Post) => b.comments.length - a.comments.length);
-        this.ordenadosComentarios.splice(2);
-        console.log('COMENTARIOS', this.ordenadosComentarios);
+        this.ordenadosComentarios.set(this.posts().slice().sort((a: Post, b: Post) => b.comments.length - a.comments.length));
+        this.ordenadosComentarios.update((actual) => actual.splice(0, 2));
+        console.log('COMENTARIOS', this.ordenadosComentarios());
     }
 }
