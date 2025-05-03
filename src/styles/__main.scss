@@ -40,11 +40,12 @@ app-root {
 
 .btn,
 .navCircles {
-    width: 150px;
+    // Dejo esto comentado, porque si no los botones de temas, etc se rompen
+    /* width: 150px;
     height: 40px;
     display: inline-flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     background: $saturated-25-green-color !important;
     color: white !important;
     border: none;
@@ -53,6 +54,7 @@ app-root {
     &:hover {
         background: $inverted-green-color !important;
     }
+
     img {
         width: 30px;
         height: 30px;
