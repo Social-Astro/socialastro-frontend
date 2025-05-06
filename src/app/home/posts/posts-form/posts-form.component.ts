@@ -1,4 +1,4 @@
-import { Component, DestroyRef, effect, inject, input, signal } from '@angular/core';
+import { Component, DestroyRef, effect, inject, input } from '@angular/core';
 import { NewPost, Post } from '../../interfaces/post';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EncodeBase64Directive } from '../../../shared/directives/encode-base64.directive';
@@ -108,14 +108,20 @@ export class PostsFormComponent {
     }
   }
 
-  /* canDeactivate() {
-    if (this.saved || this.postForm.pristine) {
+  //TODO: Implementar el canDeactivate
+  canDeactivate() {
+    if (this.section())
+      this.#router.navigate(['/home/sections', this.section().id]);
+    else
+      this.#router.navigate(['/home/posts', this.post().id]);
+
+    /* if (this.saved || this.postForm.pristine) {
       return true;
     }
 
     const modalRef = this.#modalService.open(ConfirmModalComponent);
     modalRef.componentInstance.title = 'Leaving the page';
     modalRef.componentInstance.body = 'Are you sure? The changes will be lost...';
-    return modalRef.result.catch(() => false);
-  } */
+    return modalRef.result.catch(() => false); */
+  }
 }

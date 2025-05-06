@@ -1,11 +1,10 @@
-import { Component, computed, DestroyRef, effect, inject, input, signal } from '@angular/core';
-import { rxResource, takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, DestroyRef, effect, inject, input, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Title } from '@angular/platform-browser';
 import { Topic } from '../../interfaces/topics';
 import { SectionsService } from '../../services/sections.service';
 import { Section } from '../../interfaces/sections';
 import { SectionsFormComponent } from '../sections-form/sections-form.component';
-
 import { SectionsCardComponent } from '../sections-card/sections-card.component';
 
 @Component({
@@ -20,31 +19,24 @@ export class SectionsPageComponent {
   readonly #sectionsService = inject(SectionsService);
   readonly #destroyRef = inject(DestroyRef);
 
-  topic = input.required<Topic>();
+  topic = input<Topic>();
   showForm = signal(false);
-  edit = signal(false);
-
-  sectionsResource = rxResource({
-    request: () => this.topic().id,
-    loader: ({ request: id }) => this.#sectionsService.getSectionsByTopic(id)
-  });
-
-  sectionsByTopic = computed(() => this.sectionsResource.value());
-  allSections = signal<Section[] | undefined>(undefined);
 
   sections = signal<Section[] | undefined>(undefined);
 
   constructor() {
-    // TODO: Repasar
     effect(() => {
-      if (!this.topic()) {
-        this.getAllSections();
-        this.sections.set(this.allSections());
-      } else {
-        this.#title.setTitle(this.topic().title + ' ** Social Astro');
-        this.sections.set(this.sectionsByTopic());
-      }
+      this.initialize();
     });
+  }
+
+  initialize() {
+    if (!this.topic()) {
+      this.getAllSections();
+    } else {
+      this.#title.setTitle(this.topic()!.title + ' ** Social Astro');
+      this.getSectionsByTopic();
+    }
   }
 
   getAllSections() {
@@ -52,7 +44,18 @@ export class SectionsPageComponent {
       .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe({
         next: (resp) => {
-          this.allSections.set(resp)
+          this.sections.set(resp)
+        },
+        error: (error) => console.log(error.error.message)
+      });
+  }
+
+  getSectionsByTopic() {
+    this.#sectionsService.getSectionsByTopic(this.topic()!.id)
+      .pipe(takeUntilDestroyed(this.#destroyRef))
+      .subscribe({
+        next: (resp) => {
+          this.sections.set(resp)
         },
         error: (error) => console.log(error.error.message)
       });
@@ -60,12 +63,11 @@ export class SectionsPageComponent {
 
   showSectionForm() {
     if (this.showForm() === true)
-      this.sectionsResource.reload();
+      this.initialize();
     this.showForm.update((state) => !state);
   }
 
   deleteSection() {
-    this.sectionsResource.reload();
+    this.initialize();
   }
-
 }

@@ -1,4 +1,5 @@
-<form (ngSubmit)="addTopic()" [formGroup]="topicForm" class="mt-4 row">
+<form (ngSubmit)="sendTopic()" [formGroup]="topicForm" class="mt-4" [ngClass]="{ 'row': '!partial'}">
+    @if (!partial){
     <div class="col-6">
         <label for="title" class="form-label">Nombre</label>
         <input type="text" class="form-control input" name="title" formControlName="title"
@@ -17,4 +18,16 @@
             Abortar misión
         </button>
     </div>
+    }@else {
+    <input type="text" class="form-control form-control-sm input" name="title" formControlName="title"
+        [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" />
+    <div class="d-flex justify-content-center">
+        <button class="btn m-1" type="submit" [disabled]="topicForm.invalid">
+            <i class="bi bi-floppy"></i>
+        </button>
+        <button type="button" class="btn m-1" (click)="hideForm()">
+            <i class="bi bi-x"></i>
+        </button>
+    </div>
+    }
 </form>
