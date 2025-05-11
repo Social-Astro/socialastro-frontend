@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ValidationClassesDirective } from '../../shared/directives/validation-classes.directive';
+import { httpResource } from '@angular/common/http';
 
 @Component({
     selector: 'login-page',
