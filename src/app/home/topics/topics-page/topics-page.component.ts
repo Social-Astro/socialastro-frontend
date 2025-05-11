@@ -31,8 +31,13 @@ export class TopicsPageComponent {
   getTopics() {
     this.#topicsService.getTopics()
       .pipe(takeUntilDestroyed(this.#destroyRef))
-      .subscribe((resp) => {
-        this.topics.set(resp);
+      .subscribe({
+        next: (resp) => {
+          this.topics.set(resp);
+        },
+        error: (error) => {
+          console.log(error.error.message);
+        }
       });
   }
 

@@ -20,7 +20,8 @@ export interface Post extends NewPost {
 }
 
 export interface PostsResponse {
-    posts: Post[]
+    posts: Post[],
+    page: number
 }
 
 export interface SinglePostResponse {

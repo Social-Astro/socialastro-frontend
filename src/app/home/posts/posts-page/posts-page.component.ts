@@ -1,12 +1,13 @@
-import { Component, computed, effect, inject, input } from "@angular/core";
+import { Component, DestroyRef, effect, inject, input, signal } from "@angular/core";
 import { Section } from "../../interfaces/sections";
 import { Title } from "@angular/platform-browser";
-import { rxResource, toSignal } from "@angular/core/rxjs-interop";
+import { takeUntilDestroyed, toSignal } from "@angular/core/rxjs-interop";
 import { PostsService } from "../../services/posts.service";
 import { PostsCardComponent } from "../posts-card/posts-card.component";
 import { Router, RouterLink } from "@angular/router";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { debounceTime, distinctUntilChanged } from "rxjs";
+import { Post } from "../../interfaces/post";
 
 @Component({
   selector: 'posts-page',
@@ -19,17 +20,12 @@ export class PostsPageComponent {
   readonly #title = inject(Title);
   readonly #postsService = inject(PostsService);
   readonly #router = inject(Router);
+  readonly #destroyRed = inject(DestroyRef);
 
   section = input.required<Section>();
+  posts = signal<Post[]>([]);
 
-  postsResource = rxResource({
-    request: () => this.section().id,
-    loader: ({ request: id }) => this.#postsService.getPostsBySection(id)
-  });
 
-  posts = computed(() => this.postsResource.value());
-
-  //TODO: Añadir el parámetro de búsqueda directamente en el back, e incluirlo arriba en el método que recupera los datos
   searchControl = new FormControl('');
   search = toSignal(
     this.searchControl.valueChanges.pipe(
@@ -44,8 +40,19 @@ export class PostsPageComponent {
     effect(() => {
       if (this.section()) {
         this.#title.setTitle(this.section().title + ' ** Social Astro');
+        this.getPosts();
       }
     })
+  }
+
+  getPosts() {
+    this.#postsService.getPostsBySection(this.section().id, this.search()!)
+      .pipe(takeUntilDestroyed(this.#destroyRed))
+      .subscribe({
+        next: (resp) => {
+          this.posts.set(resp.posts)
+        }
+      })
   }
 
   goAddPost() {
@@ -53,6 +60,6 @@ export class PostsPageComponent {
   }
 
   deletePost() {
-    this.postsResource.reload();
+    this.getPosts();
   }
 }

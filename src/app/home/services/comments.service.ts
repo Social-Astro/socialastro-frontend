@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
-import { NewComment, SingleCommentResponse, Comment } from "../interfaces/comment";
+import { NewComment, SingleCommentResponse, Comment, CommentsResponse } from "../interfaces/comment";
 
 @Injectable({
     providedIn: 'root'
@@ -15,24 +15,24 @@ export class CommentsService {
             .pipe(map((resp) => resp));
     }
 
-    getCommentsByPost(id: number) {
+    getCommentsByPost(id: number): Observable<Comment[]> {
         return this.#http.get<Comment[]>(`${this.#commentsUrl}/${id}/post`)
             .pipe(map((resp) => resp));
     }
 
     getComment(id: number): Observable<Comment> {
-        return this.#http.get<Comment>(`${this.#commentsUrl}/${id}`)
-            .pipe(map((resp) => resp));
+        return this.#http.get<SingleCommentResponse>(`${this.#commentsUrl}/${id}`)
+            .pipe(map((resp) => resp.comment));
     }
 
     addComment(comment: NewComment): Observable<Comment> {
-        return this.#http.post<Comment>(this.#commentsUrl, comment)
-            .pipe(map((resp) => resp));
+        return this.#http.post<SingleCommentResponse>(this.#commentsUrl, comment)
+            .pipe(map((resp) => resp.comment));
     }
 
     editComment(comment: NewComment, id: number): Observable<Comment> {
-        return this.#http.put<Comment>(`${this.#commentsUrl}/${id}`, comment)
-            .pipe(map((resp) => resp));
+        return this.#http.put<SingleCommentResponse>(`${this.#commentsUrl}/${id}`, comment)
+            .pipe(map((resp) => resp.comment));
     }
 
     deleteComment(id: number): Observable<void> {

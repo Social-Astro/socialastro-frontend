@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { NewTopic, SingleTopicResponse, Topic } from '../interfaces/topics';
+import { NewTopic, Topic } from '../interfaces/topics';
 
 @Injectable({
     providedIn: 'root'
@@ -21,13 +21,13 @@ export class TopicsService {
     }
 
     addTopic(topic: NewTopic): Observable<Topic> {
-        return this.#http.post<SingleTopicResponse>(this.#topicsUrl, topic)
-            .pipe(map((resp) => resp.topic));
+        return this.#http.post<Topic>(this.#topicsUrl, topic)
+            .pipe(map((resp) => resp));
     }
 
     editTopic(topic: NewTopic, id: number): Observable<Topic> {
-        return this.#http.put<SingleTopicResponse>(`${this.#topicsUrl}/${id}`, topic)
-            .pipe(map((resp) => resp.topic));
+        return this.#http.put<Topic>(`${this.#topicsUrl}/${id}`, topic)
+            .pipe(map((resp) => resp));
     }
 
     deleteTopic(id: number): Observable<void> {
