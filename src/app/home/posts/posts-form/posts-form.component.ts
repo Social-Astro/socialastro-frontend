@@ -9,6 +9,7 @@ import { Title } from '@angular/platform-browser';
 import { Section } from '../../interfaces/sections';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { User } from '../../../interfaces/user';
+import { Multimedia } from '../../interfaces/Multimedia';
 
 @Component({
   selector: 'posts-form',
@@ -49,7 +50,10 @@ export class PostsFormComponent {
         this.#title.setTitle(this.post().title + ' | Edit');
         this.postForm.get('title')!.setValue(this.post().title);
         this.postForm.get('description')!.setValue(this.post().content.description);
-        this.imageBase64 = this.post().content.multimedia;
+
+        if (this.post().content.multimedia && this.post().content.multimedia!.length > 0) {
+          this.imageBase64 = this.post().content.multimedia![0].filename;
+        }
       }
     })
   }
@@ -71,19 +75,29 @@ export class PostsFormComponent {
       friend_ids: []
     };
 
+    let files: Multimedia[] = [];
+
+    if (this.imageBase64) {
+      console.log(this.imageBase64);
+      files.push({ filename: this.imageBase64 });
+    }
+
     const newPost: NewPost = {
       title: this.postForm.get('title')?.getRawValue(),
       section: this.section() ? this.section() : this.post().section,
       content: {
         description: this.postForm.get('description')?.getRawValue(),
-        createdAt: this.post() ? this.post().content.createdAt : new Date(),
-        multimedia: this.imageBase64,
-        likes: 0,
+        updatedAt: this.post() ? this.post().content.updatedAt : new Date(),
+        multimedia: files.length > 0 ? files : undefined,
         user: userPruebas
       }
     };
 
+    console.log(newPost);
+
     if (this.post()) {
+      newPost.content.id = this.post().content.id;
+      console.log(newPost);
       this.#postsService.editPost(newPost, this.post().id)
         .pipe(takeUntilDestroyed(this.#destroyRef))
         .subscribe({

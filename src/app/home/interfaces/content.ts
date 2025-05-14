@@ -1,11 +1,11 @@
 import { User } from "../../interfaces/user";
+import { Multimedia } from "./Multimedia";
 
 export interface NewContent {
     description: string;
-    createdAt: Date;
+    updatedAt: Date;
     user: User;
-    multimedia: string; //TODO: Esto hay que hacerlo bien, actualizarlo en la BBDD para que recoja un array de Strings y así puedan guardarse muchos. 
-    likes: number
+    multimedia?: Multimedia[];
 }
 
 export interface Content extends NewContent {

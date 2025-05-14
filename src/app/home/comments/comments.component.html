@@ -1,8 +1,8 @@
 <div class="respuesta row mb-3">
     <div class="col-9 fondo-card contenido-respuesta m-3">
         <div class="infor d-flex justify-content-between">
-            <p>{{ comment().content.likes }} <i class="bi bi-heart"></i></p>
-            <p>{{ comment().content.createdAt | date: 'h:mm a - dd/MM/yyyy' }}</p>
+            <!-- <p>{{ comment().content.numLikes }} <i class="bi bi-heart"></i></p> -->
+            <p>{{ comment().content.updatedAt | date: 'h:mm a - dd/MM/yyyy' }}</p>
         </div>
         @if (showEdit()) {
         <comments-form [post]="comment().post" [comment]="comment()" (edited)="editComment()"></comments-form>

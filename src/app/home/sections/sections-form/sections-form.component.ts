@@ -58,6 +58,7 @@ export class SectionsFormComponent {
 
   async sendSection() {
     const actualTopic = this.topic() ? this.topic() : this.allTopics.find((f) => f.id === +this.sectionForm.get('topic')!.getRawValue());
+    console.log(actualTopic);
 
     const newSection: NewSection = {
       title: this.sectionForm.get('title')!.getRawValue(),

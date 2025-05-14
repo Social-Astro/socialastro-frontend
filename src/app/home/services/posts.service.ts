@@ -23,18 +23,18 @@ export class PostsService {
     }
 
     getPost(id: number): Observable<Post> {
-        return this.#http.get<SinglePostResponse>(`${this.#postsUrl}/${id}`)
-            .pipe(map((resp) => resp.post));
+        return this.#http.get<Post>(`${this.#postsUrl}/${id}`)
+            .pipe(map((resp) => resp));
     }
 
     addPost(post: NewPost): Observable<Post> {
-        return this.#http.post<SinglePostResponse>(this.#postsUrl, post)
-            .pipe(map((resp) => resp.post));
+        return this.#http.post<Post>(this.#postsUrl, post)
+            .pipe(map((resp) => resp));
     }
 
     editPost(post: NewPost, id: number): Observable<Post> {
-        return this.#http.put<SinglePostResponse>(`${this.#postsUrl}/${id}`, post)
-            .pipe(map((resp) => resp.post));
+        return this.#http.put<Post>(`${this.#postsUrl}/${id}`, post)
+            .pipe(map((resp) => resp));
     }
 
     deletePost(id: number): Observable<void> {

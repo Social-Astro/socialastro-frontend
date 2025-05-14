@@ -21,15 +21,15 @@
     </div>
     <div class="col-9 fondo-card texto m-3">
         <div class="infor d-flex justify-content-between">
-            <p>{{ post().content.likes }} <i class="bi bi-heart"></i></p>
-            <p>{{ post().content.createdAt | date: 'h:mm a - dd/MM/yyyy' }}</p>
+            <p>{{ post().numLikes }} <i class="bi bi-heart"></i></p>
+            <p>{{ post().content.updatedAt | date: 'h:mm a - dd/MM/yyyy' }}</p>
         </div>
         <p>
             {{ post().content.description }}
         </p>
         @if (post().content.multimedia) {
         <div>
-            <img [src]="post().content.multimedia" alt="Multimedia">
+            <img [src]="imageBase64" alt="Multimedia">
         </div>
         }
         <!-- Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,

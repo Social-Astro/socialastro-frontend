@@ -21,18 +21,18 @@ export class CommentsService {
     }
 
     getComment(id: number): Observable<Comment> {
-        return this.#http.get<SingleCommentResponse>(`${this.#commentsUrl}/${id}`)
-            .pipe(map((resp) => resp.comment));
+        return this.#http.get<Comment>(`${this.#commentsUrl}/${id}`)
+            .pipe(map((resp) => resp));
     }
 
     addComment(comment: NewComment): Observable<Comment> {
-        return this.#http.post<SingleCommentResponse>(this.#commentsUrl, comment)
-            .pipe(map((resp) => resp.comment));
+        return this.#http.post<Comment>(this.#commentsUrl, comment)
+            .pipe(map((resp) => resp));
     }
 
     editComment(comment: NewComment, id: number): Observable<Comment> {
-        return this.#http.put<SingleCommentResponse>(`${this.#commentsUrl}/${id}`, comment)
-            .pipe(map((resp) => resp.comment));
+        return this.#http.put<Comment>(`${this.#commentsUrl}/${id}`, comment)
+            .pipe(map((resp) => resp));
     }
 
     deleteComment(id: number): Observable<void> {

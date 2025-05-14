@@ -7,6 +7,7 @@ import { Post } from '../../interfaces/post';
 import { Comment, NewComment } from '../../interfaces/comment';
 import { User } from '../../../interfaces/user';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Multimedia } from '../../interfaces/Multimedia';
 
 @Component({
   selector: 'comments-form',
@@ -38,7 +39,7 @@ export class CommentsFormComponent {
     effect(() => {
       if (this.comment()) {
         this.commentForm.get('description')!.setValue(this.comment()!.content.description);
-        this.imageBase64 = this.comment()!.content.multimedia;
+        /* this.imageBase64 = this.comment()!.content.multimedia[0].filename; */
       }
     })
   }
@@ -60,18 +61,21 @@ export class CommentsFormComponent {
       friend_ids: []
     };
 
+    let files: Multimedia[] = [];
+    files.push({ filename: this.imageBase64 });
+
     const newComment: NewComment = {
       post: this.post(),
       content: {
         description: this.commentForm.get('description')?.getRawValue(),
-        createdAt: this.comment() ? this.comment()!.content.createdAt : new Date(),
-        multimedia: this.imageBase64,
-        likes: 0,
+        updatedAt: this.comment() ? this.comment()!.content.updatedAt : new Date(),
+        multimedia: files,
         user: userPruebas
       }
     }
 
     if (this.comment()) {
+      newComment.content.id = this.comment()!.content.id;
       this.#commentsService.editComment(newComment, this.comment()!.id)
         .pipe(takeUntilDestroyed(this.#destroyRef))
         .subscribe({

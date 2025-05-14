@@ -23,6 +23,7 @@ export class PostsDetailComponent {
   readonly #commentsService = inject(CommentsService);
   readonly #router = inject(Router);
 
+  imageBase64 = '';
   post = input.required<Post>();
 
   commentsResource = rxResource({
@@ -37,6 +38,9 @@ export class PostsDetailComponent {
       console.log(this.post());
       console.log(this.comments());
       this.#title.setTitle(this.post().title + ' ** Social Astro');
+      if (this.post().content.multimedia && this.post().content.multimedia!.length > 0) {
+        this.imageBase64 = this.post().content.multimedia![0].filename;
+      }
     })
   }
 

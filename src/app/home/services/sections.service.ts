@@ -26,13 +26,13 @@ export class SectionsService {
     }
 
     addSection(section: NewSection): Observable<Section> {
-        return this.#http.post<SingleSectionResponse>(this.#sectionsUrl, section)
-            .pipe(map((resp) => resp.section));
+        return this.#http.post<Section>(this.#sectionsUrl, section)
+            .pipe(map((resp) => resp));
     }
 
     editSection(section: NewSection, id: number): Observable<Section> {
-        return this.#http.put<SingleSectionResponse>(`${this.#sectionsUrl}/${id}`, section)
-            .pipe(map((resp) => resp.section));
+        return this.#http.put<Section>(`${this.#sectionsUrl}/${id}`, section)
+            .pipe(map((resp) => resp));
     }
 
     deleteSection(id: number): Observable<void> {

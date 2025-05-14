@@ -4,7 +4,7 @@ import { Section } from "./sections";
 export interface NewPost {
     title: string;
     section: Section
-    content: NewContent
+    content: Content
 }
 
 export interface EditPost {
@@ -16,7 +16,10 @@ export interface EditPost {
 
 export interface Post extends NewPost {
     id: number,
-    comments: Comment[]
+    comments: Comment[],
+    numComments: number,
+    numLikes: number,
+    numSaved: number,
 }
 
 export interface PostsResponse {

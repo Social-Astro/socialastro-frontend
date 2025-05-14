@@ -12,7 +12,7 @@
                     <li class="underline">
                         <a [routerLink]="['/home/posts', post.id]">
                             <span>{{ post.title }}</span>
-                            <span>{{ post.content.createdAt | date: 'h:mm dd/MM/yyyy' }}</span>
+                            <span>{{ post.content.updatedAt | date: 'h:mm dd/MM/yyyy' }}</span>
                         </a>
                     </li>
                     }
@@ -25,7 +25,7 @@
                     <li class="underline">
                         <a [routerLink]="['/home/posts', post.id]">
                             <span>{{ post.title }}</span>
-                            <span>{{ post.comments.length }}</span>
+                            <span>{{ post.numComments }}</span>
                         </a>
                     </li>
                     }
