@@ -1,10 +1,10 @@
 import { HttpInterceptorFn } from '@angular/common/http';
+import { environment } from '../../../environments/environment.env';
 
 export const baseUrlInterceptor: HttpInterceptorFn = (req, next) => {
-    // const serverUrl = 'http://localhost:3000';
-    const serverUrl = 'http://vps-94333546.vps.ovh.net:8080/socialastroapi';
+    const serverUrl = environment.appEnv === 'production' ? environment.apiBaseUrlPro : environment.apiBaseUrl;
     const clonedReq = req.clone({
-        url: `${serverUrl}/${req.url}`
+        url: `${serverUrl.replace(/\/$/, '')}/${req.url.replace(/^\//, '')}`
     });
     return next(clonedReq);
 };

@@ -5,6 +5,7 @@ import { FooterPageComponent } from './footer/footer-page/footer-page.component'
 import { LeftMenuPageComponent } from './menu/left-menu-page/left-menu-page.component';
 import { RightMenuPageComponent } from './menu/right-menu-page/right-menu-page.component';
 import { TopMenuPageComponent } from './menu/top-menu-page/top-menu-page.component';
+import { environment as envVars } from '../environments/environment.env';
 
 @Component({
     selector: 'app-root',
