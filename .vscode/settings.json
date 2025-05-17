@@ -25,8 +25,8 @@
   "todo-tree.highlights.customHighlight": {
     "TODO": {
       "type": "text",
-      "foreground": "#5347ff",
-      "iconColour": "#5347ff",
+      "foreground": "#00ff2a",
+      "iconColour": "#00ff2a",
       "gutterIcon": true
     },
     "FIXME": {
@@ -68,5 +68,5 @@
     "titleBar.activeForeground": "#15202b",
     "titleBar.inactiveBackground": "#d583b199",
     "titleBar.inactiveForeground": "#15202b99"
-}
+  }
 }
