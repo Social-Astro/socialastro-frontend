@@ -8,13 +8,13 @@ import { PostsService } from '../../services/posts.service';
 import { Title } from '@angular/platform-browser';
 import { Section } from '../../interfaces/sections';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { User } from '../../../interfaces/user';
 import { Multimedia } from '../../interfaces/Multimedia';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'posts-form',
   standalone: true,
-  imports: [ReactiveFormsModule, EncodeBase64Directive, ValidationClassesDirective],
+  imports: [ReactiveFormsModule, EncodeBase64Directive, ValidationClassesDirective, NgClass],
   templateUrl: './posts-form.component.html',
   styleUrl: './posts-form.component.scss'
 })
@@ -25,7 +25,7 @@ export class PostsFormComponent {
   readonly #title = inject(Title);
   /* readonly #modalService = inject(NgbModal); */
 
-  imageBase64 = '';
+  imagesBase64: string[] = [];
   saved = false;
 
   section = input.required<Section>();
@@ -40,7 +40,12 @@ export class PostsFormComponent {
       nonNullable: true,
       validators: [Validators.required]
     }),
-    multimedia: new FormControl(''),
+    multimediaGroup: new FormGroup({
+      file1: new FormControl(null),
+      file2: new FormControl(null),
+      file3: new FormControl(null),
+      file4: new FormControl(null)
+    })
   });
 
   constructor() {
@@ -51,53 +56,44 @@ export class PostsFormComponent {
         this.postForm.get('title')!.setValue(this.post().title);
         this.postForm.get('description')!.setValue(this.post().content.description);
 
-        if (this.post().content.multimedia && this.post().content.multimedia!.length > 0) {
-          this.imageBase64 = this.post().content.multimedia![0].filename;
-        }
+        this.post().content.multimedia?.forEach((f) => {
+          this.imagesBase64.push(f.filename);
+        })
       }
     })
   }
 
   sendPost() {
-    //TODO: Necesario para pruebas
-    const userPruebas: User = {
-      id: 1,
-      username: 'admin',
-      password: '',
-      name: 'admin',
-      email: 'admin@gmail.com',
-      avatar: '',
-      header: '',
-      bio: '',
-      role: '1',
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      friend_ids: []
-    };
-
     let files: Multimedia[] = [];
-
-    if (this.imageBase64) {
-      console.log(this.imageBase64);
-      files.push({ filename: this.imageBase64 });
-    }
 
     const newPost: NewPost = {
       title: this.postForm.get('title')?.getRawValue(),
       section: this.section() ? this.section() : this.post().section,
       content: {
         description: this.postForm.get('description')?.getRawValue(),
-        updatedAt: this.post() ? this.post().content.updatedAt : new Date(),
-        multimedia: files.length > 0 ? files : undefined,
-        user: userPruebas
+        updatedAt: new Date(),
+        multimedia: files
       }
     };
 
-    console.log(newPost);
+    for (let i = 0; i < this.imagesBase64.length; i++) {
+      if (this.post() && this.post().content.multimedia![i]) {
+        newPost.content.multimedia!.push({
+          id: this.post().content.multimedia![i].id,
+          filename: this.imagesBase64[i]
+        })
+      } else {
+        console.log("Entra");
+        newPost.content.multimedia!.push({
+          filename: this.imagesBase64[i]
+        })
+      }
+    }
 
     if (this.post()) {
       newPost.content.id = this.post().content.id;
-      console.log(newPost);
+      newPost.content.user = this.post().content.user;
+
       this.#postsService.editPost(newPost, this.post().id)
         .pipe(takeUntilDestroyed(this.#destroyRef))
         .subscribe({

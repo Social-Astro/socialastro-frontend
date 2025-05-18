@@ -10,14 +10,64 @@
         }
     </div>
     <div class="mb-3">
-        <label for="multimedia" class="form-label">Multimedia</label>
+        <!-- <label for="multimedia" class="form-label">Multimedia</label>
         <input type="file" class="form-control" name="multimedia" formControlName="multimedia" #fileImage encodeBase64
-            (encoded)="imageBase64 = $event" [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" />
+            (encoded)="imageBase64 = $event" [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" /> -->
+        <ng-container formGroupName="multimediaGroup">
+            <div class="selectfiles">
+                <div class="files">
+                    @if (imagesBase64[0]) {
+                    <div class="imgContainer">
+                        <img [src]="imagesBase64[0]" alt="" id="firstBase64" class="imgPreview" />
+                    </div>
+                    }
+                    <button type="button" class="inputfile" (click)="fileImage.click()">
+                        <span>+</span>
+                        <input type="file" class="form-control d-none" name="file1" #fileImage encodeBase64
+                            (encoded)="imagesBase64[0] = $event" />
+                    </button>
+                </div>
+                <div class="files">
+                    @if (imagesBase64[1]) {
+                    <div class="imgContainer">
+                        <img [src]="imagesBase64[1]" alt="" id="secondBase64" class="imgPreview" />
+                    </div>
+                    }
+                    <button type="button" class="inputfile" (click)="fileImage2.click()" [disabled]="!imagesBase64[0]">
+                        <span [ngClass]="{'d-none': !imagesBase64[0]}">+</span>
+                        <input type="file" class="form-control d-none" name="file2" #fileImage2 encodeBase64
+                            (encoded)="imagesBase64[1] = $event" />
+                    </button>
+                </div>
+                <div class="files">
+                    @if (imagesBase64[2]) {
+                    <div class="imgContainer">
+                        <img [src]="imagesBase64[2]" alt="" id="thirdBase64" class="imgPreview" />
+                    </div>
+                    }
+                    <button type="button" class="inputfile" (click)="fileImage3.click()" [disabled]="!imagesBase64[1]">
+                        <span [ngClass]="{'d-none': !imagesBase64[1]}">+</span>
+                        <input type="file" class="form-control d-none" name="file3" #fileImage3 encodeBase64
+                            (encoded)="imagesBase64[2] = $event" />
+                    </button>
+                </div>
+                <div class="files">
+                    @if (imagesBase64[3]) {
+                    <div class="imgContainer">
+                        <img [src]="imagesBase64[3]" alt="" id="fourthBase64" class="imgPreview" />
+                    </div>
+                    }
+                    <button type="button" class="inputfile" (click)="fileImage4.click()" [disabled]="!imagesBase64[2]">
+                        <span [ngClass]="{'d-none': !imagesBase64[2]}">+</span>
+                        <input type="file" class="form-control d-none" name="file4" #fileImage4 encodeBase64
+                            (encoded)="imagesBase64[3] = $event" />
+                    </button>
+                </div>
+            </div>
+        </ng-container>
     </div>
-    @if(imageBase64) {
-    <img [src]="imageBase64" [alt]="commentForm.get('title')" id="imgPreview" class="img-thumbnail mb-3" />
-    }
     <div>
+        <!-- TODO: Añadir botón de loading -->
         <!--<load-button type="submit" [loading]="loading()" (submit)="loading.set(!loading())" [formInvalid]="editForm.touched && editForm.invalid">
         Edit
         </load-button> -->

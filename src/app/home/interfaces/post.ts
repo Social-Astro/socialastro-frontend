@@ -20,6 +20,8 @@ export interface Post extends NewPost {
     numComments: number,
     numLikes: number,
     numSaved: number,
+    alreadyLikes?: boolean;
+    alreadySaved?: boolean;
 }
 
 export interface PostsResponse {

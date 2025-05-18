@@ -4,10 +4,11 @@ import { Comment } from '../interfaces/comment';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DatePipe } from '@angular/common';
 import { CommentsFormComponent } from './comments-form/comments-form.component';
+import { CarouselModule } from 'primeng/carousel';
 
 @Component({
   selector: 'comments',
-  imports: [DatePipe, CommentsFormComponent],
+  imports: [DatePipe, CommentsFormComponent, CarouselModule],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.scss'
 })

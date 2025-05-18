@@ -15,8 +15,10 @@ export class CommentsService {
             .pipe(map((resp) => resp));
     }
 
-    getCommentsByPost(id: number): Observable<Comment[]> {
-        return this.#http.get<Comment[]>(`${this.#commentsUrl}/${id}/post`)
+    getCommentsByPost(id: number, page: number = 1): Observable<CommentsResponse> {
+        let params = new URLSearchParams({ page: String(page) });
+
+        return this.#http.get<CommentsResponse>(`${this.#commentsUrl}/${id}/post?${params.toString()}`)
             .pipe(map((resp) => resp));
     }
 

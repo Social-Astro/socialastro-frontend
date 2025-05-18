@@ -11,7 +11,8 @@ export interface Comment extends NewComment {
 }
 
 export interface CommentsResponse {
-    comments: Comment[]
+    comments: Comment[],
+    page: number
 }
 
 export interface SingleCommentResponse {

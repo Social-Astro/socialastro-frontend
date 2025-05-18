@@ -1,23 +1,28 @@
-import { Directive, output } from '@angular/core';
+import { Directive, ElementRef, inject, output } from '@angular/core';
 
 @Directive({
     selector: 'input[type=file][encodeBase64]',
     standalone: true,
     host: {
-        '(change)': 'encodeFile($event)' // Vincula el elemento change del imput para que llame al método anterior. Hay que ponerle el $event para poder mandarlo.
+        '(change)': 'encodeFile()'
     }
 })
 export class EncodeBase64Directive {
-    encoded = output<string>(); // Emite el archivo serializado a base64
+    encoded = output<string>();
+    element = inject<ElementRef<HTMLInputElement>>(ElementRef);
 
-    encodeFile(event: Event) {
-        // Transforma el archivo del elemnto a base64 y lo emite.
-        const fileInput = event.target as HTMLInputElement;
-        if (!fileInput.files?.length) return;
-        const reader = new FileReader();
+    encodeFile() {
+        const fileInput = this.element.nativeElement;
+        if (!fileInput.files?.length) {
+            this.encoded.emit("");
+            return;
+        }
+
+        const reader: FileReader = new FileReader();
         reader.readAsDataURL(fileInput.files[0]);
         reader.addEventListener('loadend', () => {
             this.encoded.emit(reader.result as string);
         });
     }
+
 }

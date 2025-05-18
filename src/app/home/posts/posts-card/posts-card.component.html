@@ -4,7 +4,7 @@
         <p class="desc mb-0">{{ post().content.description }}</p>
         <p class="seccion">Sistema: {{ post().section.title }}</p>
     </div>
-    <p class="user">{{ post().content.user.username }}</p>
+    <p class="user">{{ post().content.user!.username }}</p>
     <div class="extra">
         <!-- TODO: Añadir última persona en comentar y fecha -->
         <p class="mb-0">Personajo</p>

@@ -1,7 +1,6 @@
 <div class="respuesta row mb-3">
     <div class="col-9 fondo-card contenido-respuesta m-3">
         <div class="infor d-flex justify-content-between">
-            <!-- <p>{{ comment().content.numLikes }} <i class="bi bi-heart"></i></p> -->
             <p>{{ comment().content.updatedAt | date: 'h:mm a - dd/MM/yyyy' }}</p>
         </div>
         @if (showEdit()) {
@@ -9,21 +8,20 @@
         }@else {
         <p>
             {{ comment().content.description }}
-            <!-- "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-            totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
-            dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,
-            sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam
-            est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius
-            modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima
-            veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea
-            commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil
-            molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?" -->
         </p>
         @if (comment().content.multimedia) {
-        <div>
-            <img [src]="comment().content.multimedia" alt="Multimedia">
-        </div>
+        <p-carousel [value]="comment().content.multimedia!" [numVisible]="1" [numScroll]="1" orientation="horizontal"
+            verticalViewPortHeight="330px" contentClass="flex items-center">
+            <ng-template let-multimedia #item>
+                <div class="mb-4">
+                    <div class="relative mx-auto">
+                        <img [src]="multimedia.filename" alt="Multimedia" class="w-full rounded" width="200px" />
+                    </div>
+                </div>
+            </ng-template>
+        </p-carousel>
         }
+        @if (comment().content.mine) {
         <div class="acciones">
             <button class="btn m-2" (click)="showEdit.set(true)">
                 <img src="assets/neon/neon_gun_edit.png" alt="Botón editar" title="Editar" width="40px">
@@ -33,6 +31,7 @@
             </button>
         </div>
         }
+        }
     </div>
 
     <div class="col-2 fondo-card usuario m-3">
@@ -41,7 +40,7 @@
             Avatar simulación
         </div>
         <!-- TODO: Enlace a perfil. -->
-        <p class="mb-0">{{ comment().content.user.username }}</p>
+        <p class="mb-0">{{ comment().content.user!.username }}</p>
         <!-- TODO: Sustituir por logro destacado  -->
         <small>Logro destacado</small>
         <hr>

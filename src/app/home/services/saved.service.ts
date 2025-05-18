@@ -2,13 +2,13 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { NewPost, Post, PostsResponse, SinglePostResponse } from '../interfaces/post';
-import { rxResource } from "@angular/core/rxjs-interop";
 
 @Injectable({
     providedIn: 'root'
 })
-export class PostsService {
+export class SavedService {
     readonly #postsUrl = 'posts';
+    readonly #savedUrl = 'saved';
     readonly #http = inject(HttpClient);
 
     getPosts(): Observable<Post[]> {
@@ -28,6 +28,10 @@ export class PostsService {
             .pipe(map((resp) => resp));
     }
 
+    getUserLikes(postId: number) {
+        //TODO: Método para recuperar si lo tiene en like o no, devuelve booleano. Hacer lo mismo para los guardados.
+    }
+
     addPost(post: NewPost): Observable<Post> {
         return this.#http.post<Post>(this.#postsUrl, post)
             .pipe(map((resp) => resp));
@@ -38,7 +42,7 @@ export class PostsService {
             .pipe(map((resp) => resp));
     }
 
-    deletePost(id: number): Observable<void> {
+    delete(id: number): Observable<void> {
         return this.#http.delete<void>(`${this.#postsUrl}/${id}`);
     }
 }
