@@ -1,5 +1,5 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { environment } from '../../../environments/environment.env';
+import { environment } from '../../../environments/environment';
 
 export const baseUrlInterceptor: HttpInterceptorFn = (req, next) => {
     const serverUrl = environment.appEnv === 'production' ? environment.apiBaseUrlPro : environment.apiBaseUrl;

@@ -10,6 +10,11 @@ export interface User {
     createdAt: Date;
     updatedAt?: Date;
     friend_ids?: number[];
+    numLikes?: number;
+    numPosts?: number;
+    numFriends?: number;
+    numComments?: number;
+    numAchievements?: number;
     role: string;
 }
 
@@ -20,17 +25,26 @@ export interface UserLogin {
 
 export interface UserProfileEdit {
     name?: string;
-    email?: string;
-    avatar?: string;
-    header?: string;
     bio?: string;
     updatedAt: Date;
+}
+
+export interface UserUsernameEdit {
+    username: string;
 }
 
 export interface UserPasswordEdit {
     password: string;
 }
 
-export interface UserUsernameEdit {
-    username: string;
+export interface UserEmailEdit {
+    email: string;
+}
+
+export interface UserAvatarEdit {
+    avatar: string;
+}
+
+export interface UserHeaderEdit {
+    header: string;
 }
