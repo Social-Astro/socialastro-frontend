@@ -1,40 +1,31 @@
 @import '../sections-page/sections-page.component.scss';
 
-.contenido {
-    display: grid;
-    grid-column: repeat(4, 1fr);
+.secciones {
+    display: flex;
     background: linear-gradient(to bottom, rgba(13, 0, 50, 0.8), rgba(0, 0, 0, 0.8));
-    border-radius: 25px;
-    height: fit-content;
-
-    & * {
-        padding-top: .7rem;
-    }
+    border-radius: 15px;
+    width: fit-content;
+    padding: 1.5rem;
+    gap: 1.5rem;
 
     .tema {
-        grid-column: 1;
+        font-size: smaller;
     }
 
-    .titulo {
-        grid-column: 2;
+    .data {
+        a {
+            text-decoration: none;
+            color: violet;
+            font-weight: bolder;
+        }
+
+        .desc {
+            font-size: small;
+            text-overflow: ellipsis;
+        }
     }
 
-    .desc {
-        grid-column: 3;
+    .action {
+        align-self: end;
     }
-
-    .otros {
-        grid-column: 5;
-        text-align: right;
-        margin-right: 2em;
-    }
-
-    &:not(.header):hover {
-        filter: brightness(1.75);
-    }
-}
-
-.secciones {
-    background: linear-gradient(to bottom, rgba(142, 110, 230, 0.8), rgba(0, 0, 0, 0));
-    margin: .5rem;
 }

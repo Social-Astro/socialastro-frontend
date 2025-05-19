@@ -1,4 +1,3 @@
-<!-- TODO: EL DISEÑO DE ESTA PARTE HAY QUE CAMBIARLO ENTERO, PERO NO SE ME OCURRÍAN FORMAS DE MOSTRAR LOS DATOS YA, CREO QUE ME VOY A SUICIDAR-->
 <!-- TODO: Solo visible si el usuario logueado es admin o moderador. Modificar cuando esté hecha autenticación y roles-->
 @if (true) {
 <div class="fondo-card">
@@ -15,15 +14,29 @@
     }
 </div>
 }
-<div class="fondo-card">
-    <h2 style="text-align: left;">
-        <img class="image" src="assets/neon/neon_galaxy_topic.png" alt="Icono topics" width="40px">
-        @if(topic()) {
-        {{ topic()!.title }}
-        } @else {
-        Secciones
-        }
-    </h2>
+<div class="fondo-card sections">
+    <div class="d-xl-none">
+        <h2 style="text-align: left;">
+            <img class="image" src="assets/neon/neon_galaxy_topic.png" alt="Icono topics" width="40px">
+            @if(topic()) {
+            {{ topic()!.title }}
+            } @else {
+            Secciones
+            }
+        </h2>
+    </div>
+    <div class="sun">
+        <div class="sunback"></div>
+        <div class="suncontent d-none d-xl-flex">
+            <h2 style="text-align: center;">
+                @if(topic()) {
+                {{ topic()!.title }}
+                } @else {
+                Secciones
+                }
+            </h2>
+        </div>
+    </div>
     @for (section of sections(); track section.id) {
     <sections-card [section]="section" (deleted)="deleteSection()" (edited)="initialize()"></sections-card>
     }
