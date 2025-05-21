@@ -1,5 +1,5 @@
 import { User } from "../../interfaces/user";
-import { Multimedia } from "./Multimedia";
+import { Multimedia } from "./multimedia";
 
 export interface NewContent {
     description: string;

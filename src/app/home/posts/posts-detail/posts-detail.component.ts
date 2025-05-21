@@ -1,4 +1,4 @@
-import { Component, computed, DestroyRef, effect, inject, input, signal } from "@angular/core";
+import { Component, computed, DestroyRef, effect, inject, input } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { PostsService } from "../../services/posts.service";
 import { Post } from "../../interfaces/post";
@@ -11,6 +11,7 @@ import { Router } from "@angular/router";
 import { CommentsFormComponent } from "../../comments/comments-form/comments-form.component";
 import { LikesService } from "../../services/likes.service";
 import { CarouselModule } from 'primeng/carousel';
+import { SavedService } from "../../services/saved.service";
 
 @Component({
   selector: 'posts-detail',
@@ -22,6 +23,7 @@ export class PostsDetailComponent {
   readonly #title = inject(Title);
   readonly #postService = inject(PostsService);
   readonly #likesService = inject(LikesService);
+  readonly #savedService = inject(SavedService);
   readonly #destroyRef = inject(DestroyRef);
   readonly #commentsService = inject(CommentsService);
   readonly #router = inject(Router);
@@ -67,9 +69,9 @@ export class PostsDetailComponent {
         .pipe(takeUntilDestroyed(this.#destroyRef))
         .subscribe({
           next: () => {
-            //TODO: Que se actualice el número
+            console.log("Quit like");
           },
-          error: (error) => this.post().alreadyLikes = likes
+          error: () => this.post().alreadyLikes = likes
         })
     } else {
       this.post().numLikes++;
@@ -79,9 +81,39 @@ export class PostsDetailComponent {
         .pipe(takeUntilDestroyed(this.#destroyRef))
         .subscribe({
           next: () => {
-            //TODO: Que se actualice el número
+            console.log("Like");
           },
-          error: (error) => this.post().alreadyLikes = likes
+          error: () => this.post().alreadyLikes = likes
+        });
+    }
+  }
+
+  guardar() {
+    const saved = this.post().alreadySaved;
+
+    if (saved) {
+      this.post().numSaved--;
+      this.post().alreadySaved = false;
+
+      this.#savedService.deleteSaved(this.post().id)
+        .pipe(takeUntilDestroyed(this.#destroyRef))
+        .subscribe({
+          next: () => {
+            console.log("Quit like");
+          },
+          error: () => this.post().alreadySaved = saved
+        })
+    } else {
+      this.post().numSaved++;
+      this.post().alreadySaved = true;
+
+      this.#savedService.addSaved(this.post())
+        .pipe(takeUntilDestroyed(this.#destroyRef))
+        .subscribe({
+          next: () => {
+            console.log("Like");
+          },
+          error: () => this.post().alreadySaved = saved
         });
     }
   }

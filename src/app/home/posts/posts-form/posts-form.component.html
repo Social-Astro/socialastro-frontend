@@ -2,7 +2,7 @@
     <form (ngSubmit)="sendPost()" [formGroup]="postForm" class="mt-4">
         <div class="mb-3">
             <label for="title" class="form-label">Título</label>
-            <input type="text" class="form-control" name="title" formControlName="title"
+            <input type="text" class="form-control input" name="title" formControlName="title"
                 [validationClasses]="{valid: 'is-valid', invalid:'is-invalid'}" />
             @let titleErrors = postForm.get('title')?.errors;
             @if(titleErrors?.['required']) {
@@ -11,7 +11,7 @@
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Descripción</label>
-            <textarea class="form-control" name="description" formControlName="description"
+            <textarea class="form-control input" name="description" formControlName="description"
                 [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" rows="3">
           </textarea>
             @let descErrors = postForm.get('description')?.errors;

@@ -22,10 +22,7 @@ ul {
             display: flex;
             justify-content: space-between;
             color: #c7b6c5;
-
-            &:hover {
-                text-decoration: none;
-            }
+            text-decoration: none;
         }
 
         &::after {

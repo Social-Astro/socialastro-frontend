@@ -1,15 +1,15 @@
 <!-- TODO: Ver dónde colocamos esto -->
-<div class="d-xl-none fondo-card">
+<!-- <div class="d-xl-none fondo-card">
     <comments-form [post]="post()" (added)="actualize()"></comments-form>
-</div>
-<div class="d-none d-xl-block col-xl-3 col-md-2 fondo-card comments-form">
+</div> -->
+<div class="d-none d-xl-block col-xl-3 col-md-2 fondo-card comments-form pt-0">
     <comments-form [post]="post()" (added)="actualize()"></comments-form>
 </div>
 <div class="post-header row mb-2">
     <h2 class="pb-2">{{ post().title }}</h2>
 </div>
 <div class="post-content row mb-3">
-    <div class="col-2 fondo-card usuario m-3">
+    <div class="d-none d-xl-block col-2 fondo-card usuario m-3">
         <!-- TODO: Sustituir por avatar -->
         <div style="background-color: black; width: 80px; height: 80px;">
             Avatar simulación
@@ -22,13 +22,21 @@
         <!-- TODO: Sustituir por posts totales del usuario  -->
         <p style=" font-size: small; font-weight: bold;">Planetas visitados: 3445</p>
     </div>
-    <div class="col-9 fondo-card texto m-3">
+    <div class="col-12 col-xl-9 fondo-card texto m-3">
         <div class="infor d-flex justify-content-between">
-            <div class="likes">
-                {{ post().numLikes }}
-                <button class="btn-like" type="button" (click)="darLike()">
-                    <img src="assets/neon/neon_star_likes.png" alt="Añadir like" width="30px">
-                </button>
+            <div class="d-flex">
+                <div class="likes">
+                    {{ post().numLikes }}
+                    <button class="btn-like" type="button" (click)="darLike()">
+                        <img src="assets/neon/neon_star_likes.png" alt="Añadir like" width="30px">
+                    </button>
+                </div>
+                <div class="likes">
+                    {{ post().numSaved }}
+                    <button class="btn-like" type="button" (click)="guardar()">
+                        <img src="assets/neon/neon_satellite_saved.png" alt="Guardar post" width="30px">
+                    </button>
+                </div>
             </div>
             <p>{{ post().content.updatedAt | date: 'h:mm a - dd/MM/yyyy' }}</p>
         </div>
@@ -48,16 +56,31 @@
             </ng-template>
         </p-carousel>
         }
-        @if (post().content.mine) {
-        <div class="acciones">
-            <button class="btn m-2" (click)="editPost()">
-                <img src="assets/neon/neon_gun_edit.png" alt="Botón editar" title="Editar" width="40px">
-            </button>
-            <button class="btn m-2" (click)="deletePost()">
-                <img src="assets/neon/neon_meteor_delete.png" alt="Botón borrar" title="Borrar" width="40px">
-            </button>
+        <div class="d-flex justify-content-between">
+            <div class="d-xl-none fondo-card usuario d-flex p-2" style="width: fit-content;">
+                <div style="background-color: black; width: 80px; height: 80px;">
+                    Avatar simulación
+                </div>
+                <div style="text-align: left; margin-left: .5rem;">
+                    <!-- TODO: Enlace a perfil -->
+                    <p class="mb-0">{{ post().content.user!.username }}</p>
+                    <!-- TODO: Sustituir por logro destacado  -->
+                    <small>Logro destacado</small>
+                    <!-- TODO: Sustituir por posts totales del usuario  -->
+                    <p style=" font-size: small; font-weight: bold;">Planetas visitados: 3445</p>
+                </div>
+            </div>
+            @if (post().content.mine) {
+            <div class="acciones">
+                <button class="btn m-2" (click)="editPost()">
+                    <img src="assets/neon/neon_gun_edit.png" alt="Botón editar" title="Editar" width="40px">
+                </button>
+                <button class="btn m-2" (click)="deletePost()">
+                    <img src="assets/neon/neon_meteor_delete.png" alt="Botón borrar" title="Borrar" width="40px">
+                </button>
+            </div>
+            }
         </div>
-        }
     </div>
 </div>
 <p-divider type="dashed" />

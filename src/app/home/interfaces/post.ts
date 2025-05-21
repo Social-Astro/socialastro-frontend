@@ -1,4 +1,4 @@
-import { Content, NewContent } from "./content";
+import { Content } from "./content";
 import { Section } from "./sections";
 
 export interface NewPost {

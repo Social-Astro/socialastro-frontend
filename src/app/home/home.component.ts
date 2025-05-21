@@ -40,7 +40,7 @@ export class HomeComponent {
             })
     }
 
-    // TODO: Molaría conseguir que estos métodos se pudieran sacar por la base de datos directamente
+    // TODO: Sacar por la base de datos directamente
     ordenarPorFecha() {
         console.log(this.posts());
         this.ordenadosFecha.set(this.posts().slice().sort((a: Post, b: Post) => b.content.updatedAt.toString().localeCompare(a.content.updatedAt.toString())));

@@ -1,5 +1,5 @@
 <div class="respuesta row mb-3">
-    <div class="col-9 fondo-card contenido-respuesta m-3">
+    <div class="col-12 col-xl-9 fondo-card contenido-respuesta m-3">
         <div class="infor d-flex justify-content-between">
             <p>{{ comment().content.updatedAt | date: 'h:mm a - dd/MM/yyyy' }}</p>
         </div>
@@ -21,20 +21,35 @@
             </ng-template>
         </p-carousel>
         }
-        @if (comment().content.mine) {
-        <div class="acciones">
-            <button class="btn m-2" (click)="showEdit.set(true)">
-                <img src="assets/neon/neon_gun_edit.png" alt="Botón editar" title="Editar" width="40px">
-            </button>
-            <button class="btn m-2" (click)="deleteComment()">
-                <img src="assets/neon/neon_meteor_delete.png" alt="Botón borrar" title="Borrar" width="40px">
-            </button>
+        <div class="d-flex justify-content-between">
+            <div class="d-xl-none usuario d-flex p-2" style="width: fit-content;">
+                <div style="background-color: black; width: 80px; height: 80px;">
+                    Avatar simulación
+                </div>
+                <div style="text-align: left; margin-left: .5rem;">
+                    <!-- TODO: Enlace a perfil -->
+                    <p class="mb-0">{{ comment().content.user!.username }}</p>
+                    <!-- TODO: Sustituir por logro destacado  -->
+                    <small>Logro destacado</small>
+                    <!-- TODO: Sustituir por posts totales del usuario  -->
+                    <p style=" font-size: small; font-weight: bold;">Planetas visitados: 3445</p>
+                </div>
+            </div>
+            @if (comment().content.mine) {
+            <div class="acciones">
+                <button class="btn m-2" (click)="showEdit.set(true)">
+                    <img src="assets/neon/neon_gun_edit.png" alt="Botón editar" title="Editar" width="40px">
+                </button>
+                <button class="btn m-2" (click)="deleteComment()">
+                    <img src="assets/neon/neon_meteor_delete.png" alt="Botón borrar" title="Borrar" width="40px">
+                </button>
+            </div>
+            }
         </div>
-        }
         }
     </div>
 
-    <div class="col-2 fondo-card usuario m-3">
+    <div class="d-none d-xl-block col-2 fondo-card usuario m-3">
         <!-- TODO: Sustituir por avatar -->
         <div style="background-color: black; width: 80px; height: 80px;">
             Avatar simulación

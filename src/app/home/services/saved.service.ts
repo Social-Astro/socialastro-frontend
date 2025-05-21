@@ -1,48 +1,37 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
-import { NewPost, Post, PostsResponse, SinglePostResponse } from '../interfaces/post';
+import { Post } from '../interfaces/post';
+import { Saved } from "../interfaces/saved";
 
 @Injectable({
     providedIn: 'root'
 })
 export class SavedService {
-    readonly #postsUrl = 'posts';
     readonly #savedUrl = 'saved';
     readonly #http = inject(HttpClient);
 
-    getPosts(): Observable<Post[]> {
-        return this.#http.get<Post[]>(this.#postsUrl)
+    getSaved(): Observable<Saved[]> {
+        return this.#http.get<Saved[]>(this.#savedUrl)
             .pipe(map((resp) => resp));
     }
 
-    getPostsBySection(id: number, search: string, page: number = 1): Observable<PostsResponse> {
-        let params = new URLSearchParams({ search, page: String(page) });
-
-        return this.#http.get<PostsResponse>(`${this.#postsUrl}/${id}/section?${params.toString()}`)
+    getSavedByUser(id: number): Observable<Saved[]> {
+        return this.#http.get<Saved[]>(`${this.#savedUrl}/${id}/user`)
             .pipe(map((resp) => resp));
     }
 
-    getPost(id: number): Observable<Post> {
-        return this.#http.get<Post>(`${this.#postsUrl}/${id}`)
+    getSavedByPost(id: number): Observable<Saved[]> {
+        return this.#http.get<Saved[]>(`${this.#savedUrl}/${id}/post`)
             .pipe(map((resp) => resp));
     }
 
-    getUserLikes(postId: number) {
-        //TODO: Método para recuperar si lo tiene en like o no, devuelve booleano. Hacer lo mismo para los guardados.
-    }
-
-    addPost(post: NewPost): Observable<Post> {
-        return this.#http.post<Post>(this.#postsUrl, post)
+    addSaved(post: Post): Observable<Saved> {
+        return this.#http.post<Saved>(this.#savedUrl, post)
             .pipe(map((resp) => resp));
     }
 
-    editPost(post: NewPost, id: number): Observable<Post> {
-        return this.#http.put<Post>(`${this.#postsUrl}/${id}`, post)
-            .pipe(map((resp) => resp));
-    }
-
-    delete(id: number): Observable<void> {
-        return this.#http.delete<void>(`${this.#postsUrl}/${id}`);
+    deleteSaved(id: number): Observable<void> {
+        return this.#http.delete<void>(`${this.#savedUrl}/${id}`);
     }
 }

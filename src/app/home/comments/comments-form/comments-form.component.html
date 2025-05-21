@@ -1,7 +1,7 @@
 <form (ngSubmit)="sendComment()" [formGroup]="commentForm" class="mt-4">
     <div class="mb-3">
         <label for="comment" class="form-label">Comentario</label>
-        <textarea class="form-control" name="comment" formControlName="description"
+        <textarea class="form-control input" name="comment" formControlName="description"
             [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" rows="3">
       </textarea>
         @let comErrors = commentForm.get('comment')?.errors;
@@ -10,9 +10,6 @@
         }
     </div>
     <div class="mb-3">
-        <!-- <label for="multimedia" class="form-label">Multimedia</label>
-        <input type="file" class="form-control" name="multimedia" formControlName="multimedia" #fileImage encodeBase64
-            (encoded)="imageBase64 = $event" [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" /> -->
         <ng-container formGroupName="multimediaGroup">
             <div class="selectfiles">
                 <div class="files">

@@ -6,8 +6,9 @@
     </div>
     <p class="user">{{ post().content.user!.username }}</p>
     <div class="extra">
-        <!-- TODO: Añadir última persona en comentar y fecha -->
-        <p class="mb-0">Personajo</p>
-        <p>24/3/2025</p>
+        <p class="mb-0">{{ lastVisit() ? lastVisit()!.content.user!.username : post().content.user!.username }}</p>
+        <p>{{ (lastVisit() ? lastVisit()!.content.updatedAt : post().content.updatedAt) | date: 'h:mm a - dd/MM/yyyy'
+            }}
+        </p>
     </div>
 </div>
