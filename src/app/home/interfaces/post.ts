@@ -2,15 +2,16 @@ import { Content } from "./content";
 import { Section } from "./sections";
 
 export interface NewPost {
-    title: string;
-    section: Section
-    content: Content
+    title: string,
+    section: Section,
+    content: Content,
+    tag: string
 }
 
 export interface EditPost {
-    id: number
-    title: string;
-    section: Section
+    id: number,
+    title: string,
+    section: Section,
     content: Content
 }
 

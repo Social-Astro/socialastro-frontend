@@ -15,7 +15,7 @@ export class UserService {
     userSelected = resource({
         request: () => ({ currentUser: this.#currentUser() }),
         loader: ({ request }) => {
-            return firstValueFrom(this.#http.get<SingleUserResponse>(`users/${request.currentUser ? request.currentUser : 'me'}`));
+            return firstValueFrom(this.#http.get<User>(`users/${request.currentUser ? request.currentUser : 'me'}`));
         }
     });
 

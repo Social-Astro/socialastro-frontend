@@ -37,6 +37,7 @@
                         <img src="assets/neon/neon_satellite_saved.png" alt="Guardar post" width="30px">
                     </button>
                 </div>
+                <p-tag severity="info" [value]="post().tag" [rounded]="true" />
             </div>
             <p>{{ post().content.updatedAt | date: 'h:mm a - dd/MM/yyyy' }}</p>
         </div>

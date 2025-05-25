@@ -45,6 +45,10 @@ export class PostsFormComponent {
       file2: new FormControl(null),
       file3: new FormControl(null),
       file4: new FormControl(null)
+    }),
+    tag: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required]
     })
   });
 
@@ -55,6 +59,7 @@ export class PostsFormComponent {
         this.#title.setTitle(this.post().title + ' | Edit');
         this.postForm.get('title')!.setValue(this.post().title);
         this.postForm.get('description')!.setValue(this.post().content.description);
+        this.postForm.get('tag')!.setValue(this.post().tag);
 
         this.post().content.multimedia?.forEach((f) => {
           this.imagesBase64.push(f.filename);
@@ -73,7 +78,8 @@ export class PostsFormComponent {
         description: this.postForm.get('description')?.getRawValue(),
         updatedAt: new Date(),
         multimedia: files
-      }
+      },
+      tag: this.postForm.get('tag')?.getRawValue()
     };
 
     for (let i = 0; i < this.imagesBase64.length; i++) {

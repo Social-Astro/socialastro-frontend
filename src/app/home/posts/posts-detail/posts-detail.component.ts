@@ -12,10 +12,11 @@ import { CommentsFormComponent } from "../../comments/comments-form/comments-for
 import { LikesService } from "../../services/likes.service";
 import { CarouselModule } from 'primeng/carousel';
 import { SavedService } from "../../services/saved.service";
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'posts-detail',
-  imports: [DividerModule, CommentsComponent, DatePipe, CommentsFormComponent, CarouselModule],
+  imports: [DividerModule, CommentsComponent, DatePipe, CommentsFormComponent, CarouselModule, TagModule],
   templateUrl: './posts-detail.component.html',
   styleUrl: './posts-detail.component.scss'
 })

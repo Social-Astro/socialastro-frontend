@@ -19,6 +19,15 @@
             <div class="invalid-feedback">Introduce una descripción</div>
             }
         </div>
+        <div class="mb-3">
+            <label for="tag" class="form-label">Nave nodriza: </label>
+            <input type="text" class="form-control input" name="tag" formControlName="tag"
+                [validationClasses]="{valid: 'is-valid', invalid:'is-invalid'}" />
+            @let tagErrors = postForm.get('tag')?.errors;
+            @if(tagErrors?.['required']) {
+            <div class="invalid-feedback">Debes asociar el post a una tag</div>
+            }
+        </div>
         <ng-container formGroupName="multimediaGroup">
             <div class="selectfiles">
                 <div class="files">

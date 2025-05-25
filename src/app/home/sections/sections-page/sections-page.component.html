@@ -1,5 +1,4 @@
-<!-- TODO: Solo visible si el usuario logueado es admin o moderador. Modificar cuando esté hecha autenticación y roles-->
-@if (true) {
+@if (actualUser() && actualUser()!.role === "ADMIN") {
 <div class="fondo-card">
     <h2 style="font-size: large;">Panel de mando</h2>
     @if (showForm()) {

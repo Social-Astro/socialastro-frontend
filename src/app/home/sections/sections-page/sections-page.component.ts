@@ -6,6 +6,8 @@ import { SectionsService } from '../../services/sections.service';
 import { Section } from '../../interfaces/sections';
 import { SectionsFormComponent } from '../sections-form/sections-form.component';
 import { SectionsCardComponent } from '../sections-card/sections-card.component';
+import { UserService } from '../../../profile/services/user.service';
+import { User } from '../../../interfaces/user';
 
 @Component({
   selector: 'sections-page',
@@ -18,6 +20,9 @@ export class SectionsPageComponent {
   readonly #title = inject(Title);
   readonly #sectionsService = inject(SectionsService);
   readonly #destroyRef = inject(DestroyRef);
+  readonly #userService = inject(UserService);
+
+  actualUser = signal<User | undefined>(undefined);
 
   topic = input<Topic>();
   showForm = signal(false);
@@ -27,6 +32,9 @@ export class SectionsPageComponent {
   constructor() {
     effect(() => {
       this.initialize();
+      //TODO: Necesita recargar para verse
+      this.actualUser.set(this.#userService.userSelected.value());
+      console.log('USER: ', this.actualUser());
     });
   }
 
