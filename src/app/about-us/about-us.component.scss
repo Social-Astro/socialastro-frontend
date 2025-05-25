@@ -1,7 +1,7 @@
 .about-card .card-body {
     z-index: 1;
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
     opacity: 0.95;
@@ -11,18 +11,20 @@
         0px 0px 80px 0px #00eaff22;
     border: 2.5px dashed #b3e5fc;
     background: linear-gradient(135deg, #1a0033 0%, #2d0b4e 60%, #0d0032 100%);
-    font-size: 1rem;
+    font-size: 0.98rem;
     color: white;
-    padding: 2.5rem;
-    width: 40rem;
-    max-width: 95vw;
+    padding: 3rem 4rem;
+    height: 52rem;
+    max-height: 110vh;
+    width: 60rem;
+    max-width: 98vw;
 }
 
 .association-section {
-    margin-bottom: 2rem;
+    margin-bottom: 1.2rem;
     .association-logo {
-        width: 10rem;
-        border-radius: 1rem;
+        width: 6.5rem;
+        border-radius: 0.8rem;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     }
     .association-queens {
@@ -34,14 +36,15 @@
         font-family: 'Comic Sans MS', 'Comic Sans', cursive;
         color: #b3e5fc;
         text-shadow: 0 0 8px #00eaff99;
+        font-size: 1.25rem;
     }
     .association-description {
-        font-size: 1.1rem;
-        margin-top: 1rem;
+        font-size: 1rem;
+        margin-top: 0.7rem;
         margin-bottom: 0;
         background: rgba(0, 0, 0, 0.25);
         border-radius: 0.7rem;
-        padding: 0.7rem 1rem;
+        padding: 0.5rem 0.8rem;
         box-shadow: 0 0 8px #b3e5fc33;
     }
 }
@@ -60,8 +63,8 @@
         border-color: #00eaff;
     }
     .avatar {
-        width: 6rem;
-        height: 6rem;
+        width: 3.8rem;
+        height: 3.8rem;
         border-radius: 50%;
         object-fit: cover;
         display: block;
@@ -76,11 +79,12 @@
         }
     }
     .member-info {
-        margin-top: 1rem;
-        line-height: 2;
+        margin-top: 0.7rem;
+        line-height: 1.7;
         font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+        font-size: 0.98rem;
         .fun-fact {
-            font-size: 0.98rem;
+            font-size: 0.93rem;
             color: #ffe082;
             margin-top: 0.5rem;
             font-style: italic;
@@ -102,7 +106,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .floating-icon,
@@ -110,14 +114,14 @@
     position: absolute;
     z-index: 10;
     pointer-events: none;
-    opacity: 0.85;
+    opacity: 0.75;
     animation: floaty 6s ease-in-out infinite;
 }
 
 .floating-icon-1 {
     top: 2%;
     left: 7%;
-    width: 3.2rem;
+    width: 2.2rem;
     animation-delay: 0s;
 }
 @for $i from 1 through 60 {
@@ -146,12 +150,9 @@
 }
 
 .floating-emoji {
-    width: 2rem !important;
-    height: auto !important;
-    min-width: unset !important;
-    min-height: unset !important;
-    max-width: 2rem !important;
-    max-height: 2rem !important;
+    width: 1.3rem !important;
+    max-width: 1.3rem !important;
+    max-height: 1.3rem !important;
     font-size: unset !important;
 }
 
@@ -176,16 +177,41 @@
     }
 }
 
+@media (max-width: 1400px) {
+    .about-card .card-body {
+        width: 90vw;
+        max-width: 98vw;
+        padding: 1rem;
+    }
+    .association-section .association-logo {
+        width: 5rem;
+    }
+    .member-card .avatar {
+        width: 3rem;
+        height: 3rem;
+    }
+}
+
 @media (max-width: 900px) {
     .about-card .card-body {
         width: 98vw;
         padding: 1rem;
     }
     .association-section .association-logo {
-        width: 7rem;
+        width: 4rem;
     }
     .member-card .avatar {
-        width: 4rem;
-        height: 4rem;
+        width: 2.5rem;
+        height: 2.5rem;
     }
+}
+
+.members-section {
+    margin-top: 2rem;
+    padding: 1rem 0 0 0;
+    border-top: 2px dashed #b3e5fc55;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: transparent;
 }
