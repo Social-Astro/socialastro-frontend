@@ -9,10 +9,11 @@
                 <h3 style="font-size: medium">Últimos planetas formados</h3>
                 <ul>
                     @for (post of ordenadosFecha(); track post.id) {
-                    <li class="underline">
+                    <li class="underline" style="font-size: small;">
                         <a [routerLink]="['/home/posts', post.id]">
                             <span>{{ post.title }}</span>
-                            <span>{{ post.content.updatedAt | date: 'h:mm dd/MM/yyyy' }}</span>
+                            <span>{{ post.content.updatedAt | date: 'h:mm dd/MM/yyyy'
+                                }}</span>
                         </a>
                     </li>
                     }
@@ -22,7 +23,7 @@
                 <h3 style="font-size: medium">Planetas más visitados</h3>
                 <ul>
                     @for (post of ordenadosComentarios(); track post.id) {
-                    <li class="underline">
+                    <li class="underline" style="font-size: small;">
                         <a [routerLink]="['/home/posts', post.id]">
                             <span>{{ post.title }}</span>
                             <span>{{ post.numComments }}</span>
