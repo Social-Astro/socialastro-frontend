@@ -17,8 +17,8 @@ export class ProfileEditComponent {
     readonly user = this.userResource.value;
     id = input.required({ transform: numberAttribute });
 
-    avatarBase64: string | null = null;
-    headerBase64: string | null = null;
+    avatarBase64Arr: string[] = [];
+    headerBase64Arr: string[] = [];
 
     changeUserForm = new FormGroup({
         name: new FormControl('', {
@@ -107,7 +107,7 @@ export class ProfileEditComponent {
             password: this.changePasswordForm.value.password!
         };
         this.profileService.saveUserPassword(dto).subscribe({
-            next: () => { },
+            next: () => {},
             error: (err) => console.error('Password error:', err)
         });
     }
@@ -115,10 +115,12 @@ export class ProfileEditComponent {
     onAvatarFileChange(event: Event) {
         const input = event.target as HTMLInputElement;
         if (input.files && input.files.length > 0) {
-            const file = input.files[0];
-            this.changeAvatarForm.get('avatar')!.setValue(file);
-            this.fileToBase64(file).then((base64) => {
-                this.avatarBase64 = base64 as string;
+            this.avatarBase64Arr = [];
+            Array.from(input.files).forEach((file) => {
+                this.changeAvatarForm.get('avatar')!.setValue(file);
+                this.fileToBase64(file).then((base64) => {
+                    this.avatarBase64Arr.push(base64 as string);
+                });
             });
         }
     }
@@ -126,10 +128,12 @@ export class ProfileEditComponent {
     onHeaderFileChange(event: Event) {
         const input = event.target as HTMLInputElement;
         if (input.files && input.files.length > 0) {
-            const file = input.files[0];
-            this.changeHeaderForm.get('heading')!.setValue(file);
-            this.fileToBase64(file).then((base64) => {
-                this.headerBase64 = base64 as string;
+            this.headerBase64Arr = [];
+            Array.from(input.files).forEach((file) => {
+                this.changeHeaderForm.get('heading')!.setValue(file);
+                this.fileToBase64(file).then((base64) => {
+                    this.headerBase64Arr.push(base64 as string);
+                });
             });
         }
     }
@@ -144,12 +148,13 @@ export class ProfileEditComponent {
     }
 
     changeAvatar() {
-        if (!this.changeAvatarForm.valid || !this.avatarBase64) return;
-        const dto = { avatar: this.avatarBase64 };
+        if (!this.changeAvatarForm.valid || !this.avatarBase64Arr.length) return;
+        const dto = { avatar: this.avatarBase64Arr[0] };
+        console.log('Enviando avatar:', dto);
         this.profileService.saveUserAvatar(dto).subscribe({
             next: () => {
                 this.userResource.reload();
-                this.avatarBase64 = null;
+                this.avatarBase64Arr = [];
                 this.changeAvatarForm.reset();
             },
             error: (err) => console.error('Avatar error:', err)
@@ -157,12 +162,13 @@ export class ProfileEditComponent {
     }
 
     changeHeader() {
-        if (!this.changeHeaderForm.valid || !this.headerBase64) return;
-        const dto = { heading: this.headerBase64 };
+        if (!this.changeHeaderForm.valid || !this.headerBase64Arr.length) return;
+        const dto = { heading: this.headerBase64Arr[0] };
+        console.log('Enviando header:', dto);
         this.profileService.saveUserHeader(dto).subscribe({
             next: () => {
                 this.userResource.reload();
-                this.headerBase64 = null;
+                this.headerBase64Arr = [];
                 this.changeHeaderForm.reset();
             },
             error: (err) => console.error('Header error:', err)
