@@ -61,7 +61,7 @@ export class ProfileEditComponent {
     });
 
     changeHeaderForm = new FormGroup({
-        header: new FormControl<File | null>(null, {
+        heading: new FormControl<File | null>(null, {
             nonNullable: true,
             validators: [Validators.required]
         })
@@ -107,7 +107,7 @@ export class ProfileEditComponent {
             password: this.changePasswordForm.value.password!
         };
         this.profileService.saveUserPassword(dto).subscribe({
-            next: () => {},
+            next: () => { },
             error: (err) => console.error('Password error:', err)
         });
     }
@@ -127,7 +127,7 @@ export class ProfileEditComponent {
         const input = event.target as HTMLInputElement;
         if (input.files && input.files.length > 0) {
             const file = input.files[0];
-            this.changeHeaderForm.get('header')!.setValue(file);
+            this.changeHeaderForm.get('heading')!.setValue(file);
             this.fileToBase64(file).then((base64) => {
                 this.headerBase64 = base64 as string;
             });
@@ -158,7 +158,7 @@ export class ProfileEditComponent {
 
     changeHeader() {
         if (!this.changeHeaderForm.valid || !this.headerBase64) return;
-        const dto = { header: this.headerBase64 };
+        const dto = { heading: this.headerBase64 };
         this.profileService.saveUserHeader(dto).subscribe({
             next: () => {
                 this.userResource.reload();

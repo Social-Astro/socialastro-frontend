@@ -11,8 +11,7 @@ const isUserDto = (obj: unknown): obj is User => {
         typeof dto['id'] === 'number' &&
         typeof dto['name'] === 'string' &&
         (typeof dto['avatar'] === 'string' || dto['avatar'] === null) &&
-        // FIXME devolver también el header en el back
-        // (typeof dto['header'] === 'string' || dto['header'] === null) &&
+        (typeof dto['heading'] === 'string' || dto['heading'] === null) &&
         (typeof dto['bio'] === 'string' || dto['bio'] === null) &&
         (typeof dto['numLikes'] === 'number' || dto['numLikes'] === null) &&
         (typeof dto['numPosts'] === 'number' || dto['numPosts'] === null) &&
@@ -34,6 +33,7 @@ export const mapUser = (user: unknown): User => {
         name: user.name,
         email: user.email,
         avatar: user.avatar,
+        heading: user.heading,
         bio: user.bio,
         numLikes: user.numLikes !== null ? Number(user.numLikes) : null,
         numPosts: user.numPosts !== null ? Number(user.numPosts) : null,

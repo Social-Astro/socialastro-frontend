@@ -71,11 +71,11 @@ export class ProfileComponent {
         this.editPasswordMode.update((oldValue) => !oldValue);
     }
 
-    // Calcula el estilo del header dinámicamente
+    // Calcula el estilo del heading dinámicamente
     headerBackgroundStyle = computed(() => {
         const user = this.userResource.value;
-        if (user()?.header) {
-            return { 'background-image': `url(${user()?.header})` };
+        if (user()?.heading) {
+            return { 'background-image': `url(${user()?.heading})` };
         }
         return {};
     });
@@ -84,7 +84,7 @@ export class ProfileComponent {
 
     // headerBackgroundStyle = computed(() => {
     //     const user = this.currentUser();
-    //     const headerUrl = user && user.header ? user.header : 'assets/default-header.png';
+    //     const headerUrl = user && user.heading ? user.heading : 'assets/default-header.png';
     //     return { 'background-image': `url(${headerUrl})` };
     // });
 

@@ -6,7 +6,7 @@ export interface User {
     name: string;
     email: string;
     avatar?: string;
-    header?: string;
+    heading?: string;
     bio?: string;
     createdAt: Date;
     updatedAt?: Date;
@@ -47,5 +47,5 @@ export interface UserAvatarEdit {
 }
 
 export interface UserHeaderEdit {
-    header: string;
+    heading: string;
 }

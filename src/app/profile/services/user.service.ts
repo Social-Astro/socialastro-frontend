@@ -33,7 +33,7 @@ export class UserService {
     saveUserAvatar(avatar: UserAvatarEdit): Observable<void> {
         return this.#http.put<void>('users/me/avatar', avatar);
     }
-    saveUserHeader(header: UserHeaderEdit): Observable<void> {
-        return this.#http.put<void>('users/me/header', header);
+    saveUserHeader(heading: UserHeaderEdit): Observable<void> {
+        return this.#http.put<void>('users/me/header', heading);
     }
 }
