@@ -1,43 +1,42 @@
-@if (actualUser() && actualUser()!.role === "ADMIN") {
-<div class="fondo-card">
-    <h2 style="font-size: large;">Panel de mando</h2>
-    @if (showForm()) {
-    <div class="col-12">
-        <sections-form [topic]="topic()!" (saved)="showSectionForm()" (hide)="showSectionForm()"></sections-form>
+@if (actualUser() && actualUser()!.role === 'ADMIN') {
+    <div class="fondo-card">
+        <h2 style="font-size: large">Panel de mando</h2>
+        @if (showForm()) {
+            <div class="col-12">
+                <sections-form [topic]="topic()!" (saved)="showSectionForm()" (hide)="showSectionForm()"></sections-form>
+            </div>
+        } @else {
+            <button class="btn btn-outline-info" (click)="showSectionForm()">
+                <img src="assets/normal/normal_system_section.png" alt="Icono sections" width="25px;" />
+                Agregar sistema
+            </button>
+        }
     </div>
-    }@else {
-    <button class="btn btn-outline-info" (click)="showSectionForm()">
-        <img src="assets/neon/neon_system_section.png" alt="Icono sections" width="25px;">
-        Agregar sistema
-    </button>
-    }
-</div>
 }
 <div class="fondo-card sections">
     <div class="d-xl-none">
-        <h2 style="text-align: left;">
-            <img class="image" src="assets/neon/neon_galaxy_topic.png" alt="Icono topics" width="40px">
-            @if(topic()) {
-            {{ topic()!.title }}
+        <h2 style="text-align: left">
+            <img class="image" src="assets/normal/normal_galaxy_topic.png" alt="Icono topics" width="40px" />
+            @if (topic()) {
+                {{ topic()!.title }}
             } @else {
-            Secciones
+                Secciones
             }
         </h2>
     </div>
     <div class="sun">
         <div class="sunback"></div>
         <div class="suncontent d-none d-xl-flex">
-            <h2 style="text-align: center;">
-                @if(topic()) {
-                {{ topic()!.title }}
+            <h2 style="text-align: center">
+                @if (topic()) {
+                    {{ topic()!.title }}
                 } @else {
-                Secciones
+                    Secciones
                 }
             </h2>
         </div>
     </div>
     @for (section of sections(); track section.id) {
-    <sections-card [section]="section" [actualUser]="actualUser()" (deleted)="deleteSection()"
-        (edited)="initialize()"></sections-card>
+        <sections-card [section]="section" [actualUser]="actualUser()" (deleted)="deleteSection()" (edited)="initialize()"></sections-card>
     }
 </div>

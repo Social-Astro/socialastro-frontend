@@ -12,9 +12,9 @@
         </a>
         <!-- TODO: Sustituir por logro destacado  -->
         <small>Logro destacado</small>
-        <hr>
+        <hr />
         <!-- TODO: Sustituir por posts totales del usuario  -->
-        <p style=" font-size: small; font-weight: bold;">Planetas visitados: 3445</p>
+        <p style="font-size: small; font-weight: bold">Planetas visitados: 3445</p>
     </div>
     <div class="col-12 col-xl-9 fondo-card texto m-3">
         <div class="infor d-flex justify-content-between">
@@ -22,13 +22,13 @@
                 <div class="likes">
                     {{ post().numLikes }}
                     <button class="btn-like" type="button" (click)="darLike()">
-                        <img src="assets/neon/neon_star_likes.png" alt="Añadir like" width="30px">
+                        <img src="assets/normal/normal_star_likes.png" alt="Añadir like" width="30px" />
                     </button>
                 </div>
                 <div class="likes">
                     {{ post().numSaved }}
                     <button class="btn-like" type="button" (click)="guardar()">
-                        <img src="assets/neon/neon_satellite_saved.png" alt="Guardar post" width="30px">
+                        <img src="assets/normal/normal_satellite_saved.png" alt="Guardar post" width="30px" />
                     </button>
                 </div>
                 <p-tag icon="pi pi-hashtag" severity="info" [value]="post().tag" [rounded]="true" />
@@ -39,45 +39,43 @@
             {{ post().content.description }}
         </p>
         @if (post().content.multimedia) {
-        <p-carousel [value]="post().content.multimedia!" [numVisible]="1" [numScroll]="1" orientation="horizontal"
-            verticalViewPortHeight="330px" contentClass="flex items-center">
-            <ng-template let-multimedia #item>
-                <div class="mb-4">
-                    <div class="relative mx-auto">
-                        <img [src]="multimedia.filename" alt="Multimedia" class="w-full rounded imagencarrusel"
-                            width="200px" />
+            <p-carousel [value]="post().content.multimedia!" [numVisible]="1" [numScroll]="1" orientation="horizontal" verticalViewPortHeight="330px" contentClass="flex items-center">
+                <ng-template let-multimedia #item>
+                    <div class="mb-4">
+                        <div class="relative mx-auto">
+                            <img [src]="multimedia.filename" alt="Multimedia" class="w-full rounded imagencarrusel" width="200px" />
+                        </div>
                     </div>
-                </div>
-            </ng-template>
-        </p-carousel>
+                </ng-template>
+            </p-carousel>
         }
         <div class="d-flex justify-content-between">
-            <div class="d-xl-none fondo-card usuario d-flex p-2" style="width: fit-content;">
+            <div class="d-xl-none fondo-card usuario d-flex p-2" style="width: fit-content">
                 <p-avatar [image]="post().content.user!.avatar" class="mr-2" size="xlarge" shape="circle" />
-                <div style="text-align: left; margin-left: .5rem;">
+                <div style="text-align: left; margin-left: 0.5rem">
                     <a [routerLink]="['/profile', post().content.user!.id]">
                         <p class="mb-0">{{ post().content.user!.username }}</p>
                     </a>
                     <!-- TODO: Sustituir por logro destacado  -->
                     <small>Logro destacado</small>
                     <!-- TODO: Sustituir por posts totales del usuario  -->
-                    <p style=" font-size: small; font-weight: bold;">Planetas visitados: 3445</p>
+                    <p style="font-size: small; font-weight: bold">Planetas visitados: 3445</p>
                 </div>
             </div>
             @if (post().content.mine) {
-            <div class="acciones">
-                <button class="btn m-2" (click)="editPost()">
-                    <img src="assets/neon/neon_gun_edit.png" alt="Botón editar" title="Editar" width="40px">
-                </button>
-                <button class="btn m-2" (click)="deletePost()">
-                    <img src="assets/neon/neon_meteor_delete.png" alt="Botón borrar" title="Borrar" width="40px">
-                </button>
-            </div>
+                <div class="acciones">
+                    <button class="btn m-2" (click)="editPost()">
+                        <img src="assets/normal/normal_gun_edit.png" alt="Botón editar" title="Editar" width="40px" />
+                    </button>
+                    <button class="btn m-2" (click)="deletePost()">
+                        <img src="assets/normal/normal_meteor_delete.png" alt="Botón borrar" title="Borrar" width="40px" />
+                    </button>
+                </div>
             }
         </div>
     </div>
 </div>
 <p-divider type="dashed" />
-@for (comment of comments(); track comment.id){
-<comments [comment]="comment" (edited)="actualize()" (deleted)="actualize()"></comments>
+@for (comment of comments(); track comment.id) {
+    <comments [comment]="comment" (edited)="actualize()" (deleted)="actualize()"></comments>
 }

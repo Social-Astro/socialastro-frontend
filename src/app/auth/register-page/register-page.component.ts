@@ -53,7 +53,7 @@ export class RegisterPageComponent {
         const user: User = {
             ...this.newUserForm.getRawValue(),
             createdAt: new Date(),
-            role: 'user'
+            role: 'USER'
         };
         console.log(user);
         this.#authService.register(user).subscribe({
