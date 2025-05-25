@@ -1,43 +1,73 @@
 // NUEVO DISEÑO PARA EL PERFIL
 @import '../../styles/_variables';
-.profile-header {
-    position: relative;
+
+.profile-container {
     width: 100%;
-    height: 220px; // más alto para compensar el dashboard más abajo
+    max-width: 1200px;
+    margin: 2.5rem auto 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: relative; // Necesario para el posicionamiento absoluto del avatar
+}
+
+.profile-header {
+    position: relative; // Para posicionar el avatar absolutamente respecto al header
+    width: 100%;
+    max-width: 1200px;
+    height: 500px;
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(90deg, $gradient-color-1 0%, $gradient-color-4 100%), url('/assets/background/fondo.png');
-    background-blend-mode: overlay;
+    background: none;
     border-radius: 1rem 1rem 0 0;
+    overflow: hidden;
     display: flex;
     align-items: flex-end;
     justify-content: flex-start;
-    padding: 1rem 2rem;
+    padding: 0;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     transition: background-image 0.3s ease-in-out;
+    margin: 0 auto 0 auto;
+    margin-bottom: 16px;
 
-    .profile-avatar-container {
+    .profile-header {
         position: absolute;
-        left: 2rem;
-        bottom: -60px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        z-index: 2;
-    }
-
-    .profile-avatar {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        border: 4px solid #fff;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-        background: $lighter-25-color;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
-        transition: transform 0.2s;
-        margin-bottom: 0.5rem;
-        &:hover {
-            transform: scale(1.05);
-        }
+        border-radius: 1rem 1rem 0 0;
+        z-index: 1;
+        box-shadow: none;
+    }
+}
+.profile-avatar-container {
+    position: absolute;
+    left: 50px;
+    top: 420px;
+    bottom: 0;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: auto;
+    width: 120px;
+    height: 120px;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    background: $lighter-25-color;
+    object-fit: cover;
+    transition: transform 0.2s;
+    margin-bottom: 0.5rem;
+    z-index: 21;
+    &:hover {
+        transform: scale(1.05);
     }
 
     .edit-btn {
@@ -64,12 +94,13 @@
 
 .profile-dashboard {
     background: rgba(20, 20, 40, 0.85);
-    border-radius: 1rem;
+    border-radius: 0 0 1rem 1rem;
     box-shadow: 0 2px 16px rgba(0, 0, 0, 0.18);
-    margin: 0 auto 0 0;
-    margin-top: 40px; // más abajo
-    width: 100%; // ocupa todo el ancho
-    max-width: 1200px; // más grande
+    margin: 0 auto 0 auto;
+    margin-top: 0;
+    padding-top: 90px; // Espacio para el avatar sobrepuesto
+    width: 100%;
+    max-width: 1200px;
     min-height: 600px;
     padding: 2.5rem 3rem 2rem 3rem;
     display: flex;
@@ -80,7 +111,7 @@
 
     /* Deja margen a la derecha en pantallas grandes */
     @media (min-width: 1200px) {
-        margin-right: 3vw;
+        margin-right: 0;
     }
 
     @media (max-width: 900px) {
@@ -101,7 +132,7 @@
     max-width: 370px;
     min-width: 300px;
     margin-left: 2.5rem;
-    background: #f8f6ff;
+    background: #9fc39f;
     border-radius: 0.7rem;
     box-shadow: 0 1px 4px rgba(108, 46, 183, 0.1);
     padding: 2rem 1.5rem 1.5rem 1.5rem;
@@ -131,7 +162,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        background: rgba(255, 255, 255, 0.92);
+        background: #9fc39f;
         border-radius: 0.7rem;
         box-shadow: 0 1px 4px rgba(108, 46, 183, 0.1);
         padding: 0.7rem 1.2rem;
@@ -200,7 +231,7 @@
 }
 
 .profile-card-active {
-    background: #fff !important;
+    background: #9fc39f !important;
     color: #222 !important;
     border: 2px solid #6c2eb7;
     box-shadow: 0 4px 24px rgba(108, 46, 183, 0.1);
@@ -230,7 +261,7 @@
     .achievement-badge {
         display: flex;
         align-items: center;
-        background: #fff;
+        background: #9fc39f;
         border-radius: 1.5rem;
         padding: 0.3rem 0.9rem 0.3rem 0.5rem;
         box-shadow: 0 1px 4px rgba(108, 46, 183, 0.08);
@@ -260,7 +291,7 @@
 .edit-main-btn {
     display: block;
     margin: 0 auto 1.5rem auto;
-    background: $saturated-25-green-color !important;
+    background: #6c2eb7 !important;
     color: #fff !important;
     border-radius: 0.4rem;
     font-weight: 700;
@@ -280,7 +311,7 @@
     margin-bottom: 1.2rem;
 
     button {
-        background: #fff;
+        background: #9fc39f;
         color: #6c2eb7;
         border: 2px solid #6c2eb7;
         border-radius: 1.5rem;
@@ -320,7 +351,7 @@
         align-items: center;
         margin-left: 0.3rem;
         color: #6c2eb7;
-        background: #f3f0fa;
+        background: #9fc39f;
         border-radius: 50%;
         width: 2rem;
         height: 2rem;
