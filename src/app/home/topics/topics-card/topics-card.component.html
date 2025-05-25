@@ -1,7 +1,6 @@
 <div class="topic">
     <div class="topic-content">
-        <!-- TODO: Solo visible si es admin o mod. Modificar cuando esté hecha autenticación y roles  -->
-        @if(true && !edit()) {
+        @if(actualUser() && actualUser()!.role === "ADMIN" && !edit()) {
         <div class="settings">
             <p-button (click)="op.toggle($event)" icon="pi pi-cog" [rounded]="true" size="small" severity="help" />
             <p-popover #op>

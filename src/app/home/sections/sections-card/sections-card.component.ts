@@ -6,6 +6,7 @@ import { Section } from '../../interfaces/sections';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { SectionsFormComponent } from '../sections-form/sections-form.component';
+import { User } from '../../../interfaces/user';
 
 @Component({
   selector: 'sections-card',
@@ -18,6 +19,7 @@ export class SectionsCardComponent {
   readonly #destroyRef = inject(DestroyRef);
 
   section = input.required<Section>();
+  actualUser = input.required<User | undefined>();
   topicTitle = '';
 
   edit = signal(false);

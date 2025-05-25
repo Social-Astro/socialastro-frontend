@@ -22,8 +22,7 @@
     grid-column-gap: 10px;
     grid-row-gap: 10px;
 
-    /* TODO: Hay que poner manualmente cuántas repeticiones, buscar otra forma, porque el número depende de la BBDD */
-    @for $i from 1 through 15 {
+    @for $i from 1 through 20 {
         & .topic-card:nth-child(#{$i}) {
             animation: float #{math.random(5)*5}s ease-in-out infinite;
             animation-delay: #{math.random(9)}s;

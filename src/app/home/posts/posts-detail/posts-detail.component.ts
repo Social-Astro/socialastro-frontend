@@ -7,16 +7,17 @@ import { CommentsService } from "../../services/comments.service";
 import { DividerModule } from 'primeng/divider';
 import { CommentsComponent } from "../../comments/comments.component";
 import { DatePipe } from "@angular/common";
-import { Router } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { CommentsFormComponent } from "../../comments/comments-form/comments-form.component";
 import { LikesService } from "../../services/likes.service";
 import { CarouselModule } from 'primeng/carousel';
 import { SavedService } from "../../services/saved.service";
 import { TagModule } from 'primeng/tag';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'posts-detail',
-  imports: [DividerModule, CommentsComponent, DatePipe, CommentsFormComponent, CarouselModule, TagModule],
+  imports: [DividerModule, CommentsComponent, DatePipe, CommentsFormComponent, CarouselModule, TagModule, AvatarModule, RouterLink],
   templateUrl: './posts-detail.component.html',
   styleUrl: './posts-detail.component.scss'
 })
@@ -48,6 +49,7 @@ export class PostsDetailComponent {
       if (this.post().content.multimedia && this.post().content.multimedia!.length > 0) {
         this.imageBase64 = this.post().content.multimedia![0].filename;
       }
+      this.post().content.user!.avatar = this.post().content.user!.avatar ? this.post().content.user!.avatar : 'assets/default-avatar.png';
     })
   }
 

@@ -26,6 +26,7 @@ export class CommentsFormComponent {
 
   edited = output<void>();
   added = output<void>();
+  hide = output<void>();
 
   commentForm = new FormGroup({
     description: new FormControl('', {
@@ -70,7 +71,6 @@ export class CommentsFormComponent {
           filename: this.imagesBase64[i]
         })
       } else {
-        console.log("Entra");
         newComment.content.multimedia!.push({
           filename: this.imagesBase64[i]
         })
@@ -81,6 +81,12 @@ export class CommentsFormComponent {
       newComment.content.id = this.comment()!.content.id;
       newComment.content.user = this.comment()!.content.user;
       console.log(newComment);
+
+      console.log("IMAGENES", this.imagesBase64);
+
+      if (!this.imagesBase64.length) {
+        newComment.content.multimedia = this.comment()!.content.multimedia;
+      }
 
       this.#commentsService.editComment(newComment, this.comment()!.id)
         .pipe(takeUntilDestroyed(this.#destroyRef))
@@ -110,5 +116,18 @@ export class CommentsFormComponent {
           }
         })
     }
+  }
+
+  //TODO: Implementar el canDeactivate
+  canDeactivate() {
+    this.hide.emit();
+    /* if (this.saved || this.postForm.pristine) {
+      return true;
+    }
+
+    const modalRef = this.#modalService.open(ConfirmModalComponent);
+    modalRef.componentInstance.title = 'Leaving the page';
+    modalRef.componentInstance.body = 'Are you sure? The changes will be lost...';
+    return modalRef.result.catch(() => false); */
   }
 }

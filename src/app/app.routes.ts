@@ -24,7 +24,7 @@ export const routes: Routes = [
         path: 'about-us',
         canActivate: [loginActivateGuard],
         loadComponent: () => import('./about-us/about-us.component').then((m) => m.AboutUsComponent),
-        title: 'Register'
+        title: 'Salu2 terrícola ** Social Astro'
     },
 
     {

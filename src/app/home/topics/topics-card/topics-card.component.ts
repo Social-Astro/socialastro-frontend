@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { Popover } from 'primeng/popover';
 import { ButtonModule } from 'primeng/button';
 import { TopicsFormComponent } from '../topics-form/topics-form.component';
+import { User } from '../../../interfaces/user';
 
 @Component({
   selector: 'topics-card',
@@ -19,6 +20,8 @@ export class TopicsCardComponent {
   readonly #destroyRef = inject(DestroyRef);
 
   topic = input.required<Topic>();
+  actualUser = input.required<User | undefined>();
+
   edit = signal(false);
   deleted = output<void>();
   edited = output<void>();

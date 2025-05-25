@@ -9,6 +9,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
     selector: 'topics-page',
+    standalone: true,
     imports: [TopicsCardComponent, TopicsFormComponent],
     templateUrl: './topics-page.component.html',
     styleUrl: './topics-page.component.scss'
@@ -25,7 +26,6 @@ export class TopicsPageComponent {
 
     constructor() {
         this.getTopics();
-        // TODO: No lo pilla al momento
         effect(() => {
             this.actualUser.set(this.#authService.currentUser.value());
             console.log('USER: ', this.actualUser());

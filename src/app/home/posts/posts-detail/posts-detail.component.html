@@ -1,7 +1,3 @@
-<!-- TODO: Ver dónde colocamos esto -->
-<!-- <div class="d-xl-none fondo-card">
-    <comments-form [post]="post()" (added)="actualize()"></comments-form>
-</div> -->
 <div class="d-none d-xl-block col-xl-3 col-md-2 fondo-card comments-form pt-0">
     <comments-form [post]="post()" (added)="actualize()"></comments-form>
 </div>
@@ -10,12 +6,10 @@
 </div>
 <div class="post-content row mb-3">
     <div class="d-none d-xl-block col-2 fondo-card usuario m-3">
-        <!-- TODO: Sustituir por avatar -->
-        <div style="background-color: black; width: 80px; height: 80px;">
-            Avatar simulación
-        </div>
-        <!-- TODO: Enlace a perfil -->
-        <p class="mb-0">{{ post().content.user!.username }}</p>
+        <p-avatar [image]="post().content.user!.avatar" class="mr-2" size="xlarge" shape="circle" />
+        <a [routerLink]="['/profile', post().content.user!.id]">
+            <p class="mb-0">{{ post().content.user!.username }}</p>
+        </a>
         <!-- TODO: Sustituir por logro destacado  -->
         <small>Logro destacado</small>
         <hr>
@@ -37,7 +31,7 @@
                         <img src="assets/neon/neon_satellite_saved.png" alt="Guardar post" width="30px">
                     </button>
                 </div>
-                <p-tag severity="info" [value]="post().tag" [rounded]="true" />
+                <p-tag icon="pi pi-hashtag" severity="info" [value]="post().tag" [rounded]="true" />
             </div>
             <p>{{ post().content.updatedAt | date: 'h:mm a - dd/MM/yyyy' }}</p>
         </div>
@@ -59,12 +53,11 @@
         }
         <div class="d-flex justify-content-between">
             <div class="d-xl-none fondo-card usuario d-flex p-2" style="width: fit-content;">
-                <div style="background-color: black; width: 80px; height: 80px;">
-                    Avatar simulación
-                </div>
+                <p-avatar [image]="post().content.user!.avatar" class="mr-2" size="xlarge" shape="circle" />
                 <div style="text-align: left; margin-left: .5rem;">
-                    <!-- TODO: Enlace a perfil -->
-                    <p class="mb-0">{{ post().content.user!.username }}</p>
+                    <a [routerLink]="['/profile', post().content.user!.id]">
+                        <p class="mb-0">{{ post().content.user!.username }}</p>
+                    </a>
                     <!-- TODO: Sustituir por logro destacado  -->
                     <small>Logro destacado</small>
                     <!-- TODO: Sustituir por posts totales del usuario  -->

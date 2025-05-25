@@ -5,10 +5,11 @@ import { rxResource, takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { Comment } from "../../interfaces/comment";
 import { CommentsService } from "../../services/comments.service";
 import { DatePipe } from "@angular/common";
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'posts-card',
-  imports: [DatePipe],
+  imports: [DatePipe, TagModule],
   templateUrl: './posts-card.component.html',
   styleUrl: './posts-card.component.scss'
 })

@@ -32,7 +32,6 @@ export class SectionsPageComponent {
     constructor() {
         effect(() => {
             this.initialize();
-            //TODO: Necesita recargar para verse
             this.actualUser.set(this.#authService.currentUser.value());
             console.log('USER: ', this.actualUser());
         });

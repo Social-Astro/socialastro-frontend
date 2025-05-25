@@ -3,6 +3,7 @@
         <p class="mb-0 titulo">{{ post().title }}</p>
         <p class="desc mb-0">{{ post().content.description.substr(0,30) }}...</p>
         <p class="seccion">Sistema: {{ post().section.title }}</p>
+        <p-tag icon="pi pi-hashtag" severity="info" [value]="post().tag" [rounded]="true" />
     </div>
     <p class="user">{{ post().content.user!.username }}</p>
     <div class="extra">

@@ -15,7 +15,8 @@
 }
 <div class="group fondo-card">
     @for (topic of topics(); track topic.id) {
-    <topics-card class="topic-card" [topic]="topic" (deleted)="deleteTopic(topic)" (edited)="getTopics()"></topics-card>
+    <topics-card class="topic-card" [topic]="topic" [actualUser]="actualUser()" (deleted)="deleteTopic(topic)"
+        (edited)="getTopics()"></topics-card>
     }@empty {
     <p>Sin datos</p>
     }

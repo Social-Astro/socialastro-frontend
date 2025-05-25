@@ -37,6 +37,7 @@
         </div>
     </div>
     @for (section of sections(); track section.id) {
-    <sections-card [section]="section" (deleted)="deleteSection()" (edited)="initialize()"></sections-card>
+    <sections-card [section]="section" [actualUser]="actualUser()" (deleted)="deleteSection()"
+        (edited)="initialize()"></sections-card>
     }
 </div>

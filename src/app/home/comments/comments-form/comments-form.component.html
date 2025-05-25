@@ -71,5 +71,8 @@
         <button type="submit" class="btn btn-primary" [disabled]="commentForm.invalid">
             {{ this.comment() ? "Editar estación espacial" :
             "Aterrizar" }}</button>
+        <button type="button" class="btn m-2" (click)="canDeactivate()">
+            Abortar misión
+        </button>
     </div>
 </form>

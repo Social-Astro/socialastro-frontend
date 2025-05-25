@@ -10,6 +10,11 @@
         </a>
         <p class="desc">{{ section().description }}</p>
     </div>
+    } @else {
+    <sections-form [topic]="section().topic" [section]="section()" (saved)="showEditForm()"
+        (hide)="showEditForm()"></sections-form>
+    }
+    @if (actualUser() && actualUser()!.role === "ADMIN" && !edit()) {
     <div class="action">
         <p-button (click)="op.toggle($event)" icon="pi pi-cog" [rounded]="true" size="small" severity="help" />
         <p-popover #op>
@@ -23,8 +28,5 @@
             </div>
         </p-popover>
     </div>
-    } @else {
-    <sections-form [topic]="section().topic" [section]="section()" (saved)="showEditForm()"
-        (hide)="showEditForm()"></sections-form>
     }
 </div>

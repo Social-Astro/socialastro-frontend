@@ -89,7 +89,6 @@ export class PostsFormComponent {
           filename: this.imagesBase64[i]
         })
       } else {
-        console.log("Entra");
         newPost.content.multimedia!.push({
           filename: this.imagesBase64[i]
         })
@@ -99,6 +98,10 @@ export class PostsFormComponent {
     if (this.post()) {
       newPost.content.id = this.post().content.id;
       newPost.content.user = this.post().content.user;
+
+      if (!this.imagesBase64.length) {
+        newPost.content.multimedia = this.post().content.multimedia;
+      }
 
       this.#postsService.editPost(newPost, this.post().id)
         .pipe(takeUntilDestroyed(this.#destroyRef))

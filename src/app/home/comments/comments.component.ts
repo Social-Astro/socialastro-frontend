@@ -5,10 +5,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DatePipe } from '@angular/common';
 import { CommentsFormComponent } from './comments-form/comments-form.component';
 import { CarouselModule } from 'primeng/carousel';
+import { AvatarModule } from 'primeng/avatar';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'comments',
-  imports: [DatePipe, CommentsFormComponent, CarouselModule],
+  imports: [DatePipe, CommentsFormComponent, CarouselModule, AvatarModule, RouterLink],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.scss'
 })
@@ -38,5 +40,9 @@ export class CommentsComponent {
           console.log(error.error.message)
         }
       })
+  }
+
+  hideForm() {
+    this.showEdit.set(false);
   }
 }
