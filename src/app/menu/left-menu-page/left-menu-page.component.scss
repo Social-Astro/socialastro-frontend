@@ -1,5 +1,8 @@
 .left-menu {
-    height: 100%;
+    width: 300px; // ancho fijo
+    height: 100%; // alto fijo igual a la altura de la ventana
+    min-width: 300px;
+    max-width: 300px;
     left: 0;
     background-color: #2c2c54;
     color: white;

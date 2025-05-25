@@ -1,10 +1,8 @@
-import { Component, effect, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators, NonNullableFormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { from } from 'rxjs';
 import { ValidationClassesDirective } from '../../shared/directives/validation-classes.directive';
-import { sameValue } from '../../shared/validators/same-value.validator';
+import { sameValue } from '../../utils/same-value.validator';
 import { AuthService } from '../services/auth.service';
 import { User } from '../../interfaces/user';
 

@@ -1,0 +1,10 @@
+@if (posts?.length) {
+    @for (post of posts; track post.id) {
+        <div class="profile-post">
+            <h4>{{ post.title }}</h4>
+            <p>{{ post.content }}</p>
+        </div>
+    }
+} @else {
+    <span>No tienes posts aún.</span>
+}

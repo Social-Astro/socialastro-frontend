@@ -1,0 +1,88 @@
+<p>profile-edit works!</p>
+<div class="profile-edit-panel">
+    <div class="profile-edit-accordion">
+        <div class="accordion-item">
+            <button class="accordion-toggle" (click)="showUserForm = !showUserForm">
+                <span>Editar datos</span>
+                <span [class.rotated]="showUserForm">▼</span>
+            </button>
+            <form *ngIf="showUserForm" [formGroup]="changeUserForm" (ngSubmit)="changeUser()" class="edit-form">
+                <div class="mb-3">
+                    <label>Nombre</label>
+                    <input type="text" class="form-control input" formControlName="name" />
+                </div>
+                <div class="mb-3">
+                    <label>Bio</label>
+                    <input type="text" class="form-control input" formControlName="bio" />
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="changeUserForm.invalid">Guardar</button>
+            </form>
+        </div>
+        <div class="accordion-item">
+            <button class="accordion-toggle" (click)="showEmailForm = !showEmailForm">
+                <span>Cambiar email</span>
+                <span [class.rotated]="showEmailForm">▼</span>
+            </button>
+            <form *ngIf="showEmailForm" [formGroup]="changeEmailForm" (ngSubmit)="changeEmail()" class="edit-form mt-3">
+                <div class="mb-3">
+                    <label>Email</label>
+                    <input type="email" class="form-control input" formControlName="email" />
+                </div>
+                <div class="mb-3">
+                    <label>Repite email</label>
+                    <input type="email" class="form-control input" formControlName="email2" />
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="changeEmailForm.invalid">Cambiar email</button>
+            </form>
+        </div>
+        <div class="accordion-item">
+            <button class="accordion-toggle" (click)="showPasswordForm = !showPasswordForm">
+                <span>Cambiar contraseña</span>
+                <span [class.rotated]="showPasswordForm">▼</span>
+            </button>
+            <form *ngIf="showPasswordForm" [formGroup]="changePasswordForm" (ngSubmit)="changePassword()" class="edit-form mt-3">
+                <div class="mb-3">
+                    <label>Nueva contraseña</label>
+                    <input type="password" class="form-control input" formControlName="password" />
+                </div>
+                <div class="mb-3">
+                    <label>Repite contraseña</label>
+                    <input type="password" class="form-control input" formControlName="password2" />
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="changePasswordForm.invalid">Cambiar contraseña</button>
+            </form>
+        </div>
+        <div class="accordion-item">
+            <button class="accordion-toggle" (click)="showAvatarForm = !showAvatarForm">
+                <span>Cambiar avatar</span>
+                <span [class.rotated]="showAvatarForm">▼</span>
+            </button>
+            <form *ngIf="showAvatarForm" [formGroup]="changeAvatarForm" (ngSubmit)="changeAvatar()" class="edit-form mt-3">
+                <div class="mb-3">
+                    <label>Nuevo avatar</label>
+                    <input type="file" class="form-control input" (change)="onAvatarFileChange($event)" />
+                    <div *ngIf="avatarBase64" class="img-preview-container">
+                        <img [src]="avatarBase64" class="img-preview" alt="Avatar preview" />
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="changeAvatarForm.invalid || !avatarBase64">Guardar avatar</button>
+            </form>
+        </div>
+        <div class="accordion-item">
+            <button class="accordion-toggle" (click)="showHeaderForm = !showHeaderForm">
+                <span>Cambiar portada</span>
+                <span [class.rotated]="showHeaderForm">▼</span>
+            </button>
+            <form *ngIf="showHeaderForm" [formGroup]="changeHeaderForm" (ngSubmit)="changeHeader()" class="edit-form mt-3">
+                <div class="mb-3">
+                    <label>Nueva portada</label>
+                    <input type="file" class="form-control input" (change)="onHeaderFileChange($event)" />
+                    <div *ngIf="headerBase64" class="img-preview-container">
+                        <img [src]="headerBase64" class="img-preview header-preview" alt="Header preview" />
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="changeHeaderForm.invalid || !headerBase64">Guardar portada</button>
+            </form>
+        </div>
+    </div>
+</div>

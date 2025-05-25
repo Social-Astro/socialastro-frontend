@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, httpResource } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { User, UserLogin } from '../../interfaces/user';
 import { SingleUserResponse, TokenResponse } from '../../interfaces/response';
+import { mapUser } from '../../profile/services/mappers/user.mapper';
 
 @Injectable({
     providedIn: 'root'
@@ -54,11 +55,11 @@ export class AuthService {
         return of(true);
     }
 
-    register(user: User): Observable<User> {
-        return this.#http.post<SingleUserResponse>('auth/register', user).pipe(map((resp) => resp.user));
-    }
+    currentUser = httpResource(() => (this.#logged() ? 'users/me' : undefined), {
+        parse: mapUser
+    });
 
-    getCurrentUser(): Observable<User> {
-        return this.#http.get<SingleUserResponse>('users/me').pipe(map((response) => response.user));
+    register(user: User): Observable<User> {
+        return this.#http.post<SingleUserResponse>('auth/register', user);
     }
 }

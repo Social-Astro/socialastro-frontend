@@ -1,0 +1,191 @@
+.about-card .card-body {
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.95;
+    border-radius: 1.5rem;
+    box-shadow:
+        0px 0px 40px 10px #b3e5fc55,
+        0px 0px 80px 0px #00eaff22;
+    border: 2.5px dashed #b3e5fc;
+    background: linear-gradient(135deg, #1a0033 0%, #2d0b4e 60%, #0d0032 100%);
+    font-size: 1rem;
+    color: white;
+    padding: 2.5rem;
+    width: 40rem;
+    max-width: 95vw;
+}
+
+.association-section {
+    margin-bottom: 2rem;
+    .association-logo {
+        width: 10rem;
+        border-radius: 1rem;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    }
+    .association-queens {
+        animation: alien-bounce 2s infinite;
+        filter: drop-shadow(0 0 10px #b3e5fc);
+    }
+    h4 {
+        letter-spacing: 1px;
+        font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+        color: #b3e5fc;
+        text-shadow: 0 0 8px #00eaff99;
+    }
+    .association-description {
+        font-size: 1.1rem;
+        margin-top: 1rem;
+        margin-bottom: 0;
+        background: rgba(0, 0, 0, 0.25);
+        border-radius: 0.7rem;
+        padding: 0.7rem 1rem;
+        box-shadow: 0 0 8px #b3e5fc33;
+    }
+}
+
+.member-card {
+    background: linear-gradient(120deg, rgba(179, 229, 252, 0.08) 0%, rgba(13, 0, 50, 0.15) 100%);
+    border-radius: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    color: white;
+    text-align: left;
+    border: 2px solid #b3e5fc55;
+    transition: transform 0.2s;
+    &:hover {
+        transform: scale(1.04) rotate(-2deg);
+        box-shadow: 0 0 30px #b3e5fc88;
+        border-color: #00eaff;
+    }
+    .avatar {
+        width: 6rem;
+        height: 6rem;
+        border-radius: 50%;
+        object-fit: cover;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        border: 2.5px solid #b3e5fc;
+        background: #0d0032;
+        transition: box-shadow 0.3s;
+        &:hover {
+            box-shadow: 0 0 30px #00eaff99;
+        }
+    }
+    .member-info {
+        margin-top: 1rem;
+        line-height: 2;
+        font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+        .fun-fact {
+            font-size: 0.98rem;
+            color: #ffe082;
+            margin-top: 0.5rem;
+            font-style: italic;
+            text-shadow: 0 0 6px #0d0032;
+        }
+        a {
+            color: #b3e5fc;
+            text-decoration: underline;
+            font-weight: bold;
+            &:hover {
+                color: #ffe082;
+                text-shadow: 0 0 8px #b3e5fc;
+            }
+        }
+    }
+}
+
+.logo-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.floating-icon,
+.floating-emoji {
+    position: absolute;
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0.85;
+    animation: floaty 6s ease-in-out infinite;
+}
+
+.floating-icon-1 {
+    top: 2%;
+    left: 7%;
+    width: 3.2rem;
+    animation-delay: 0s;
+}
+@for $i from 1 through 60 {
+    $top: random(80);
+    $left: random(90);
+    $font-size: 2 + random(6) / 10;
+    $delay: random(40) / 10;
+    $bottom: random(80);
+    $right: random(90);
+
+    .floating-emoji-#{$i} {
+        top: percentage($top / 100);
+        left: percentage($left / 100);
+        font-size: $font-size * 1rem;
+        animation-delay: $delay * 1s;
+
+        @if $i % 2 == 0 {
+            top: auto;
+            bottom: percentage($bottom / 100);
+        }
+        @if $i % 3 == 0 {
+            left: auto;
+            right: percentage($right / 100);
+        }
+    }
+}
+
+.floating-emoji {
+    width: 2rem !important;
+    height: auto !important;
+    min-width: unset !important;
+    min-height: unset !important;
+    max-width: 2rem !important;
+    max-height: 2rem !important;
+    font-size: unset !important;
+}
+
+@keyframes alien-bounce {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px) scale(1.08);
+    }
+}
+@keyframes floaty {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-18px) scale(1.08);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 900px) {
+    .about-card .card-body {
+        width: 98vw;
+        padding: 1rem;
+    }
+    .association-section .association-logo {
+        width: 7rem;
+    }
+    .member-card .avatar {
+        width: 4rem;
+        height: 4rem;
+    }
+}

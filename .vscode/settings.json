@@ -1,72 +1,154 @@
 {
-  "material-icon-theme.folders.associations": {
-    "data": "Global",
-    "dto": "Less",
-    "mappers": "Mappings",
-    "di": "Resource",
-    "domain": "Class",
-    "data-access": "Base",
-    "use-cases": "Other",
-    "domain/use-cases": "Interface",
-    "impl": "Class",
-    "queries": "Mjml",
-    "builders": "Include",
-    "interceptors": "Connection",
-    "entities": "Import",
-    "entity": "Import",
-    "features": "Controller"
-  },
-  "todo-tree.highlights.defaultHighlight": {
-    "icon": "alert",
-    "type": "text",
-    "foreground": "#FF0000",
-    "iconColour": "#0000FF"
-  },
-  "todo-tree.highlights.customHighlight": {
-    "TODO": {
-      "type": "text",
-      "foreground": "#00ff2a",
-      "iconColour": "#00ff2a",
-      "gutterIcon": true
+    "material-icon-theme.folders.associations": {
+        "data": "Global",
+        "dto": "Less",
+        "mappers": "Mappings",
+        "di": "Resource",
+        "domain": "Class",
+        "data-access": "Base",
+        "use-cases": "Other",
+        "domain/use-cases": "Interface",
+        "impl": "Class",
+        "queries": "Mjml",
+        "builders": "Include",
+        "interceptors": "Connection",
+        "entities": "Import",
+        "entity": "Import",
+        "features": "Controller",
+        "config": "Settings",
+        "constants": "Constant",
+        "utils": "Tools",
+        "helpers": "Helper",
+        "middleware": "Middleware",
+        "controllers": "Controller",
+        "routes": "Routing",
+        "tests": "Test",
+        "public": "Public",
+        "assets": "App",
+        "components": "Component",
+        "views": "View",
+        "store": "Redux",
+        "hooks": "Hook",
+        "schemas": "Schema",
+        "validators": "Check",
+        "logs": "Log",
+        "scripts": "Script",
+        "lib": "Library",
+        "services": "Service",
+        "extensions": "Extension",
+        "templates": "Template",
+        "docs": "Documentation",
+        "exceptions": "Error",
+        "errors": "Error",
+        "events": "Event",
+        "jobs": "Job",
+        "mail": "Mail",
+        "repositories": "Repository",
+        "resources": "Resource",
+        "providers": "Class"
     },
-    "FIXME": {
-      "type": "text",
-      "foreground": "#FFFF00",
-      "iconColour": "#FFFF00",
-      "gutterIcon": true
+    "todo-tree.highlights.customHighlight": {
+        "TODO": {
+            "icon": "flame",
+            "type": "text",
+            "foreground": "#00BFFF",
+            "gutterIcon": true,
+            "iconColour": "#00BFFF"
+        },
+        "FIXME": {
+            "icon": "zap",
+            "type": "text",
+            "foreground": "#FFFF00",
+            "iconColour": "#FFFF00",
+            "gutterIcon": true
+        },
+        "HACK": {
+            "icon": "star",
+            "type": "text",
+            "foreground": "#EE82EE",
+            "iconColour": "#EE82EE",
+            "gutterIcon": true
+        },
+        "BUG": {
+            "icon": "bug",
+            "type": "text",
+            "foreground": "#DC143C",
+            "iconColour": "#DC143C",
+            "gutterIcon": true
+        },
+        "REVIEW": {
+            "icon": "eye",
+            "type": "text",
+            "foreground": "#FFA500",
+            "iconColour": "#FFA500",
+            "gutterIcon": true
+        },
+        "OPTIMIZE": {
+            "icon": "rocket",
+            "type": "text",
+            "foreground": "#32CD32",
+            "iconColour": "#32CD32",
+            "gutterIcon": true
+        },
+        "NOTE": {
+            "icon": "search",
+            "type": "text",
+            "foreground": "#1E90FF",
+            "iconColour": "#1E90FF",
+            "gutterIcon": true
+        },
+        "QUESTION": {
+            "icon": "question",
+            "type": "text",
+            "foreground": "#FFD700",
+            "iconColour": "#FFD700",
+            "gutterIcon": true
+        },
+        "DEPRECATED": {
+            "icon": "alert",
+            "type": "text",
+            "foreground": "#FF4500",
+            "iconColour": "#FF4500",
+            "gutterIcon": true
+        },
+        "DONE": {
+            "icon": "check",
+            "type": "text",
+            "foreground": "#00ff4c",
+            "iconColour": "#00ff4c",
+            "gutterIcon": true
+        }
     },
-    "HACK": {
-      "type": "text",
-      "foreground": "#EE82EE",
-      "iconColour": "#EE82EE",
-      "gutterIcon": true
-    },
-    "BUG": {
-      "icon": "bug",
-      "type": "text",
-      "foreground": "#DC143C",
-      "iconColour": "#DC143C",
-      "gutterIcon": true
-    },
-  },
-  "peacock.color": "#d583b199",
-  "workbench.colorCustomizations": {
-    "activityBar.activeBackground": "#e2a9c999",
-    "activityBar.background": "#e2a9c999",
-    "activityBar.foreground": "#15202b",
-    "activityBar.inactiveForeground": "#15202b99",
-    "activityBarBadge.background": "#557728",
-    "activityBarBadge.foreground": "#e7e7e7",
-    "commandCenter.border": "#15202b99",
-    "sash.hoverBorder": "#e2a9c999",
-    "statusBar.background": "#d583b199",
-    "statusBar.foreground": "#15202b",
-    "statusBarItem.hoverBackground": "#c85d9999",
-    "statusBarItem.remoteBackground": "#d583b199",
-    "statusBarItem.remoteForeground": "#15202b",
-    "titleBar.activeBackground": "#d583b199",
-    "titleBar.activeForeground": "#15202b",
-    "titleBar.inactiveBackground": "#d583b199",
-    "titleBar.inactiveForeground": "#15202b99"
-  }
+    "todo-tree.general.tags": [
+        "TODO",
+        "FIXME",
+        "HACK",
+        "BUG",
+        "REVIEW",
+        "OPTIMIZE",
+        "NOTE",
+        "QUESTION",
+        "DEPRECATED",
+        "DONE"
+    ],
+    "peacock.color": "#d583b199",
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#e2a9c999",
+        "activityBar.background": "#e2a9c999",
+        "activityBar.foreground": "#15202b",
+        "activityBar.inactiveForeground": "#15202b99",
+        "activityBarBadge.background": "#557728",
+        "activityBarBadge.foreground": "#e7e7e7",
+        "commandCenter.border": "#15202b99",
+        "sash.hoverBorder": "#e2a9c999",
+        "statusBar.background": "#d583b199",
+        "statusBar.foreground": "#15202b",
+        "statusBarItem.hoverBackground": "#c85d9999",
+        "statusBarItem.remoteBackground": "#d583b199",
+        "statusBarItem.remoteForeground": "#15202b",
+        "titleBar.activeBackground": "#d583b199",
+        "titleBar.activeForeground": "#15202b",
+        "titleBar.inactiveBackground": "#d583b199",
+        "titleBar.inactiveForeground": "#15202b99"
+    }
 }

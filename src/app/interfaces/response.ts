@@ -4,9 +4,7 @@ export interface TokenResponse {
     accessToken: string;
 }
 
-export interface SingleUserResponse {
-    user: User;
-}
+export type SingleUserResponse = User;
 
 export interface AvatarResponse {
     avatar: string;

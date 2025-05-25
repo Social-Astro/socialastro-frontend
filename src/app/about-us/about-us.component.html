@@ -1,0 +1,53 @@
+<div class="text-center mb-3 about-card">
+    <!-- Iconos flotantes decorativos -->
+    <img src="assets/normal/normal_alien_queens.png" alt="Alien Icon" class="floating-icon floating-icon-1" />
+    @for (idx of emojiArray; track idx; let i = $index) {
+        <img src="assets/normal/normal_alien_queens.png" alt="Alien Emoji" class="floating-emoji floating-emoji-{{ i }}" />
+    }
+    <div class="card-body">
+        <div class="association-section mb-5">
+            <div class="logo-center mb-3">
+                <img src="assets/logo.png" alt="Asociación Logo" class="association-logo" />
+            </div>
+            <img src="assets/normal/normal_alien_queens.png" alt="Alien Queens Icon" class="association-queens mb-2" style="width: 4rem; margin-bottom: 1rem" />
+            <h4 class="mb-3">Asociación Social Astro <span style="font-size: 1.5rem">👽✨</span></h4>
+            <p class="association-description">
+                ¡Bienvenido terrícola a la nave nodriza! <br />
+                Somos una asociación dedicada a conectar personas a través de la tecnología y la astronomía.<br />
+                Nuestro objetivo es crear una comunidad inclusiva, educativa y... ¡con mucho humor interestelar! 🚀🌌
+            </p>
+            <div class="association-contact mb-4">
+                <strong>Email de contacto:</strong>
+                <a href="mailto:contacto@socialastro.org">contacto&#64;socialastro.org</a>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-5 mb-4">
+                <div class="member-card p-3">
+                    <img src="assets/avatars/avatar2.png" alt="Avatar 2" class="avatar mb-3" />
+                    <div class="member-info">
+                        <div><strong>Nombre:</strong> Irene <span title="Alien Queen">👑👽</span></div>
+                        <div><strong>LinkedIn: </strong> <a href="https://linkedin.com" target="_blank">Irene</a></div>
+                        <div><strong>GitHub: </strong> <a href="https://github.com/" target="_blank">Irene</a></div>
+                        <div class="fun-fact mt-2">🛸 Siempre lista para una aventura interplanetaria y memes espaciales.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 mb-4">
+                <div class="member-card p-3">
+                    <img src="assets/avatars/avatar1.png" alt="Avatar 1" class="avatar mb-3" />
+                    <div class="member-info">
+                        <div><strong>Nombre:</strong> Sandra <span title="Alien Queen">👑👽</span></div>
+                        <div><strong>LinkedIn: </strong> <a href="https://linkedin.com/in/sandra" target="_blank"> Sandra</a></div>
+                        <div><strong>GitHub: </strong> <a href="https://github.com/sandra" target="_blank"> Sandra</a></div>
+                        <div class="fun-fact mt-2">🌠 Le gusta programar bajo las estrellas y tomar café galáctico.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            <img src="assets/normal/normal_alien_queens.png" alt="Alien Queens Icon" style="width: 2.5rem; vertical-align: middle; margin-right: 0.5rem" />
+            <span style="font-size: 1.1rem">¡Únete a nuestra tripulación y sé parte de la invasión positiva! 👾</span>
+        </div>
+    </div>
+</div>

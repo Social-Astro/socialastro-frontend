@@ -20,6 +20,12 @@ export const routes: Routes = [
         canActivate: [loginActivateGuard],
         loadChildren: () => import('./profile/profile.routes').then((m) => m.routes)
     },
+    {
+        path: 'about-us',
+        canActivate: [loginActivateGuard],
+        loadComponent: () => import('./about-us/about-us.component').then((m) => m.AboutUsComponent),
+        title: 'Register'
+    },
 
     {
         path: '',

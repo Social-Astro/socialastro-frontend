@@ -1,3 +1,4 @@
+// TODO: crear una interfaz para el usuario real (lo que devuelve el back) y otra para el resigter
 export interface User {
     id?: number;
     username: string;

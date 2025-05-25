@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, resource, signal } from '@angular/core';
-import { empty, firstValueFrom, map, Observable } from 'rxjs';
-import { User, UserAvatarEdit, UserEmailEdit, UserHeaderEdit, UserPasswordEdit, UserProfileEdit } from './../../interfaces/user';
-import { SingleUserResponse } from './../../interfaces/response';
+import { HttpClient, httpResource } from '@angular/common/http';
+import { inject, Injectable, signal } from '@angular/core';
+import { Observable } from 'rxjs';
+import { UserAvatarEdit, UserEmailEdit, UserHeaderEdit, UserPasswordEdit, UserProfileEdit } from './../../interfaces/user';
+import { mapUser } from './mappers/user.mapper';
 
 @Injectable({
     providedIn: 'root'
@@ -12,12 +12,7 @@ export class UserService {
 
     #currentUser = signal<number | undefined>(undefined);
 
-    userSelected = resource({
-        request: () => ({ currentUser: this.#currentUser() }),
-        loader: ({ request }) => {
-            return firstValueFrom(this.#http.get<User>(`users/${request.currentUser ? request.currentUser : 'me'}`));
-        }
-    });
+    userSelected = httpResource(() => `users/${this.#currentUser() || 'me'}`, { parse: mapUser });
 
     setCurrentUser(id?: number) {
         this.#currentUser.set(id);
@@ -30,7 +25,7 @@ export class UserService {
     saveUserPassword(password: UserPasswordEdit): Observable<void> {
         return this.#http.put<void>('users/me/password', password);
     }
-    // TODO: implementar en el back los endpoints para el email, el avatar y el header
+    // Done: implementar en el back los endpoints para el email, el avatar y el header
     saveUserEmail(email: UserEmailEdit): Observable<void> {
         return this.#http.put<void>('users/me/email', email);
     }
