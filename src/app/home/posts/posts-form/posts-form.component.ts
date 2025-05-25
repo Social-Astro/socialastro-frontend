@@ -104,7 +104,6 @@ export class PostsFormComponent {
         .pipe(takeUntilDestroyed(this.#destroyRef))
         .subscribe({
           next: (resp) => {
-            console.log(resp);
             this.saved = true;
             this.#router.navigate(['/home/posts', this.post().id]);
           },

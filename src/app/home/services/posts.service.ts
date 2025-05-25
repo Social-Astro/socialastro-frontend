@@ -23,6 +23,13 @@ export class PostsService {
             .pipe(map((resp) => resp));
     }
 
+    getPostsByUser(id: number, page: number = 1) {
+        let params = new URLSearchParams({ page: String(page) });
+
+        return this.#http.get<PostsResponse>(`${this.#postsUrl}/user/${id}?${params.toString()}`)
+            .pipe(map((resp) => resp));
+    }
+
     getPost(id: number): Observable<Post> {
         return this.#http.get<Post>(`${this.#postsUrl}/${id}`)
             .pipe(map((resp) => resp));
