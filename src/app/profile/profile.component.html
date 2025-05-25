@@ -2,7 +2,7 @@
 
 <div class="profile-header" [style]="headerBackgroundStyle()">
     <div class="profile-avatar-container">
-        <img class="profile-avatar" [src]="user?.avatar || 'assets/default-avatar.png'" alt="Avatar" />
+        <img class="profile-avatar" [src]="user && user.avatar ? user.avatar : 'assets/default-avatar.png'" alt="Avatar" />
     </div>
 </div>
 
