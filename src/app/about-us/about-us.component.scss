@@ -124,7 +124,7 @@
     width: 2.2rem;
     animation-delay: 0s;
 }
-@for $i from 1 through 60 {
+@for $i from 1 through 200 {
     $top: random(80);
     $left: random(90);
     $font-size: 2 + random(6) / 10;

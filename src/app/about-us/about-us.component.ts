@@ -8,5 +8,5 @@ import { RouterLink } from '@angular/router';
     styleUrl: './about-us.component.scss'
 })
 export class AboutUsComponent {
-    emojiArray = Array.from({ length: 60 });
+    emojiArray = Array.from({ length: 200 });
 }

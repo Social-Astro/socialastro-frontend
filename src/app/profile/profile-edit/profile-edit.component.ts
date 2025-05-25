@@ -150,7 +150,6 @@ export class ProfileEditComponent {
     changeAvatar() {
         if (!this.changeAvatarForm.valid || !this.avatarBase64Arr.length) return;
         const dto = { avatar: this.avatarBase64Arr[0] };
-        console.log('Enviando avatar:', dto);
         this.profileService.saveUserAvatar(dto).subscribe({
             next: () => {
                 this.userResource.reload();
@@ -164,7 +163,6 @@ export class ProfileEditComponent {
     changeHeader() {
         if (!this.changeHeaderForm.valid || !this.headerBase64Arr.length) return;
         const dto = { heading: this.headerBase64Arr[0] };
-        console.log('Enviando header:', dto);
         this.profileService.saveUserHeader(dto).subscribe({
             next: () => {
                 this.userResource.reload();
