@@ -1,8 +1,10 @@
 <form (ngSubmit)="sendComment()" [formGroup]="commentForm" class="mt-4">
     <div class="mb-3">
-        <label for="comment" class="form-label">Comentario</label>
-        <textarea class="form-control input" name="comment" formControlName="description"
-            [validationClasses]="{valid: 'is-valid', invalid: 'is-invalid'}" rows="3">
+        <label for="comment" class="form-label">
+            <img src="assets/normal/normal_planet_comment.png" alt="" width="50px" />
+            Petición de aterrizaje:
+        </label>
+        <textarea class="form-control input" name="comment" formControlName="description" rows="3">
       </textarea>
         @let comErrors = commentForm.get('comment')?.errors;
         @if(comErrors?.['required']) {

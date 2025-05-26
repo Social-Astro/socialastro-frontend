@@ -65,7 +65,8 @@ export class CommentsFormComponent {
     }
 
     for (let i = 0; i < this.imagesBase64.length; i++) {
-      if (this.comment() && this.comment()!.content.multimedia![i]) {
+      /* if (this.comment() && this.comment()!.content.multimedia![i]) { */
+      if (this.comment()?.content.multimedia?.[i]) {
         newComment.content.multimedia!.push({
           id: this.comment()!.content.multimedia![i].id,
           filename: this.imagesBase64[i]
@@ -83,10 +84,6 @@ export class CommentsFormComponent {
       console.log(newComment);
 
       console.log("IMAGENES", this.imagesBase64);
-
-      if (!this.imagesBase64.length) {
-        newComment.content.multimedia = this.comment()!.content.multimedia;
-      }
 
       this.#commentsService.editComment(newComment, this.comment()!.id)
         .pipe(takeUntilDestroyed(this.#destroyRef))
@@ -121,6 +118,9 @@ export class CommentsFormComponent {
   //TODO: Implementar el canDeactivate
   canDeactivate() {
     this.hide.emit();
+    this.commentForm.reset();
+    this.commentForm.markAsUntouched();
+    this.imagesBase64 = [];
     /* if (this.saved || this.postForm.pristine) {
       return true;
     }
