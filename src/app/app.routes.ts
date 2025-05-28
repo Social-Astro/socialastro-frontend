@@ -28,6 +28,13 @@ export const routes: Routes = [
     },
 
     {
+        path: 'explorer',
+        canActivate: [loginActivateGuard],
+        loadComponent: () => import('./explore/explore.component').then((m) => m.ExploreComponent),
+        title: 'Explorar hiperespacio ** Social Astro'
+    },
+
+    {
         path: '',
         redirectTo: '/home',
         pathMatch: 'full'

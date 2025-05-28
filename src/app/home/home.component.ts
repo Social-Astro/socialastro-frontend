@@ -40,18 +40,16 @@ export class HomeComponent {
             })
     }
 
-    // TODO: Sacar por la base de datos directamente
     ordenarPorFecha() {
-        console.log(this.posts());
-        this.ordenadosFecha.set(this.posts().slice().sort((a: Post, b: Post) => b.content.updatedAt.toString().localeCompare(a.content.updatedAt.toString())));
-        this.ordenadosFecha.update((actual) => actual.splice(0, 2));
+        this.ordenadosFecha.set(this.posts().splice(0, 3));
         console.log('FECHA: ', this.ordenadosFecha());
         console.log('posts', this.posts());
     }
 
+    // TODO: Sacar por la base de datos directamente
     ordenarPorComentarios() {
         this.ordenadosComentarios.set(this.posts().slice().sort((a: Post, b: Post) => b.numComments - a.numComments));
-        this.ordenadosComentarios.update((actual) => actual.splice(0, 2));
+        this.ordenadosComentarios.update((actual) => actual.splice(0, 3));
         console.log('COMENTARIOS', this.ordenadosComentarios());
     }
 }

@@ -1,0 +1,89 @@
+<div class="fondo-card mt-3">
+    <h2>Últimos planetas terraformados</h2>
+    <p-carousel [value]="posts()" [numVisible]="5" [numScroll]="1" [responsiveOptions]="responsiveOptions">
+        <ng-template let-post #item>
+            @let image = post.content.multimedia.length > 0 ? post.content.multimedia[0].filename :
+            'assets/normal/normal_planet_post.png';
+            <div class="border border-surface-200 dark:border-surface-700 rounded m-2 p-4 post-card"
+                [ngStyle]="{ 'background-image': 'url(' + image + ')' }">
+                <p-tag [value]="post.tag" severity="info" />
+                <div class="mt-4 font-medium post-text">{{ post.title }}</div>
+                <div class="mb-4 font-medium post-text">
+                    <img src="assets/normal/normal_planet_comment.png" alt="" width="30px" /> {{ post.numComments }}
+                </div>
+                <div class="d-flex justify-content-between mb-o">
+                    <a [routerLink]="['/profile', post.content.user.id]" class="align-self-center"><p-avatar
+                            [image]="post.content.user!.avatar" class="mr-2" size="normal" shape="circle" />
+                    </a>
+                    <a [routerLink]="['/home/posts', post.id]" class="btn m-2 enlace">
+                        <img src="assets/normal/normal_planet_system3.png" alt="Visitar" title="Visitar" width="40px" />
+                    </a>
+                </div>
+
+                <div class="font-small">Sistema: <br>
+                    <a [routerLink]="['/home/topics', post.section.id]" class="enlace">{{post.section.title }}</a>
+                </div>
+            </div>
+        </ng-template>
+    </p-carousel>
+</div>
+
+<div class="fondo-card">
+    <h2>Aparición aleatoria en el radar</h2>
+    <div class="aleatorio">
+        @let postAleatorio = posts()[numAleatorio];
+        @let image = postAleatorio.content.multimedia!.length! > 0 ? postAleatorio.content.multimedia![0].filename :
+        'assets/normal/normal_planet_post.png';
+        <img [src]="image" [alt]="postAleatorio.title" />
+        <div class="aleatorio-texto">
+            <h3>{{ postAleatorio.title }}</h3>
+            <p>{{ postAleatorio.content.description }}</p>
+            <div class="d-flex justify-content-between">
+                <div class="font-small">
+                    <p class="mb-0">Sistema: </p>
+                    <a [routerLink]="['/home/topics', postAleatorio.section.id]"
+                        class="enlace">{{postAleatorio.section.title }}</a>
+                </div>
+                <div class="d-flex redirec">
+                    <a [routerLink]="['/profile', postAleatorio.content.user!.id]" class="align-self-center"><p-avatar
+                            [image]="postAleatorio.content.user!.avatar" class="mr-2" size="normal" shape="circle" />
+                    </a>
+                    <a [routerLink]="['/home/posts', postAleatorio.id]" class="btn enlace">
+                        <img src="assets/normal/normal_planet_system3.png" alt="Visitar" title="Visitar" width="40px"
+                            class="enlace-post" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (postsUsuario()[0] && ordenadosTag1()) {
+<div class="fondo-card mt-3">
+    <h2>Otros planetas basados en {{ postsUsuario()[0].tag }}</h2>
+    <p-carousel [value]="ordenadosTag1()" [numVisible]="5" [numScroll]="1" [responsiveOptions]="responsiveOptions">
+        <ng-template let-post #item>
+            @let image = post.content.multimedia.length > 0 ? post.content.multimedia[0].filename :
+            'assets/normal/normal_planet_post.png';
+            <div class="border border-surface-200 dark:border-surface-700 rounded m-2 p-4 post-card"
+                [ngStyle]="{ 'background-image': 'url(' + image + ')' }">
+                <p-tag [value]="post.tag" severity="info" />
+                <div class="mt-4 font-medium post-text">{{ post.title }}</div>
+                <div class="mb-4 font-medium post-text">
+                    <img src="assets/normal/normal_planet_comment.png" alt="" width="30px" /> {{ post.numComments }}
+                </div>
+                <div class="d-flex justify-content-between mb-0">
+                    <a [routerLink]="['/profile', post.content.user.id]" class="align-self-center"><p-avatar
+                            [image]="post.content.user!.avatar" class="mr-2" size="normal" shape="circle" /></a>
+                    <a [routerLink]="['/home/posts', post.id]" class="btn m-2 boton-post">
+                        <img src="assets/normal/normal_planet_system3.png" alt="Visitar" title="Visitar" width="40px" />
+                    </a>
+                </div>
+                <div class="font-small">Sistema: <br>
+                    <a [routerLink]="['/home/topics', post.section.id]" class="enlace">{{post.section.title }}</a>
+                </div>
+            </div>
+        </ng-template>
+    </p-carousel>
+</div>
+}

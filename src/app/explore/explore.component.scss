@@ -1,0 +1,52 @@
+@import '../home/home.component.scss';
+@import '../../styles/_variables';
+
+.aleatorio {
+    display: flex;
+
+    img:not(.enlace-post) {
+        width: 300px;
+        border-radius: 15px;
+    }
+
+    .aleatorio-texto {
+        margin-left: 1.5rem;
+        flex-grow: 1;
+    }
+
+    .redirec {
+        a {
+            margin: .5rem;
+        }
+    }
+}
+
+.post-card {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(199, 199, 199, 0.795);
+    background-blend-mode: lighten;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    width: 180px;
+
+    .post-text {
+        color: $purple-color;
+        font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+    }
+
+    .boton-post {
+        align-self: end;
+    }
+}
+
+.enlace {
+    text-decoration: none;
+    color: $purple-color;
+    font-weight: bold;
+}

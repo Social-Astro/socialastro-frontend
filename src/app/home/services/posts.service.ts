@@ -30,6 +30,13 @@ export class PostsService {
             .pipe(map((resp) => resp));
     }
 
+    getPostsByTag(tag: string) {
+        let params = new URLSearchParams({ tag: tag });
+
+        return this.#http.get<Post[]>(`${this.#postsUrl}/tag?${params.toString()}`)
+            .pipe(map((resp) => resp));
+    }
+
     getPost(id: number): Observable<Post> {
         return this.#http.get<Post>(`${this.#postsUrl}/${id}`)
             .pipe(map((resp) => resp));
