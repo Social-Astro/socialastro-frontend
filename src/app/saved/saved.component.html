@@ -1,0 +1,12 @@
+@for (tag of tags(); track tag) {
+<div class="fondo-card mt-4 col-10">
+    <h2><img src="assets/normal/normal_satellite_saved.png" alt="Ir al post" width="40px" /> {{ tag }}</h2>
+    @for (post of savedPosts(); track post.id) {
+    @if (post.tag === tag) {
+    <a [routerLink]="['/home/posts', post.id]">
+        <posts-card [post]="post"></posts-card>
+    </a>
+    }
+    }
+</div>
+}

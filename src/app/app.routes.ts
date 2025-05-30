@@ -35,6 +35,13 @@ export const routes: Routes = [
     },
 
     {
+        path: 'saved',
+        canActivate: [loginActivateGuard],
+        loadComponent: () => import('./saved/saved.component').then((m) => m.SavedComponent),
+        title: 'Estaciones guardadas ** Social Astro'
+    },
+
+    {
         path: '',
         redirectTo: '/home',
         pathMatch: 'full'

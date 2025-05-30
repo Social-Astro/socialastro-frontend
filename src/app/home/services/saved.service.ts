@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { Post } from '../interfaces/post';
-import { Saved } from "../interfaces/saved";
+import { Saved, SavedByUser } from "../interfaces/saved";
 
 @Injectable({
     providedIn: 'root'
@@ -16,8 +16,8 @@ export class SavedService {
             .pipe(map((resp) => resp));
     }
 
-    getSavedByUser(id: number): Observable<Saved[]> {
-        return this.#http.get<Saved[]>(`${this.#savedUrl}/${id}/user`)
+    getSavedByUser(): Observable<SavedByUser[]> {
+        return this.#http.get<SavedByUser[]>(`${this.#savedUrl}/user`)
             .pipe(map((resp) => resp));
     }
 

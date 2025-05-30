@@ -10,3 +10,9 @@ export interface Saved extends NewSaved {
     post: Post
     user: User
 }
+
+export interface SavedByUser {
+    postId: number;
+    postTitle: string;
+    postTag: string;
+}
