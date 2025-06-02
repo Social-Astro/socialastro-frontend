@@ -8,8 +8,8 @@ import { PostsService } from '../../services/posts.service';
 import { Title } from '@angular/platform-browser';
 import { Section } from '../../interfaces/sections';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Multimedia } from '../../interfaces/multimedia';
 import { NgClass } from '@angular/common';
+import { Multimedia } from '../../interfaces/multimedia';
 
 @Component({
   selector: 'posts-form',

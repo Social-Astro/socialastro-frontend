@@ -6,8 +6,8 @@ import { CommentsService } from '../../services/comments.service';
 import { Post } from '../../interfaces/post';
 import { Comment, NewComment } from '../../interfaces/comment';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Multimedia } from '../../interfaces/multimedia';
 import { NgClass } from '@angular/common';
+import { Multimedia } from '../../interfaces/multimedia';
 
 @Component({
   selector: 'comments-form',
