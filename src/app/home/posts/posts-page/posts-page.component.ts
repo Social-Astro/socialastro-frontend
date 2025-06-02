@@ -8,11 +8,12 @@ import { Router, RouterLink } from "@angular/router";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { debounceTime, distinctUntilChanged } from "rxjs";
 import { Post } from "../../interfaces/post";
+import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 
 @Component({
   selector: 'posts-page',
   standalone: true,
-  imports: [PostsCardComponent, RouterLink, ReactiveFormsModule],
+  imports: [PostsCardComponent, RouterLink, ReactiveFormsModule, PaginatorModule],
   templateUrl: './posts-page.component.html',
   styleUrl: './posts-page.component.scss'
 })
@@ -24,7 +25,8 @@ export class PostsPageComponent {
 
   section = input.required<Section>();
   posts = signal<Post[]>([]);
-
+  total = signal<number>(0);
+  page = 1;
 
   searchControl = new FormControl('');
   search = toSignal(
@@ -46,13 +48,19 @@ export class PostsPageComponent {
   }
 
   getPosts() {
-    this.#postsService.getPostsBySection(this.section().id, this.search()!)
+    this.#postsService.getPostsBySection(this.section().id, this.search()!, this.page)
       .pipe(takeUntilDestroyed(this.#destroyRed))
       .subscribe({
         next: (resp) => {
           this.posts.set(resp.posts)
+          this.total.set(resp.count);
         }
       })
+  }
+
+  onPageChange(event: PaginatorState) {
+    this.page = ++event.page!;
+    this.getPosts();
   }
 
   goAddPost() {
@@ -61,5 +69,9 @@ export class PostsPageComponent {
 
   deletePost() {
     this.getPosts();
+  }
+
+  goBack() {
+    this.#router.navigate(['/home/topics', this.section().topic.id]);
   }
 }

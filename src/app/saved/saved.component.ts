@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, effect, inject, signal } from '@angular/core';
 import { SavedService } from '../home/services/saved.service';
 import { Post } from '../home/interfaces/post';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -22,7 +22,9 @@ export class SavedComponent {
   tags = signal<string[]>([]);
 
   constructor() {
-    this.getSavedPosts();
+    effect(() => {
+      this.getSavedPosts();
+    })
   }
 
   getSavedPosts() {
@@ -32,24 +34,34 @@ export class SavedComponent {
         next: (resp) => {
           resp.forEach((p) => {
             this.tags().push(p.postTag);
-
-            this.#postsService.getPost(p.postId)
-              .pipe(takeUntilDestroyed(this.#destroyRef))
-              .subscribe({
-                next: (post) => {
-                  this.savedPosts().push(post);
-                }
-              })
+            this.getSinglePost(p.postId)
           })
 
           console.log(this.savedPosts());
           this.reduceTags();
           console.log(this.tags());
+        },
+        error: (error) => {
+          console.log(error.error.message);
+        }
+      })
+  }
+
+  getSinglePost(postId: number) {
+    this.#postsService.getPost(postId)
+      .pipe(takeUntilDestroyed(this.#destroyRef))
+      .subscribe({
+        next: (post) => {
+          this.savedPosts().push(post);
         }
       })
   }
 
   reduceTags() {
     this.tags.update((value) => Array.from(new Set(value)));
+  }
+
+  nada() {
+    console.log("Hola");
   }
 }

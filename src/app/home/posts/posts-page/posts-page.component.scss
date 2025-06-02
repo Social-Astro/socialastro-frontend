@@ -31,3 +31,27 @@ a {
     color: #d6a3d6;
     height: fit-content;
 }
+
+::ng-deep .p-paginator {
+    background: transparent;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.go-back {
+    width: fit-content;
+    padding: .4rem;
+    border-radius: 50px;
+    background-color: #5fa35f;
+
+    i {
+        align-self: center;
+    }
+}
+
+.section-nombre {
+    flex-grow: 1;
+    text-align: left;
+    padding-left: .5rem;
+    align-self: center;
+}
