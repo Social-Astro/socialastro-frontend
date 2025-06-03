@@ -1,53 +1,54 @@
-<div class="respuesta row mb-3">
-    <div class="col-12 col-xl-9 fondo-card contenido-respuesta m-3">
+<div class="respuesta mb-3">
+    <div class="fondo-card m-3" style="flex-grow: 1;">
         <div class="infor d-flex justify-content-between">
             <p>{{ comment().content.updatedAt | date: 'h:mm a - dd/MM/yyyy' }}</p>
         </div>
         @if (showEdit()) {
-            <comments-form [post]="comment().post" [comment]="comment()" (edited)="editComment()" (hide)="hideForm()"></comments-form>
+        <comments-form [post]="comment().post" [comment]="comment()" (edited)="editComment()"
+            (hide)="hideForm()"></comments-form>
         } @else {
-            <p>
-                {{ comment().content.description }}
-            </p>
-            @if (comment().content.multimedia) {
-                <p-carousel [value]="comment().content.multimedia!" [numVisible]="1" [numScroll]="1" orientation="horizontal" verticalViewPortHeight="330px" contentClass="flex items-center">
-                    <ng-template let-multimedia #item>
-                        <div class="mb-4">
-                            <div class="relative mx-auto">
-                                <img [src]="multimedia.filename" alt="Multimedia" class="w-full rounded" width="200px" />
-                            </div>
-                        </div>
-                    </ng-template>
-                </p-carousel>
-            }
-            <div class="d-flex justify-content-between">
-                <div class="d-xl-none usuario d-flex p-2" style="width: fit-content">
-                    <p-avatar [image]="comment().content.user!.avatar" class="mr-2" size="xlarge" shape="circle" />
-                    <div style="text-align: left; margin-left: 0.5rem">
-                        <a [routerLink]="['/profile', comment().content.user!.id]">
-                            <p class="mb-0">{{ comment().content.user!.username }}</p>
-                        </a>
-                        <!-- TODO: Sustituir por logro destacado  -->
-                        <small>Logro destacado</small>
-                        <!-- TODO: Sustituir por posts totales del usuario  -->
-                        <p style="font-size: small; font-weight: bold">Planetas visitados: 3445</p>
+        <p>
+            {{ comment().content.description }}
+        </p>
+        @if (comment().content.multimedia) {
+        <p-carousel [value]="comment().content.multimedia!" [numVisible]="1" [numScroll]="1" orientation="horizontal"
+            verticalViewPortHeight="330px" contentClass="flex items-center">
+            <ng-template let-multimedia #item>
+                <div class="mb-4">
+                    <div class="relative mx-auto">
+                        <img [src]="multimedia.filename" alt="Multimedia" class="w-full rounded" width="200px" />
                     </div>
                 </div>
-                @if (comment().content.mine) {
-                    <div class="acciones">
-                        <button class="btn m-2" (click)="showEdit.set(true)">
-                            <img src="assets/normal/normal_gun_edit.png" alt="Botón editar" title="Editar" width="40px" />
-                        </button>
-                        <button class="btn m-2" (click)="deleteComment()">
-                            <img src="assets/normal/normal_meteor_delete.png" alt="Botón borrar" title="Borrar" width="40px" />
-                        </button>
-                    </div>
-                }
+            </ng-template>
+        </p-carousel>
+        }
+        <div class="d-flex justify-content-between">
+            <div class="usuario usuario-xs p-2" style="width: fit-content">
+                <p-avatar [image]="comment().content.user!.avatar" class="mr-2" size="xlarge" shape="circle" />
+                <div style="text-align: left; margin-left: 0.5rem">
+                    <a [routerLink]="['/profile', comment().content.user!.id]">
+                        <p class="mb-0">{{ comment().content.user!.username }}</p>
+                    </a>
+                    <!-- TODO: Sustituir por logro destacado  -->
+                    <small>Logro destacado</small>
+                    <p style="font-size: small; font-weight: bold">Planetas visitados: {{
+                        comment().content.user!.numPosts }}</p>
+                </div>
             </div>
+            @if (comment().content.mine) {
+            <div class="acciones">
+                <button class="btn m-2" (click)="showEdit.set(true)">
+                    <img src="assets/normal/normal_gun_edit.png" alt="Botón editar" title="Editar" width="40px" />
+                </button>
+                <button class="btn m-2" (click)="deleteComment()">
+                    <img src="assets/normal/normal_meteor_delete.png" alt="Botón borrar" title="Borrar" width="40px" />
+                </button>
+            </div>
+            }
+        </div>
         }
     </div>
-
-    <div class="d-none d-xl-block col-2 fondo-card usuario m-3">
+    <div class="fondo-card usuario usuario-xl m-3">
         <p-avatar [image]="comment().content.user!.avatar" class="mr-2" size="xlarge" shape="circle" />
         <a [routerLink]="['/profile', comment().content.user!.id]">
             <p class="mb-0">{{ comment().content.user!.username }}</p>
@@ -55,7 +56,6 @@
         <!-- TODO: Sustituir por logro destacado  -->
         <small>Logro destacado</small>
         <hr />
-        <!-- TODO: Sustituir por posts totales del usuario  -->
-        <p style="font-size: small; font-weight: bold">Planetas visitados: 3445</p>
+        <p style="font-size: small; font-weight: bold">Planetas visitados: {{ comment().content.user!.numPosts }}</p>
     </div>
 </div>

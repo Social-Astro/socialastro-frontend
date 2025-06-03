@@ -1,4 +1,4 @@
-@import '../sections-page/sections-page.component.scss';
+@use '../sections-page/sections-page.component.scss' as *;
 
 .secciones {
     display: flex;

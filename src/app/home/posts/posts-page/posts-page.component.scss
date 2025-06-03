@@ -1,6 +1,40 @@
-@import '../../home.component.scss';
+@use '../../home.component.scss' as *;
 
-.header {
+.titulo-section-posts {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+
+    @media (max-width: 1200px) {
+        .terraformar {
+            margin-top: .5rem;
+            flex-grow: 1;
+        }
+    }
+
+    .section-nombre {
+        flex-grow: 1;
+        text-align: left;
+        padding-left: 1.5rem;
+        align-self: center;
+    }
+
+    .input {
+        background: linear-gradient(to bottom, rgba(13, 0, 50, 0.8), rgba(0, 0, 0, 0.8));
+        color: #d6a3d6;
+        height: fit-content;
+
+        &::placeholder {
+            color: #d6a3d6;
+            opacity: .6;
+        }
+    }
+}
+
+.header-info {
+    display: flex;
+    justify-content: center;
     background: linear-gradient(to bottom, rgba(13, 0, 50, 0.8), rgba(0, 0, 0, 0.8));
     color: white;
     border-radius: 25px;
@@ -18,18 +52,16 @@
     }
 
     .extra {
-        padding-right: .5rem;
+        padding-right: 1.5rem;
+    }
+
+    @media (max-width: 1000px) {
+        display: none;
     }
 }
 
 a {
     text-decoration: none;
-}
-
-.input {
-    background: linear-gradient(to bottom, rgba(13, 0, 50, 0.8), rgba(0, 0, 0, 0.8));
-    color: #d6a3d6;
-    height: fit-content;
 }
 
 ::ng-deep .p-paginator {
@@ -47,11 +79,4 @@ a {
     i {
         align-self: center;
     }
-}
-
-.section-nombre {
-    flex-grow: 1;
-    text-align: left;
-    padding-left: .5rem;
-    align-self: center;
 }

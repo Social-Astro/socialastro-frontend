@@ -66,14 +66,15 @@
         </ng-container>
     </div>
     <div>
-        <!-- TODO: Añadir botón de loading -->
-        <!--<load-button type="submit" [loading]="loading()" (submit)="loading.set(!loading())" [formInvalid]="editForm.touched && editForm.invalid">
-        Edit
-        </load-button> -->
-        <button type="submit" class="btn btn-primary" [disabled]="commentForm.invalid">
+        <load-button type="submit" [formInvalid]="commentForm.invalid" [loading]="loading()"
+            (submit)="loading.set(!loading())">
             {{ this.comment() ? "Editar estación espacial" :
-            "Aterrizar" }}</button>
-        <button type="button" class="btn m-2" (click)="canDeactivate()">
+            "Aterrizar" }}
+        </load-button>
+        <!-- <button type="submit" class="btn btn-primary" [disabled]="commentForm.invalid">
+            {{ this.comment() ? "Editar estación espacial" :
+            "Aterrizar" }}</button> -->
+        <button type="button" class="btn m-2" (click)="exitForm()">
             Abortar misión
         </button>
     </div>

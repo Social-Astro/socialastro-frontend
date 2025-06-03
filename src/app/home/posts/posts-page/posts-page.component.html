@@ -1,4 +1,4 @@
-<div class="fondo-card d-flex p-4 justify-content-between">
+<div class="fondo-card p-4 titulo-section-posts">
     <button class="d-flex go-back" (click)="goBack()">
         <i class="pi pi-angle-left" style="font-size: 2rem"></i>
         <img src="assets/normal/normal_galaxy_topic.png" alt="Icono topics" width="50px;" />
@@ -16,7 +16,7 @@
         <input class="form-control me-2 input" type="text" placeholder="Escanear planetas" aria-label="Search"
             [formControl]="searchControl" />
     </form>
-    <button class="btn btn-primary" (click)="goAddPost()">
+    <button class="btn btn-primary terraformar" (click)="goAddPost()">
         <img src="assets/normal/normal_planet_post.png" alt="Icono post" width="25px;" />
         Terraformar
     </button>
@@ -25,7 +25,7 @@
 <!-- Hacerlo en formato tabla, pero que si se hace muy pequeño pase a card -->
 <div class="fondo-card">
     <!-- Poner los campos necesarios para post -->
-    <div class="header d-none d-md-flex justify-content-around">
+    <div class="header-info">
         <p class="info">Información</p>
         <p class="user">Astronauta</p>
         <p class="extra">Última visita</p>

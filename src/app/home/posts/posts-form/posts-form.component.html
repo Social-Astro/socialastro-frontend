@@ -20,7 +20,7 @@
             }
         </div>
         <div class="mb-3">
-            <label for="tag" class="form-label">Nave nodriza: </label>
+            <label for="tag" class="form-label">Nave nodriza ( # ): </label>
             <input type="text" class="form-control input" name="tag" formControlName="tag"
                 [validationClasses]="{valid: 'is-valid', invalid:'is-invalid'}" />
             @let tagErrors = postForm.get('tag')?.errors;
@@ -85,7 +85,7 @@
                 {{ this.post() ? "Editar planeta" :
                 "Terraformar" }}
             </button>
-            <button type="button" class="btn m-2" (click)="canDeactivate()">
+            <button type="button" class="btn m-2" (click)="dismiss()">
                 Abortar misión
             </button>
         </div>

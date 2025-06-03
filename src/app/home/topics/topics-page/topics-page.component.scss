@@ -1,5 +1,5 @@
 @use "sass:math";
-@import '../../home.component.scss';
+@use '../../home.component.scss' as *;
 
 @keyframes float {
     0% {

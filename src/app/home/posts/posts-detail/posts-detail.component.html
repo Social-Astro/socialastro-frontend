@@ -1,4 +1,4 @@
-<div class="d-none d-xl-block col-xl-3 col-md-2 fondo-card comments-form pt-0">
+<div class="fondo-card comments-form pt-0">
     <comments-form [post]="post()" (added)="actualize()"></comments-form>
 </div>
 <div class="post-header mb-2">
@@ -8,8 +8,8 @@
     </button>
     <h2>{{ post().title }}</h2>
 </div>
-<div class="post-content row mb-3">
-    <div class="d-none d-xl-block col-2 fondo-card usuario m-3">
+<div class="post-content mb-3">
+    <div class="fondo-card usuario usuario-xl m-3">
         <p-avatar [image]="post().content.user!.avatar" class="mr-2" size="xlarge" shape="circle" />
         <a [routerLink]="['/profile', post().content.user!.id]">
             <p class="mb-0">{{ post().content.user!.username }}</p>
@@ -17,10 +17,9 @@
         <!-- TODO: Sustituir por logro destacado  -->
         <small>Logro destacado</small>
         <hr />
-        <!-- TODO: Sustituir por posts totales del usuario  -->
-        <p style="font-size: small; font-weight: bold">Planetas visitados: 3445</p>
+        <p style="font-size: small; font-weight: bold">Planetas visitados: {{ post().content.user!.numPosts }}</p>
     </div>
-    <div class="col-12 col-xl-9 fondo-card texto m-3">
+    <div class="fondo-card texto m-3">
         <div class="infor d-flex justify-content-between">
             <div class="d-flex">
                 <div class="likes">
@@ -56,7 +55,7 @@
         </p-carousel>
         }
         <div class="d-flex justify-content-between">
-            <div class="d-xl-none fondo-card usuario d-flex p-2" style="width: fit-content">
+            <div class="fondo-card usuario usuario-xs p-2" style="width: fit-content">
                 <p-avatar [image]="post().content.user!.avatar" class="mr-2" size="xlarge" shape="circle" />
                 <div style="text-align: left; margin-left: 0.5rem">
                     <a [routerLink]="['/profile', post().content.user!.id]">
@@ -64,8 +63,8 @@
                     </a>
                     <!-- TODO: Sustituir por logro destacado  -->
                     <small>Logro destacado</small>
-                    <!-- TODO: Sustituir por posts totales del usuario  -->
-                    <p style="font-size: small; font-weight: bold">Planetas visitados: 3445</p>
+                    <p style="font-size: small; font-weight: bold">Planetas visitados: {{ post().content.user!.numPosts
+                        }}</p>
                 </div>
             </div>
             @if (post().content.mine) {

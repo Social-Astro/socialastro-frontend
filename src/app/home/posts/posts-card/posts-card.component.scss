@@ -1,10 +1,10 @@
-@import '../posts-page/posts-page.component.scss';
+@use '../posts-page/posts-page.component.scss' as *;
 
-.input {
+/* .input {
     background-color: transparent;
     color: #d6a3d6;
     border-radius: 15px;
-}
+} */
 
 .posts {
     background: linear-gradient(to bottom, rgba(142, 110, 230, 0.8), rgba(0, 0, 0, 0));
@@ -17,6 +17,17 @@
 
     .info {
         text-align: left;
+
+        .titulo {
+            font-weight: bold;
+        }
+
+        .desc {
+            text-indent: .3rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 
     .user,
@@ -24,23 +35,14 @@
         text-align: right;
     }
 
-    .titulo {
-        font-weight: bold;
-    }
-
-    .desc {
-        text-indent: .3rem;
-    }
-
     &:hover {
         filter: brightness(1.75);
     }
 }
 
-@media (min-width: 1283px) {
+@media (min-width: 1000px) {
     .posts {
         display: flex;
-        justify-content: space-between;
 
         .info {
             flex-grow: 1;
@@ -50,10 +52,18 @@
             flex-grow: 1;
             text-align: center;
         }
+    }
+}
 
-        /*.extra {
-            grid-column: 4;
-        } */
+@media (max-width: 1000px) {
+    .user::before {
+        font-weight: bold;
+        content: 'Astronauta: ';
+    }
+
+    .extra::before {
+        font-weight: bold;
+        content: 'Última interacción: ';
     }
 }
 
@@ -78,18 +88,7 @@
 
         .user {
             margin-bottom: 0;
-
-            &::before {
-                font-weight: bold;
-                content: 'Astronauta: ';
-            }
         }
 
-        .extra {
-            &::before {
-                font-weight: bold;
-                content: 'Última interacción: ';
-            }
-        }
     }
 }

@@ -1,4 +1,4 @@
-@import '../posts-page/posts-page.component.scss';
+@use '../posts-page/posts-page.component.scss' as *;
 
 @keyframes rotateLike {
     from {
@@ -53,6 +53,25 @@
     .acciones {
         text-align: right;
     }
+
+    @media (min-width: 1600px) {
+        display: flex;
+
+        .usuario-xs {
+            display: none;
+        }
+    }
+
+    @media (max-width: 1600px) {
+
+        .usuario-xl {
+            display: none;
+        }
+
+        .usuario-xs {
+            display: flex;
+        }
+    }
 }
 
 .likes {
@@ -70,11 +89,14 @@
 }
 
 .comments-form {
-    opacity: 1;
-    position: fixed;
-    margin: 1.5rem;
-    bottom: 0;
-    right: 0;
+    @media (min-width: 1500px) {
+        width: 400px;
+        opacity: 1;
+        position: fixed;
+        margin: 1.5rem;
+        bottom: 0;
+        right: 0;
+    }
 }
 
 .imagencarrusel {

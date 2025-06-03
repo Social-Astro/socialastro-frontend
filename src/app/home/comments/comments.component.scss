@@ -1,4 +1,4 @@
-@import '../posts/posts-detail/posts-detail.component.scss';
+@use '../posts/posts-detail/posts-detail.component.scss' as *;
 
 .usuario {
     border-radius: 20px;

@@ -21,7 +21,6 @@ export class HomeComponent {
     ordenadosComentarios = signal<Post[]>([]);
 
     constructor() {
-        // TODO: Que se actualice al momento al corregir el todo de abajo
         this.getPosts();
     }
 
@@ -46,7 +45,6 @@ export class HomeComponent {
         console.log('posts', this.posts());
     }
 
-    // TODO: Sacar por la base de datos directamente
     ordenarPorComentarios() {
         this.ordenadosComentarios.set(this.posts().slice().sort((a: Post, b: Post) => b.numComments - a.numComments));
         this.ordenadosComentarios.update((actual) => actual.splice(0, 3));

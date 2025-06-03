@@ -1,6 +1,5 @@
-import { Component, DestroyRef, effect, inject, input, output } from '@angular/core';
+import { Component, DestroyRef, effect, inject, input, output, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ValidationClassesDirective } from '../../../shared/directives/validation-classes.directive';
 import { EncodeBase64Directive } from '../../../shared/directives/encode-base64.directive';
 import { CommentsService } from '../../services/comments.service';
 import { Post } from '../../interfaces/post';
@@ -8,10 +7,11 @@ import { Comment, NewComment } from '../../interfaces/comment';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgClass } from '@angular/common';
 import { Multimedia } from '../../interfaces/multimedia';
+import { LoadButtonComponent } from '../../../shared/load-button/load-button.component';
 
 @Component({
   selector: 'comments-form',
-  imports: [ReactiveFormsModule, ValidationClassesDirective, EncodeBase64Directive, NgClass],
+  imports: [ReactiveFormsModule, EncodeBase64Directive, NgClass, LoadButtonComponent],
   templateUrl: './comments-form.component.html',
   styleUrl: './comments-form.component.scss'
 })
@@ -19,7 +19,7 @@ export class CommentsFormComponent {
   readonly #commentsService = inject(CommentsService);
   readonly #destroyRef = inject(DestroyRef);
   imagesBase64: string[] = [];
-  saved = false;
+  loading = signal(false);
 
   post = input.required<Post>();
   comment = input<Comment>();
@@ -89,7 +89,6 @@ export class CommentsFormComponent {
         .pipe(takeUntilDestroyed(this.#destroyRef))
         .subscribe({
           next: () => {
-            this.saved = true;
             this.edited.emit();
           },
           error: (error) => {
@@ -103,7 +102,6 @@ export class CommentsFormComponent {
         .pipe(takeUntilDestroyed(this.#destroyRef))
         .subscribe({
           next: () => {
-            this.saved = true;
             this.commentForm.reset();
             this.imagesBase64 = [];
             this.added.emit();
@@ -113,21 +111,14 @@ export class CommentsFormComponent {
           }
         })
     }
+    this.loading.set(false);
   }
 
-  //TODO: Implementar el canDeactivate
-  canDeactivate() {
+  exitForm() {
+    this.loading.set(false);
     this.hide.emit();
     this.commentForm.reset();
     this.commentForm.markAsUntouched();
     this.imagesBase64 = [];
-    /* if (this.saved || this.postForm.pristine) {
-      return true;
-    }
-
-    const modalRef = this.#modalService.open(ConfirmModalComponent);
-    modalRef.componentInstance.title = 'Leaving the page';
-    modalRef.componentInstance.body = 'Are you sure? The changes will be lost...';
-    return modalRef.result.catch(() => false); */
   }
 }

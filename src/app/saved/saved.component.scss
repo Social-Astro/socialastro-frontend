@@ -1,4 +1,4 @@
-@import '../home/home.component.scss';
+@use '../home/home.component.scss' as *;
 
 a {
     text-decoration: none;

@@ -1,1 +1,2 @@
-@import '../../posts/posts-form/posts-form.component.scss';
+@use '../../posts/posts-form/posts-form.component.scss' as *;
+@use '../../../../styles/_variables' as *;
