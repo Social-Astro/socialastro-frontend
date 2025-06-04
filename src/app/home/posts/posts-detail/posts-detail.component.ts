@@ -135,4 +135,8 @@ export class PostsDetailComponent {
   goBack() {
     this.#router.navigate(['/home/sections', this.post().section.id]);
   }
+
+  scrollToTop() {
+    window.scrollTo(0, 0);
+  }
 }

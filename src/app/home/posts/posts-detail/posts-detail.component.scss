@@ -38,6 +38,7 @@
     }
 
     .texto {
+        flex-grow: 1;
         background-image: url('/assets/background/interfaz.jpg');
         background-size: contain;
         background-color: rgba(233, 187, 235, 0.757);
@@ -103,4 +104,14 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
+}
+
+@media (max-width: 1500px) {
+    .scroll {
+        position: fixed;
+        border-radius: 50px;
+        z-index: 100;
+        bottom: 5%;
+        right: 2%;
+    }
 }

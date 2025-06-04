@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { Post } from '../interfaces/post';
-import { Likes } from "../interfaces/Likes";
+import { Likes } from "../interfaces/likes";
 
 @Injectable({
     providedIn: 'root'

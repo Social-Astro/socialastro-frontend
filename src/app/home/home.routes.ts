@@ -14,5 +14,10 @@ export const homeRoutes: Routes = [
         path: 'posts',
         loadChildren: () => import('./posts/posts.routes').then((p) => p.postsRoutes)
     },
+    {
+        path: 'notifications',
+        loadComponent: () => import('./notifications/notifications.component').then((m) => m.NotificationsComponent),
+        title: 'Notificaciones ** Social Astro'
+    },
     { path: '', redirectTo: '/home/topics', pathMatch: 'full' }
 ];
