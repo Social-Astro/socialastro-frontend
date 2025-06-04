@@ -106,12 +106,16 @@
     object-fit: cover;
 }
 
-@media (max-width: 1500px) {
-    .scroll {
+.scroll {
+    display: none;
+
+    @media (max-width: 1500px) {
+        display: inline;
         position: fixed;
         border-radius: 50px;
         z-index: 100;
         bottom: 5%;
         right: 2%;
+
     }
 }
