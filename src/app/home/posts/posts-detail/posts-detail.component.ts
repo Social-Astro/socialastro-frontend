@@ -131,4 +131,12 @@ export class PostsDetailComponent {
         error: (error) => console.log(error.errror.message)
       })
   }
+
+  goBack() {
+    this.#router.navigate(['/home/sections', this.post().section.id]);
+  }
+
+  scrollToTop() {
+    window.scrollTo(0, 0);
+  }
 }

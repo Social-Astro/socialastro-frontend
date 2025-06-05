@@ -1,0 +1,27 @@
+<div class="fondo-card">
+    <div class="d-flex">
+        <img src="assets/normal/normal_satellite_notification.png" alt="Notifications Icon" />
+        <h1>Notificaciones</h1>
+    </div>
+    @for (notif of notifications(); track notif.id) {
+    <a [routerLink]="['/home/posts', notif.ref]">
+        <div class="notificacion">
+            @switch (notif.type) {
+            @case ('comment') {
+            <img src="assets/normal/normal_planet_comment.png" alt="Comment Icon" />
+            } @case ('like') {
+            <img src="assets/normal/normal_star_likes.png" alt="Comment Icon" />
+            } @case ('saved') {
+            <img src="assets/normal/normal_satellite_saved.png" alt="Comment Icon" />
+            } @default {
+            <img src="assets/normal/normal_alien_queens.png" alt="Comment Icon" />
+            }
+            }
+            <a [routerLink]="['/profile', notif.user.id]" class="avatar align-self-center">
+                <p-avatar [image]="notif.user.avatar" class="mr-2" size="normal" shape="circle" />
+            </a>
+            <p class="message align-self-center">{{ notif.message }}</p>
+        </div>
+    </a>
+    }
+</div>

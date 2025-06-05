@@ -27,6 +27,7 @@ export interface Post extends NewPost {
 
 export interface PostsResponse {
     posts: Post[],
+    count: number,
     page: number
 }
 

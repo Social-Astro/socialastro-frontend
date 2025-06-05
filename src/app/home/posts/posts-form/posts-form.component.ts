@@ -8,8 +8,8 @@ import { PostsService } from '../../services/posts.service';
 import { Title } from '@angular/platform-browser';
 import { Section } from '../../interfaces/sections';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Multimedia } from '../../interfaces/multimedia';
 import { NgClass } from '@angular/common';
+import { Multimedia } from '../../interfaces/multimedia';
 
 @Component({
   selector: 'posts-form',
@@ -23,10 +23,8 @@ export class PostsFormComponent {
   readonly #postsService = inject(PostsService);
   readonly #destroyRef = inject(DestroyRef);
   readonly #title = inject(Title);
-  /* readonly #modalService = inject(NgbModal); */
 
   imagesBase64: string[] = [];
-  saved = false;
 
   section = input.required<Section>();
   post = input.required<Post>();
@@ -106,8 +104,7 @@ export class PostsFormComponent {
       this.#postsService.editPost(newPost, this.post().id)
         .pipe(takeUntilDestroyed(this.#destroyRef))
         .subscribe({
-          next: (resp) => {
-            this.saved = true;
+          next: () => {
             this.#router.navigate(['/home/posts', this.post().id]);
           },
           error: (error) => console.log(error.error.message)
@@ -117,8 +114,7 @@ export class PostsFormComponent {
       this.#postsService.addPost(newPost)
         .pipe(takeUntilDestroyed(this.#destroyRef))
         .subscribe({
-          next: (resp) => {
-            this.saved = true;
+          next: () => {
             this.#router.navigate(['/home/sections', this.section().id]);
           },
           error: (error) => console.log(error.error.message)
@@ -126,20 +122,10 @@ export class PostsFormComponent {
     }
   }
 
-  //TODO: Implementar el canDeactivate
-  canDeactivate() {
+  dismiss() {
     if (this.section())
       this.#router.navigate(['/home/sections', this.section().id]);
     else
       this.#router.navigate(['/home/posts', this.post().id]);
-
-    /* if (this.saved || this.postForm.pristine) {
-      return true;
-    }
-
-    const modalRef = this.#modalService.open(ConfirmModalComponent);
-    modalRef.componentInstance.title = 'Leaving the page';
-    modalRef.componentInstance.body = 'Are you sure? The changes will be lost...';
-    return modalRef.result.catch(() => false); */
   }
 }

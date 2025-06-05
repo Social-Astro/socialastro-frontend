@@ -20,10 +20,15 @@
 
 .fondo-card.sections {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
+    flex-direction: column;
 
-    @media (min-width: 1400px) {
+    .sections-card {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    @media (min-width: 1600px) {
         .sun {
             position: absolute;
             width: 25rem;
@@ -50,12 +55,23 @@
 
             .suncontent {
                 position: relative;
+                display: flex;
                 justify-content: center;
                 align-items: center;
                 height: 100%;
                 color: rgb(66, 57, 119);
                 text-align: center;
             }
+        }
+
+        .titulo-section {
+            display: none;
+        }
+    }
+
+    @media (max-width: 1600px) {
+        .suncontent {
+            display: none;
         }
     }
 }

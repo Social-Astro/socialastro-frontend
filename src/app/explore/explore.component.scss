@@ -1,5 +1,5 @@
-@import '../home/home.component.scss';
-@import '../../styles/_variables';
+@use '../home/home.component.scss' as *;
+@use '../../styles/_variables' as *;
 
 .aleatorio {
     display: flex;
