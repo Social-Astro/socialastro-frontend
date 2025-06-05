@@ -7,7 +7,6 @@ import { ProfileFriendsComponent } from './profile-friends/profile-friends.compo
 import { ProfilePostsComponent } from './profile-posts/profile-posts.component';
 import { PostsService } from '../home/services/posts.service';
 import { Post } from '../home/interfaces/post';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FriendService } from './services/friend.service';
 
 @Component({
@@ -33,23 +32,6 @@ export class ProfileComponent {
 
     // Estado para la sección activa
     activeSection = signal<'posts' | 'friends' | 'achievements' | null>(null);
-
-    // Datos ficticios
-    fakePosts = [
-        { title: 'Mi primer post', content: 'Contenido de ejemplo', id: 1 },
-        { title: 'Otro post', content: 'Más contenido', id: 2 },
-        { title: 'Post interesante', content: 'Contenido interesante', id: 3 }
-    ];
-    fakeFriends = [
-        { name: 'Jorge', id: 1 },
-        { name: 'Chus', id: 2 },
-        { name: 'Sandra', id: 3 }
-    ];
-    fakeAchievements = [
-        { name: '¡Bienvenido!', icon: 'assets/achievements/logro-new-user.png' },
-        { name: 'Esto solo acaba de comenazr', icon: 'assets/achievements/logro-start.png' },
-        { name: 'Tu primera amistad', icon: 'assets/achievements/logro-friend.png' }
-    ];
 
     // Amigos y logros reales del usuario (usa arrays vacíos si no existen)
     userFriends = computed(() => (this.userResource.value() as any)?.friends ?? []);

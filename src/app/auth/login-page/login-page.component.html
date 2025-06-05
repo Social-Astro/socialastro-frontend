@@ -31,6 +31,12 @@
         </form>
     </div>
 </div>
+@if (loginError()) {
+    <div class="login-error-card animate-error-card">
+        <img src="assets/normal/normal_meteor_delete.png" alt="Error" class="error-icon" />
+        <div class="error-message">{{ loginError() }}</div>
+    </div>
+}
 <div class="icon-large-container" style="position: fixed; bottom: 40px; right: 0%">
     <img src="assets/normal/normal_rocket_login.png" alt="Login Icon" style="width: 25rem; opacity: 0.8" />
 </div>

@@ -1,4 +1,4 @@
-import { Component, inject, computed, effect, input, numberAttribute, signal } from '@angular/core';
+import { Component, inject, computed, effect, input, numberAttribute, signal, ChangeDetectorRef } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { sameValue } from '../../utils/same-value.validator';
@@ -74,18 +74,22 @@ export class ProfileEditComponent {
     showAvatarForm = false;
     showHeaderForm = false;
 
+    private cdr = inject(ChangeDetectorRef);
+
     changeUser() {
         if (!this.changeUserForm.valid) return;
-        const updatedAt = new Date();
-        const user = {
-            ...this.changeUserForm.getRawValue(),
-            updatedAt
+        const dto = {
+            name: this.changeUserForm.value.name!,
+            bio: this.changeUserForm.value.bio!,
+            updatedAt: new Date()
         };
-        this.profileService.saveUserProfile(user).subscribe({
+        this.profileService.saveUserProfile(dto).subscribe({
             next: () => {
                 this.userResource.reload();
+                this.showUserForm = false;
+                this.cdr.detectChanges();
             },
-            error: (err) => console.error('Edit error:', err)
+            error: (err) => console.error('User error:', err)
         });
     }
 
@@ -97,6 +101,8 @@ export class ProfileEditComponent {
         this.profileService.saveUserEmail(dto).subscribe({
             next: () => {
                 this.userResource.reload();
+                this.showEmailForm = false;
+                this.cdr.detectChanges();
             },
             error: (err) => console.error('Email error:', err)
         });
@@ -110,6 +116,8 @@ export class ProfileEditComponent {
         this.profileService.saveUserPassword(dto).subscribe({
             next: () => {
                 console.log('Password changed successfully');
+                this.showPasswordForm = false;
+                this.cdr.detectChanges();
             },
             error: (err) => console.error('Password error:', err)
         });
@@ -133,18 +141,22 @@ export class ProfileEditComponent {
         this.avatarBase64Arr.set(avatarBase64Arr);
     }
 
-    onHeaderFileChange(event: Event) {
+    async onHeaderFileChange(event: Event) {
         const input = event.target as HTMLInputElement;
-        if (input.files && input.files.length > 0) {
-            const headerBase64Arr: string[] = [];
-            Array.from(input.files).forEach((file) => {
-                this.changeHeaderForm.get('heading')!.setValue(file);
-                this.fileToBase64(file).then((base64) => {
-                    headerBase64Arr.push(base64 as string);
-                });
-            });
-            this.headerBase64Arr.set(headerBase64Arr);
+        if (!input.files || input.files.length === 0) {
+            return;
         }
+
+        const headerBase64Arr: string[] = [];
+
+        for (const file of Array.from(input.files)) {
+            this.changeHeaderForm.get('heading')!.setValue(file);
+            const base64 = await this.fileToBase64(file);
+            console.log('Header Base64:', base64?.slice(0, 30));
+            headerBase64Arr.push(base64 as string);
+        }
+
+        this.headerBase64Arr.set(headerBase64Arr);
     }
 
     private fileToBase64(file: File): Promise<string | ArrayBuffer | null> {
@@ -164,6 +176,8 @@ export class ProfileEditComponent {
                 this.userResource.reload();
                 this.avatarBase64Arr.set([]);
                 this.changeAvatarForm.reset();
+                this.showAvatarForm = false;
+                this.cdr.detectChanges();
             },
             error: (err) => console.error('Avatar error:', err)
         });
@@ -177,6 +191,8 @@ export class ProfileEditComponent {
                 this.userResource.reload();
                 this.headerBase64Arr.set([]);
                 this.changeHeaderForm.reset();
+                this.showHeaderForm = false;
+                this.cdr.detectChanges();
             },
             error: (err) => console.error('Header error:', err)
         });
