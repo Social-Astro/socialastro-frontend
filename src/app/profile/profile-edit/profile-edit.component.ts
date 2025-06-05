@@ -3,11 +3,12 @@ import { UserService } from '../services/user.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { sameValue } from '../../utils/same-value.validator';
 import { CommonModule } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
     selector: 'profile-edit',
     standalone: true,
-    imports: [FormsModule, ReactiveFormsModule, CommonModule],
+    imports: [FormsModule, ReactiveFormsModule],
     templateUrl: './profile-edit.component.html',
     styleUrl: './profile-edit.component.scss'
 })
@@ -17,8 +18,8 @@ export class ProfileEditComponent {
     readonly user = this.userResource.value;
     id = input.required({ transform: numberAttribute });
 
-    avatarBase64Arr: string[] = [];
-    headerBase64Arr: string[] = [];
+    readonly avatarBase64Arr = signal<string[]>([]);
+    readonly headerBase64Arr = signal<string[]>([]);
 
     changeUserForm = new FormGroup({
         name: new FormControl('', {
@@ -107,34 +108,42 @@ export class ProfileEditComponent {
             password: this.changePasswordForm.value.password!
         };
         this.profileService.saveUserPassword(dto).subscribe({
-            next: () => {},
+            next: () => {
+                console.log('Password changed successfully');
+            },
             error: (err) => console.error('Password error:', err)
         });
     }
 
-    onAvatarFileChange(event: Event) {
+    async onAvatarFileChange(event: Event) {
         const input = event.target as HTMLInputElement;
-        if (input.files && input.files.length > 0) {
-            this.avatarBase64Arr = [];
-            Array.from(input.files).forEach((file) => {
-                this.changeAvatarForm.get('avatar')!.setValue(file);
-                this.fileToBase64(file).then((base64) => {
-                    this.avatarBase64Arr.push(base64 as string);
-                });
-            });
+        if (!input.files || input.files.length === 0) {
+            return;
         }
+
+        const avatarBase64Arr: string[] = [];
+
+        for (const file of Array.from(input.files)) {
+            this.changeAvatarForm.get('avatar')!.setValue(file);
+            const base64 = await this.fileToBase64(file);
+            console.log('Base64:', base64?.slice(0, 30));
+            avatarBase64Arr.push(base64 as string);
+        }
+
+        this.avatarBase64Arr.set(avatarBase64Arr);
     }
 
     onHeaderFileChange(event: Event) {
         const input = event.target as HTMLInputElement;
         if (input.files && input.files.length > 0) {
-            this.headerBase64Arr = [];
+            const headerBase64Arr: string[] = [];
             Array.from(input.files).forEach((file) => {
                 this.changeHeaderForm.get('heading')!.setValue(file);
                 this.fileToBase64(file).then((base64) => {
-                    this.headerBase64Arr.push(base64 as string);
+                    headerBase64Arr.push(base64 as string);
                 });
             });
+            this.headerBase64Arr.set(headerBase64Arr);
         }
     }
 
@@ -148,12 +157,12 @@ export class ProfileEditComponent {
     }
 
     changeAvatar() {
-        if (!this.changeAvatarForm.valid || !this.avatarBase64Arr.length) return;
-        const dto = { avatar: this.avatarBase64Arr[0] };
+        if (!this.changeAvatarForm.valid || !this.avatarBase64Arr().length) return;
+        const dto = { avatar: this.avatarBase64Arr()[0] };
         this.profileService.saveUserAvatar(dto).subscribe({
             next: () => {
                 this.userResource.reload();
-                this.avatarBase64Arr = [];
+                this.avatarBase64Arr.set([]);
                 this.changeAvatarForm.reset();
             },
             error: (err) => console.error('Avatar error:', err)
@@ -161,12 +170,12 @@ export class ProfileEditComponent {
     }
 
     changeHeader() {
-        if (!this.changeHeaderForm.valid || !this.headerBase64Arr.length) return;
-        const dto = { heading: this.headerBase64Arr[0] };
+        if (!this.changeHeaderForm.valid || !this.headerBase64Arr().length) return;
+        const dto = { heading: this.headerBase64Arr()[0] };
         this.profileService.saveUserHeader(dto).subscribe({
             next: () => {
                 this.userResource.reload();
-                this.headerBase64Arr = [];
+                this.headerBase64Arr.set([]);
                 this.changeHeaderForm.reset();
             },
             error: (err) => console.error('Header error:', err)

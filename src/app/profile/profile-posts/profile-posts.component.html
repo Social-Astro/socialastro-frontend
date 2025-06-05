@@ -1,9 +1,8 @@
 @if (posts?.length) {
     @for (post of posts; track post.id) {
-        <div class="profile-post">
-            <h4>{{ post.title }}</h4>
-            <p>{{ post.content }}</p>
-        </div>
+        <a [routerLink]="['/home/posts', post.id]" style="text-decoration: none; color: inherit">
+            <posts-card [post]="post"></posts-card>
+        </a>
     }
 } @else {
     <span>No tienes posts aún.</span>

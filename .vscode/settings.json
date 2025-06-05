@@ -34,7 +34,6 @@
         "logs": "Log",
         "scripts": "Script",
         "lib": "Library",
-        "services": "Service",
         "extensions": "Extension",
         "templates": "Template",
         "docs": "Documentation",

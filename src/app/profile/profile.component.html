@@ -42,19 +42,19 @@
                 @if (activeSection() === 'achievements') {
                     <div class="profile-card profile-card-active">
                         <div class="card-title">Logros</div>
-                        <profile-achievements [achievements]="fakeAchievements"></profile-achievements>
+                        <profile-achievements [achievements]="userAchievements()"></profile-achievements>
                     </div>
                 }
                 @if (activeSection() === 'friends') {
                     <div class="profile-card profile-card-active">
                         <div class="card-title">Amigos</div>
-                        <profile-friends [friends]="fakeFriends"></profile-friends>
+                        <profile-friends [friends]="realFriends()"></profile-friends>
                     </div>
                 }
                 @if (activeSection() === 'posts') {
                     <div class="profile-card profile-card-active">
                         <div class="card-title">Posts</div>
-                        <profile-posts [posts]="fakePosts"></profile-posts>
+                        <profile-posts [posts]="userPosts()"></profile-posts>
                     </div>
                 }
             </div>
