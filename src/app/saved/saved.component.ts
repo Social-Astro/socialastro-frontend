@@ -22,9 +22,7 @@ export class SavedComponent {
   tags = signal<string[]>([]);
 
   constructor() {
-    effect(() => {
-      this.getSavedPosts();
-    })
+    this.getSavedPosts();
   }
 
   getSavedPosts() {
@@ -33,7 +31,7 @@ export class SavedComponent {
       .subscribe({
         next: (resp) => {
           resp.forEach((p) => {
-            this.tags().push(p.postTag);
+            this.tags.update((tags) => [...tags, p.postTag]);
             this.getSinglePost(p.postId)
           })
 
@@ -52,7 +50,7 @@ export class SavedComponent {
       .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe({
         next: (post) => {
-          this.savedPosts().push(post);
+          this.savedPosts.update((posts) => [...posts, post]);
         }
       })
   }
