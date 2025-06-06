@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PostsCardComponent } from '../../home/posts/posts-card/posts-card.component';
 
@@ -10,5 +10,5 @@ import { PostsCardComponent } from '../../home/posts/posts-card/posts-card.compo
     styleUrl: './profile-posts.component.scss'
 })
 export class ProfilePostsComponent {
-    @Input({ required: true }) posts: any[] = [];
+    posts = input.required<any[]>();
 }

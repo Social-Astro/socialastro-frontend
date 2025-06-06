@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
     selector: 'profile-achievements',
@@ -8,5 +8,5 @@ import { Component, Input } from '@angular/core';
     styleUrl: './profile-achievements.component.scss'
 })
 export class ProfileAchievementsComponent {
-    @Input({ required: true }) achievements: any[] = [];
+    achievements = input.required<any[]>();
 }

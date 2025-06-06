@@ -97,8 +97,8 @@ export class ProfileComponent {
         this.editPasswordMode.update((oldValue) => !oldValue);
     }
 
-    // BUG: el avatar y el header no se previsualizan correctamente.
-    // REVIEW: Poner una imagen por defecto si no hay heading, que no hay.
+    // DONE: el avatar y el header no se previsualizan correctamente.
+    // DONE: Poner una imagen por defecto si no hay heading, que no hay.
     headerBackgroundStyle = computed(() => {
         const user = this.userResource.value;
         if (user()?.heading) {
@@ -107,7 +107,6 @@ export class ProfileComponent {
         return {};
     });
 
-    // Permite activar/desactivar el modo edición desde el HTML
     setEditMode(value: boolean) {
         this.editMode.set(value);
         if (!value) {

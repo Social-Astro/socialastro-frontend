@@ -1,6 +1,6 @@
-@if (achievements?.length) {
+@if (achievements().length) {
     <div class="achievements-list">
-        @for (ach of achievements; track ach.id) {
+        @for (ach of achievements(); track ach.id) {
             <div class="achievement-badge">
                 <img class="achievements-icon" [src]="ach.icon" alt="icono logro" />
                 {{ ach.name }}
