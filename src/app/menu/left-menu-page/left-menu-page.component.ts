@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../auth/services/auth.service';
+import { NgIf } from '@angular/common';
 
 @Component({
     selector: 'left-menu-page',
@@ -12,7 +13,22 @@ export class LeftMenuPageComponent {
 
     isLoggedin = this.authService.logged;
 
+    // REVIEW: Controla la visibilidad del menú en móviles
+    isMenuOpen = false;
+
+    openMenu() {
+        this.isMenuOpen = true;
+    }
+    closeMenu() {
+        this.isMenuOpen = false;
+    }
+
     logout() {
         this.authService.logout();
+    }
+
+    get isAdmin() {
+        const user = this.authService.currentUser.value();
+        return user && user.role === 'ADMIN';
     }
 }

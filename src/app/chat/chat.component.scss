@@ -1,0 +1,309 @@
+@use '../../styles/_variables' as *;
+
+.chat-container {
+    display: flex;
+    max-width: 1200px;
+    min-width: 500px;
+    width: 98vw;
+    height: 70vh;
+    min-height: 400px;
+    margin-top: 3.5rem;
+    border-radius: 1.2rem;
+    overflow: hidden;
+    border: 2px solid $gradient-green-1;
+    box-shadow:
+        0 0 40px 0 $gradient-green-1,
+        0 2px 12px 0 $gradient-green-7;
+    background: linear-gradient(to bottom, rgba(13, 0, 50, 0.8), rgba(0, 0, 0, 0.8));
+}
+
+.chat-sidebar {
+    width: 120px;
+    min-width: 100px;
+    max-width: 160px;
+    background: linear-gradient(to bottom, rgba(13, 0, 50, 0.8), rgba(0, 0, 0, 0.8));
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0.2rem;
+    gap: 0.2rem;
+    border-right: 2px solid $gradient-green-6;
+    box-shadow: 2px 0 12px 0 $gradient-green-6;
+    overflow-y: auto;
+}
+
+.chat-friend {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.3rem 0.1rem;
+    border-radius: 0.7rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    color: $gradient-green-4;
+    font-weight: 500;
+    background: rgba($lighter-25-green-color, 0.1);
+    box-shadow: 0 1px 4px $gradient-green-6;
+    &:hover,
+    &.active {
+        background: linear-gradient(90deg, $gradient-dark-blue-2 60%, $gradient-dark-blue-5 100%);
+        color: #fff;
+        box-shadow: 0 0 12px $gradient-green-6;
+    }
+    .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid $gradient-green-6;
+        background: #fff;
+        box-shadow: 0 0 6px $gradient-green-6;
+    }
+    span {
+        margin-top: 0.2rem;
+        color: $gradient-green-4;
+        font-weight: 500;
+        font-size: 1rem;
+        text-shadow: none;
+    }
+}
+
+.chat-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: none;
+    position: relative;
+}
+
+.chat-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(to bottom, rgba(13, 0, 50, 0.8), rgba(0, 0, 0, 0.8));
+    border-bottom: 2px solid $gradient-green-6;
+    .avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 2.5px solid $gradient-green-6;
+        background: #fff;
+        box-shadow: 0 0 8px $gradient-green-6;
+    }
+    span {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: $gradient-green-6;
+        letter-spacing: 0.5px;
+        text-shadow: 0 0 8px $gradient-green-6;
+    }
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    background: none;
+    scrollbar-width: thin;
+    scrollbar-color: $gradient-green-6 $gradient-green-7;
+}
+
+.chat-message {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.7rem;
+    color: $gradient-green-7;
+    &.own {
+        flex-direction: row-reverse;
+        .bubble {
+            background: $gradient-dark-blue-2;
+            align-items: flex-end;
+        }
+    }
+    .avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 2.5px solid $gradient-green-6;
+        background: #fff;
+        box-shadow: 0 0 8px $gradient-green-6;
+    }
+    .bubble {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        background: rgba($gradient-green-6, 0.13);
+        backdrop-filter: blur(2.5px);
+        border: 1.5px solid $gradient-green-6;
+        box-shadow: 0 2px 12px $gradient-green-6;
+        border-radius: 1.1rem;
+        padding: 0.7rem 1.1rem;
+        min-width: 60px;
+        max-width: 350px;
+        .text {
+            font-size: 1rem;
+            word-break: break-word;
+        }
+        .meta {
+            font-size: 0.8rem;
+            color: $gradient-green-6;
+            margin-top: 0.2rem;
+            text-align: right;
+            letter-spacing: 0.2px;
+        }
+    }
+}
+
+.chat-input {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(90deg, rgba($gradient-dark-blue-2, 0.13) 60%, rgba($gradient-green-6, 0.1) 100%);
+    border-top: 2px solid $gradient-green-6;
+    input {
+        flex: 1;
+        border-radius: 0.7rem;
+        border: 1.5px solid $gradient-green-6;
+        padding: 0.6rem 1rem;
+        font-size: 1rem;
+        background: rgba($lighter-25-green-color, 0.95);
+        color: $gradient-green-7;
+        box-shadow: 0 1px 4px $gradient-green-6;
+    }
+    button {
+        background: linear-gradient(90deg, $gradient-dark-blue-2 60%, $gradient-green-6 100%);
+        color: #fff;
+        border: none;
+        border-radius: 0.7rem;
+        padding: 0.6rem 1.2rem;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background 0.2s;
+        box-shadow: 0 1px 4px $gradient-green-6;
+        &:hover {
+            background: $gradient-dark-blue-3;
+            box-shadow: 0 0 12px $gradient-green-6;
+        }
+    }
+}
+
+.chat-placeholder {
+    text-align: center;
+    color: $gradient-green-6;
+    margin-top: 4rem;
+    font-size: 1.1rem;
+    opacity: 0.7;
+    text-shadow: 0 0 8px $gradient-green-6;
+}
+
+@media (max-width: 900px) {
+    .chat-container {
+        flex-direction: column;
+        height: 70vh;
+        max-width: 600px;
+        min-width: 320px;
+        width: 90vw;
+        margin: 2.5rem auto 2.5rem auto;
+    }
+    .chat-sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        border-right: none;
+        padding: 0.5rem 0.2rem;
+        gap: 0.2rem;
+    }
+    .chat-friend {
+        flex-direction: column;
+        align-items: center;
+        min-width: 60px;
+        padding: 0.3rem 0.1rem;
+        font-size: 0.85rem;
+    }
+    .chat-main {
+        padding: 0;
+    }
+    .chat-header,
+    .chat-input {
+        padding: 0.7rem 0.5rem;
+    }
+    .chat-messages {
+        padding: 0.7rem 0.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .chat-container {
+        flex-direction: column;
+        height: 65vh;
+        min-width: 180px;
+        max-width: 320px;
+        width: 90vw;
+        border-radius: 1.2rem;
+        margin-top: 4rem;
+        margin-bottom: 2rem;
+        border: 2.5px solid $gradient-green-1;
+        box-shadow: 0 0 18px 2px $gradient-green-1;
+        overflow: hidden;
+        margin-left: 0.5rem;
+        margin-right: auto;
+    }
+    .chat-sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        border-right: none;
+        padding: 0.2rem 0.1rem;
+        gap: 0.1rem;
+        box-shadow: none;
+    }
+    .chat-friend {
+        flex-direction: column;
+        align-items: center;
+        min-width: 36px;
+        max-width: 40px;
+        padding: 0.1rem 0.1rem;
+        font-size: 0.7rem;
+        gap: 0.1rem;
+        border-radius: 50%;
+        background: transparent;
+        box-shadow: none;
+        span {
+            display: none !important;
+        }
+        .avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+        }
+    }
+    .chat-main {
+        padding: 0;
+        min-width: 0;
+        min-height: 0;
+    }
+    .chat-header,
+    .chat-input {
+        padding: 0.2rem 0.1rem;
+    }
+    .chat-messages {
+        padding: 0.2rem 0.1rem;
+        gap: 0.5rem;
+    }
+    .chat-message .bubble {
+        padding: 0.4rem 0.7rem;
+        min-width: 0;
+        max-width: 80vw;
+        font-size: 0.95rem;
+    }
+    .chat-header .avatar {
+        width: 32px;
+        height: 32px;
+    }
+}

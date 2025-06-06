@@ -24,21 +24,35 @@ export const routes: Routes = [
         path: 'about-us',
         canActivate: [loginActivateGuard],
         loadComponent: () => import('./about-us/about-us.component').then((m) => m.AboutUsComponent),
-        title: 'Salu2 terrícola ** Social Astro'
+        title: 'Salu2 terrícola'
     },
 
     {
         path: 'explorer',
         canActivate: [loginActivateGuard],
         loadComponent: () => import('./explore/explore.component').then((m) => m.ExploreComponent),
-        title: 'Explorar hiperespacio ** Social Astro'
+        title: 'Explorar hiperespacio'
     },
 
     {
         path: 'saved',
         canActivate: [loginActivateGuard],
         loadComponent: () => import('./saved/saved.component').then((m) => m.SavedComponent),
-        title: 'Estaciones guardadas ** Social Astro'
+        title: 'Estaciones guardadas'
+    },
+
+    {
+        path: 'chat',
+        canActivate: [loginActivateGuard],
+        loadComponent: () => import('./chat/chat.component').then((m) => m.ChatComponent),
+        title: 'Radio Comunicación'
+    },
+
+    {
+        path: 'achievements',
+        canActivate: [loginActivateGuard],
+        loadComponent: () => import('./achievements/achievements.component').then((m) => m.AchievementsComponent),
+        title: 'Logros galácticos'
     },
 
     {

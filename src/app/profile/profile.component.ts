@@ -30,10 +30,7 @@ export class ProfileComponent {
     userPosts = signal<Post[]>([]);
     realFriends = signal<any[]>([]);
 
-    // Estado para la sección activa
     activeSection = signal<'posts' | 'friends' | 'achievements' | null>(null);
-
-    // Amigos y logros reales del usuario (usa arrays vacíos si no existen)
     userFriends = computed(() => (this.userResource.value() as any)?.friends ?? []);
     userAchievements = computed(() => (this.userResource.value() as any)?.achievements ?? []);
 
@@ -55,7 +52,6 @@ export class ProfileComponent {
             this.canEdit.set(currentId === profileUser.id || currentRole === 'ADMIN');
         });
 
-        // Cargar posts del usuario al activar la sección de posts
         effect(() => {
             let sub: any;
             if (this.activeSection() === 'posts') {
@@ -74,7 +70,6 @@ export class ProfileComponent {
             };
         });
 
-        // Cargar amigos reales al activar la sección de amigos
         effect(() => {
             let sub: any;
             if (this.activeSection() === 'friends') {
@@ -122,5 +117,10 @@ export class ProfileComponent {
 
     setActiveSection(section: 'posts' | 'friends' | 'achievements') {
         this.activeSection.set(this.activeSection() === section ? null : section);
+    }
+
+    get isAdmin() {
+        const user = this.authService.currentUser.value();
+        return user && user.role === 'ADMIN';
     }
 }

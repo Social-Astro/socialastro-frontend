@@ -11,6 +11,63 @@
     flex-direction: column;
     align-items: center;
     padding: 2rem;
+    z-index: 1001;
+    transition:
+        left 0.3s,
+        transform 0.3s;
+}
+
+// Overlay para móviles
+.left-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+}
+
+.close-menu-btn {
+    display: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #6c2eb7;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1002;
+}
+
+@media (max-width: 600px) {
+    .left-menu {
+        position: fixed;
+        top: 0;
+        left: -320px;
+        min-width: 260px;
+        max-width: 80vw;
+        width: 80vw;
+        height: 100vh;
+        padding: 2rem 1rem 2rem 1rem;
+        box-shadow: 2px 0 16px rgba(0, 0, 0, 0.3);
+        transform: translateX(-100%);
+        transition:
+            left 0.3s,
+            transform 0.3s;
+        z-index: 1001;
+    }
+    .left-menu.left-menu-mobile-open {
+        left: 0;
+        transform: translateX(0);
+    }
+    .close-menu-btn {
+        display: block;
+    }
 }
 
 .left-menu ul {

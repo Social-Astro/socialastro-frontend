@@ -13,6 +13,14 @@ export class TopMenuPageComponent {
 
     isLoggedin = this.authService.logged;
 
+    // REVIEW: Comunicación con el menú lateral (quiero ponerle botones más bonitos, pero tengo sueño)
+    openLeftMenu() {
+        const leftMenu = document.querySelector('left-menu-page') as any;
+        if (leftMenu && typeof leftMenu.openMenu === 'function') {
+            leftMenu.openMenu();
+        }
+    }
+
     logout() {
         this.authService.logout();
     }
