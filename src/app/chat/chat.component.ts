@@ -21,7 +21,7 @@ interface Message {
     standalone: true,
     templateUrl: './chat.component.html',
     styleUrl: './chat.component.scss',
-    imports: [CommonModule, NgIf, NgFor, FormsModule, DatePipe]
+    imports: [CommonModule, FormsModule, DatePipe]
 })
 export class ChatComponent {
     friends = [
