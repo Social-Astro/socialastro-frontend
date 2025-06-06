@@ -8,11 +8,12 @@ import { ProfilePostsComponent } from './profile-posts/profile-posts.component';
 import { PostsService } from '../home/services/posts.service';
 import { Post } from '../home/interfaces/post';
 import { FriendService } from './services/friend.service';
+import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 
 @Component({
     selector: 'profile',
     standalone: true,
-    imports: [ProfileEditComponent, ProfileAchievementsComponent, ProfileFriendsComponent, ProfilePostsComponent],
+    imports: [ProfileEditComponent, ProfileAchievementsComponent, ProfileFriendsComponent, ProfilePostsComponent, PaginatorModule],
     templateUrl: './profile.component.html',
     styleUrl: './profile.component.scss'
 })
@@ -28,6 +29,10 @@ export class ProfileComponent {
     editPasswordMode = signal(false);
     canEdit = signal(false);
     userPosts = signal<Post[]>([]);
+    totalPosts = signal<number>(0);
+    pagePosts = 1;
+    userIdPost = 0;
+
     realFriends = signal<any[]>([]);
 
     activeSection = signal<'posts' | 'friends' | 'achievements' | null>(null);
@@ -57,10 +62,8 @@ export class ProfileComponent {
             if (this.activeSection() === 'posts') {
                 const userId = this.userResource.value()?.id;
                 if (typeof userId === 'number') {
-                    sub = this.postsService.getPostsByUser(userId).subscribe({
-                        next: (resp) => this.userPosts.set(resp.posts),
-                        error: () => this.userPosts.set([])
-                    });
+                    sub = this.getPostsByUser(userId);
+                    this.userIdPost = userId;
                 } else {
                     this.userPosts.set([]);
                 }
@@ -122,5 +125,22 @@ export class ProfileComponent {
     get isAdmin() {
         const user = this.authService.currentUser.value();
         return user && user.role === 'ADMIN';
+    }
+
+    getPostsByUser(userId: number) {
+        this.postsService.getPostsByUser(userId, this.pagePosts).subscribe({
+            next: (resp) => {
+                console.log(resp.posts);
+                this.userPosts.set(resp.posts);
+                this.totalPosts.set(resp.count);
+                this.pagePosts = resp.page;
+            },
+            error: () => this.userPosts.set([])
+        });
+    }
+
+    onPostPageChange(event: PaginatorState) {
+        this.pagePosts = ++event.page!;
+        this.getPostsByUser(this.userIdPost);
     }
 }

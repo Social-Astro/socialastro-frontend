@@ -6,7 +6,6 @@
     left: 0;
     background-color: #2c2c54;
     color: white;
-    position: sticky;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,7 +24,7 @@
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.4);
-    z-index: 1000;
+    z-index: -85;
 }
 
 .close-menu-btn {
@@ -44,7 +43,7 @@
     z-index: 1002;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 993px) {
     .left-menu {
         position: fixed;
         top: 0;
@@ -59,12 +58,14 @@
         transition:
             left 0.3s,
             transform 0.3s;
-        z-index: 1001;
+        z-index: 8000;
     }
+
     .left-menu.left-menu-mobile-open {
         left: 0;
         transform: translateX(0);
     }
+
     .close-menu-btn {
         display: block;
     }

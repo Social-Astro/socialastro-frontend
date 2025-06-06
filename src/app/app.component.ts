@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from './auth/services/auth.service';
 import { FooterPageComponent } from './footer/footer-page/footer-page.component';
@@ -14,12 +14,17 @@ import { TopMenuPageComponent } from './menu/top-menu-page/top-menu-page.compone
 })
 export class AppComponent {
     title = 'socialastro-frontend';
-
     private readonly authService = inject(AuthService);
+
+    openMobile = signal(false);
 
     isLoggedin = this.authService.logged;
 
     logout() {
         this.authService.logout();
+    }
+
+    openMenuMobile() {
+        this.openMobile.update((value) => !value);
     }
 }

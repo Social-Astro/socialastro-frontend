@@ -1,0 +1,28 @@
+@use '../../../styles/_variables' as *;
+
+.post {
+    display: flex;
+    border-radius: 15px;
+    background: linear-gradient(135deg, $gradient-color-1, $gradient-color-4, $gradient-color-7);
+
+    img:not(.enlace-post) {
+        height: 50px;
+        border-radius: 15px;
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .post-texto {
+        margin-left: 1.5rem;
+        flex-grow: 1;
+    }
+
+    .redirec {
+        a {
+            margin: .5rem;
+        }
+    }
+}

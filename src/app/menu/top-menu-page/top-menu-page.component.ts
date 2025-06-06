@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../auth/services/auth.service';
 
@@ -12,12 +12,13 @@ export class TopMenuPageComponent {
     private readonly authService = inject(AuthService);
 
     isLoggedin = this.authService.logged;
+    openMenuMobile = output<void>();
 
-    // REVIEW: Comunicación con el menú lateral (quiero ponerle botones más bonitos, pero tengo sueño)
     openLeftMenu() {
-        const leftMenu = document.querySelector('left-menu-page') as any;
-        if (leftMenu && typeof leftMenu.openMenu === 'function') {
-            leftMenu.openMenu();
+        const leftMenu = document.querySelector('left-menu-page');
+
+        if (leftMenu) {
+            this.openMenuMobile.emit();
         }
     }
 
