@@ -1,1 +1,0 @@
-import"./chunk-7CGTOI24.js";var o=[{path:"login",loadComponent:()=>import("./chunk-URMFROR5.js").then(t=>t.LoginPageComponent),title:"Login"},{path:"register",loadComponent:()=>import("./chunk-RNEVQEVT.js").then(t=>t.RegisterPageComponent),title:"Register"}];export{o as routes};
