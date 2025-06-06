@@ -1,1 +1,0 @@
-import{Ka as n,eb as o,fb as i,xb as s}from"./chunk-W4ZOI5UP.js";import"./chunk-7CGTOI24.js";var m=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=n({type:t,selectors:[["achievements"]],decls:2,vars:0,template:function(e,a){e&1&&(o(0,"p"),s(1,"achievements works!"),i())},encapsulation:2})};export{m as AchievementsComponent};
