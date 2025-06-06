@@ -21,7 +21,9 @@
                 </div>
 
                 <div class="font-small">Sistema: <br>
-                    <a [routerLink]="['/home/topics', post.section.id]" class="enlace">{{post.section.title }}</a>
+                    <p class="enlace">{{ post.section.title }}</p>
+                    <!-- <a [routerLink]="['/home/topics', post.section.id]" class="enlace">{{ post.section.title
+                        }}</a> -->
                 </div>
             </div>
         </ng-template>
@@ -30,25 +32,27 @@
 
 <div class="fondo-card">
     <h2>Aparición aleatoria en el radar</h2>
+    @if (postAleatorio()) {
     <div class="aleatorio">
-        @let postAleatorio = posts()[numAleatorio];
-        @let image = postAleatorio.content.multimedia!.length! > 0 ? postAleatorio.content.multimedia![0].filename :
+        @let image = postAleatorio()!.content.multimedia!.length! > 0 ?
+        postAleatorio()!.content!.multimedia![0].filename
+        :
         'assets/normal/normal_planet_post.png';
-        <img [src]="image" [alt]="postAleatorio.title" />
+        <img [src]="image" [alt]="postAleatorio()!.title" />
         <div class="aleatorio-texto">
-            <h3>{{ postAleatorio.title }}</h3>
-            <p>{{ postAleatorio.content.description }}</p>
+            <h3>{{ postAleatorio()!.title }}</h3>
+            <p>{{ postAleatorio()!.content.description }}</p>
             <div class="d-flex justify-content-between">
                 <div class="font-small">
                     <p class="mb-0">Sistema: </p>
-                    <a [routerLink]="['/home/topics', postAleatorio.section.id]"
-                        class="enlace">{{postAleatorio.section.title }}</a>
+                    <p class="enlace">{{postAleatorio()!.section.title }}</p>
                 </div>
                 <div class="d-flex redirec">
-                    <a [routerLink]="['/profile', postAleatorio.content.user!.id]" class="align-self-center"><p-avatar
-                            [image]="postAleatorio.content.user!.avatar" class="mr-2" size="normal" shape="circle" />
+                    <a [routerLink]="['/profile', postAleatorio()!.content.user!.id]"
+                        class="align-self-center"><p-avatar [image]="postAleatorio()!.content.user!.avatar" class="mr-2"
+                            size="normal" shape="circle" />
                     </a>
-                    <a [routerLink]="['/home/posts', postAleatorio.id]" class="btn enlace">
+                    <a [routerLink]="['/home/posts', postAleatorio()!.id]" class="btn enlace">
                         <img src="assets/normal/normal_planet_system3.png" alt="Visitar" title="Visitar" width="40px"
                             class="enlace-post" />
                     </a>
@@ -56,6 +60,7 @@
             </div>
         </div>
     </div>
+    }
 </div>
 
 @if (postsUsuario()[0] && ordenadosTag1()) {
@@ -80,7 +85,7 @@
                     </a>
                 </div>
                 <div class="font-small">Sistema: <br>
-                    <a [routerLink]="['/home/topics', post.section.id]" class="enlace">{{post.section.title }}</a>
+                    <p class="enlace">{{post.section.title }}</p>
                 </div>
             </div>
         </ng-template>
