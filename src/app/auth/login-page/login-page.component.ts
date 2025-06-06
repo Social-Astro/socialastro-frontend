@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ValidationClassesDirective } from '../../shared/directives/validation-classes.directive';
+import { signal } from '@angular/core';
 
 @Component({
     selector: 'login-page',
@@ -25,24 +26,32 @@ export class LoginPageComponent {
         })
     });
 
+    loginError = signal<string | null>(null);
+
     login() {
+        this.loginError.set(null);
         const newLoggin = {
             username: this.loginForm.value.username!,
             password: this.loginForm.value.password!
         };
-        console.log('Login:', newLoggin);
-        `
-        `;
+
         if (this.loginForm.valid) {
             this.#authService.login(newLoggin).subscribe({
                 next: () => {
                     this.saved = true;
-                    console.log('%cLogin exitoso', 'color: green;');
                     this.#router.navigate(['/home']);
                 },
-                error: (err) => console.error('Login error:', err)
+                error: (err) => {
+                    console.error('Login error:', err);
+                    if (err.status === 401) {
+                        this.loginError.set('¿Estás seguro de que te has montado en tu nave...?');
+                    } else {
+                        this.loginError.set('Woops, esto es embarazoso. Es culpa nuestra..');
+                    }
+                }
             });
         } else {
+            this.loginError.set('Escribe bien... es humano no extraterrestre.');
             console.error('Formulario inválido');
         }
     }

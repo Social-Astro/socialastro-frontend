@@ -1,9 +1,11 @@
 import { Component, Input } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { PostsCardComponent } from '../../home/posts/posts-card/posts-card.component';
 
 @Component({
     selector: 'profile-posts',
     standalone: true,
-    imports: [],
+    imports: [PostsCardComponent, RouterModule],
     templateUrl: './profile-posts.component.html',
     styleUrl: './profile-posts.component.scss'
 })

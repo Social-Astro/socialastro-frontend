@@ -1,13 +1,14 @@
-import { Component, inject, computed, effect, input, numberAttribute, signal } from '@angular/core';
+import { Component, inject, computed, effect, input, numberAttribute, signal, ChangeDetectorRef } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { sameValue } from '../../utils/same-value.validator';
 import { CommonModule } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
     selector: 'profile-edit',
     standalone: true,
-    imports: [FormsModule, ReactiveFormsModule, CommonModule],
+    imports: [FormsModule, ReactiveFormsModule],
     templateUrl: './profile-edit.component.html',
     styleUrl: './profile-edit.component.scss'
 })
@@ -17,8 +18,8 @@ export class ProfileEditComponent {
     readonly user = this.userResource.value;
     id = input.required({ transform: numberAttribute });
 
-    avatarBase64Arr: string[] = [];
-    headerBase64Arr: string[] = [];
+    readonly avatarBase64Arr = signal<string[]>([]);
+    readonly headerBase64Arr = signal<string[]>([]);
 
     changeUserForm = new FormGroup({
         name: new FormControl('', {
@@ -73,18 +74,22 @@ export class ProfileEditComponent {
     showAvatarForm = false;
     showHeaderForm = false;
 
+    private cdr = inject(ChangeDetectorRef);
+
     changeUser() {
         if (!this.changeUserForm.valid) return;
-        const updatedAt = new Date();
-        const user = {
-            ...this.changeUserForm.getRawValue(),
-            updatedAt
+        const dto = {
+            name: this.changeUserForm.value.name!,
+            bio: this.changeUserForm.value.bio!,
+            updatedAt: new Date()
         };
-        this.profileService.saveUserProfile(user).subscribe({
+        this.profileService.saveUserProfile(dto).subscribe({
             next: () => {
                 this.userResource.reload();
+                this.showUserForm = false;
+                this.cdr.detectChanges();
             },
-            error: (err) => console.error('Edit error:', err)
+            error: (err) => console.error('User error:', err)
         });
     }
 
@@ -96,6 +101,8 @@ export class ProfileEditComponent {
         this.profileService.saveUserEmail(dto).subscribe({
             next: () => {
                 this.userResource.reload();
+                this.showEmailForm = false;
+                this.cdr.detectChanges();
             },
             error: (err) => console.error('Email error:', err)
         });
@@ -107,35 +114,49 @@ export class ProfileEditComponent {
             password: this.changePasswordForm.value.password!
         };
         this.profileService.saveUserPassword(dto).subscribe({
-            next: () => {},
+            next: () => {
+                console.log('Password changed successfully');
+                this.showPasswordForm = false;
+                this.cdr.detectChanges();
+            },
             error: (err) => console.error('Password error:', err)
         });
     }
 
-    onAvatarFileChange(event: Event) {
+    async onAvatarFileChange(event: Event) {
         const input = event.target as HTMLInputElement;
-        if (input.files && input.files.length > 0) {
-            this.avatarBase64Arr = [];
-            Array.from(input.files).forEach((file) => {
-                this.changeAvatarForm.get('avatar')!.setValue(file);
-                this.fileToBase64(file).then((base64) => {
-                    this.avatarBase64Arr.push(base64 as string);
-                });
-            });
+        if (!input.files || input.files.length === 0) {
+            return;
         }
+
+        const avatarBase64Arr: string[] = [];
+
+        for (const file of Array.from(input.files)) {
+            this.changeAvatarForm.get('avatar')!.setValue(file);
+            const base64 = await this.fileToBase64(file);
+            console.log('Base64:', base64?.slice(0, 30));
+            avatarBase64Arr.push(base64 as string);
+        }
+
+        this.avatarBase64Arr.set(avatarBase64Arr);
     }
 
-    onHeaderFileChange(event: Event) {
+    async onHeaderFileChange(event: Event) {
         const input = event.target as HTMLInputElement;
-        if (input.files && input.files.length > 0) {
-            this.headerBase64Arr = [];
-            Array.from(input.files).forEach((file) => {
-                this.changeHeaderForm.get('heading')!.setValue(file);
-                this.fileToBase64(file).then((base64) => {
-                    this.headerBase64Arr.push(base64 as string);
-                });
-            });
+        if (!input.files || input.files.length === 0) {
+            return;
         }
+
+        const headerBase64Arr: string[] = [];
+
+        for (const file of Array.from(input.files)) {
+            this.changeHeaderForm.get('heading')!.setValue(file);
+            const base64 = await this.fileToBase64(file);
+            console.log('Header Base64:', base64?.slice(0, 30));
+            headerBase64Arr.push(base64 as string);
+        }
+
+        this.headerBase64Arr.set(headerBase64Arr);
     }
 
     private fileToBase64(file: File): Promise<string | ArrayBuffer | null> {
@@ -148,26 +169,30 @@ export class ProfileEditComponent {
     }
 
     changeAvatar() {
-        if (!this.changeAvatarForm.valid || !this.avatarBase64Arr.length) return;
-        const dto = { avatar: this.avatarBase64Arr[0] };
+        if (!this.changeAvatarForm.valid || !this.avatarBase64Arr().length) return;
+        const dto = { avatar: this.avatarBase64Arr()[0] };
         this.profileService.saveUserAvatar(dto).subscribe({
             next: () => {
                 this.userResource.reload();
-                this.avatarBase64Arr = [];
+                this.avatarBase64Arr.set([]);
                 this.changeAvatarForm.reset();
+                this.showAvatarForm = false;
+                this.cdr.detectChanges();
             },
             error: (err) => console.error('Avatar error:', err)
         });
     }
 
     changeHeader() {
-        if (!this.changeHeaderForm.valid || !this.headerBase64Arr.length) return;
-        const dto = { heading: this.headerBase64Arr[0] };
+        if (!this.changeHeaderForm.valid || !this.headerBase64Arr().length) return;
+        const dto = { heading: this.headerBase64Arr()[0] };
         this.profileService.saveUserHeader(dto).subscribe({
             next: () => {
                 this.userResource.reload();
-                this.headerBase64Arr = [];
+                this.headerBase64Arr.set([]);
                 this.changeHeaderForm.reset();
+                this.showHeaderForm = false;
+                this.cdr.detectChanges();
             },
             error: (err) => console.error('Header error:', err)
         });

@@ -5,6 +5,9 @@ import { AuthService } from '../auth/services/auth.service';
 import { ProfileAchievementsComponent } from './profile-achievements/profile-achievements.component';
 import { ProfileFriendsComponent } from './profile-friends/profile-friends.component';
 import { ProfilePostsComponent } from './profile-posts/profile-posts.component';
+import { PostsService } from '../home/services/posts.service';
+import { Post } from '../home/interfaces/post';
+import { FriendService } from './services/friend.service';
 
 @Component({
     selector: 'profile',
@@ -17,31 +20,22 @@ export class ProfileComponent {
     public readonly userId = input.required({ transform: numberAttribute });
     private readonly profileService = inject(UserService);
     private readonly authService = inject(AuthService);
+    private readonly postsService = inject(PostsService);
+    private readonly friendService = inject(FriendService);
     userResource = this.profileService.userSelected;
     readonly user = this.userResource.value;
     editMode = signal(false);
     editPasswordMode = signal(false);
     canEdit = signal(false);
+    userPosts = signal<Post[]>([]);
+    realFriends = signal<any[]>([]);
 
     // Estado para la sección activa
     activeSection = signal<'posts' | 'friends' | 'achievements' | null>(null);
 
-    // Datos ficticios
-    fakePosts = [
-        { title: 'Mi primer post', content: 'Contenido de ejemplo', id: 1 },
-        { title: 'Otro post', content: 'Más contenido', id: 2 },
-        { title: 'Post interesante', content: 'Contenido interesante', id: 3 }
-    ];
-    fakeFriends = [
-        { name: 'Jorge', id: 1 },
-        { name: 'Chuss', id: 2 },
-        { name: 'Sandra', id: 3 }
-    ];
-    fakeAchievements = [
-        { name: '¡Bienvenido!', icon: 'assets/achievements/logro-new-user.png' },
-        { name: 'Esto solo acaba de comenazr', icon: 'assets/achievements/logro-start.png' },
-        { name: 'Tu primera amistad', icon: 'assets/achievements/logro-friend.png' }
-    ];
+    // Amigos y logros reales del usuario (usa arrays vacíos si no existen)
+    userFriends = computed(() => (this.userResource.value() as any)?.friends ?? []);
+    userAchievements = computed(() => (this.userResource.value() as any)?.achievements ?? []);
 
     constructor() {
         console.log('ProfileComponent initialized with userId:');
@@ -51,7 +45,6 @@ export class ProfileComponent {
 
         effect(() => {
             const user = this.authService.currentUser.value();
-            console.log('Current User:', user);
             const profileUser = this.userResource.value();
             if (!user || !profileUser) {
                 this.canEdit.set(false);
@@ -60,6 +53,44 @@ export class ProfileComponent {
             const currentRole = user.role.toUpperCase();
             const currentId = user.id;
             this.canEdit.set(currentId === profileUser.id || currentRole === 'ADMIN');
+        });
+
+        // Cargar posts del usuario al activar la sección de posts
+        effect(() => {
+            let sub: any;
+            if (this.activeSection() === 'posts') {
+                const userId = this.userResource.value()?.id;
+                if (typeof userId === 'number') {
+                    sub = this.postsService.getPostsByUser(userId).subscribe({
+                        next: (resp) => this.userPosts.set(resp.posts),
+                        error: () => this.userPosts.set([])
+                    });
+                } else {
+                    this.userPosts.set([]);
+                }
+            }
+            return () => {
+                if (sub) sub.unsubscribe();
+            };
+        });
+
+        // Cargar amigos reales al activar la sección de amigos
+        effect(() => {
+            let sub: any;
+            if (this.activeSection() === 'friends') {
+                const userId = this.userResource.value()?.id;
+                if (typeof userId === 'number') {
+                    sub = this.friendService.getUserWithFriends(userId).subscribe({
+                        next: (resp) => this.realFriends.set(resp.friends ?? resp ?? []),
+                        error: () => this.realFriends.set([])
+                    });
+                } else {
+                    this.realFriends.set([]);
+                }
+            }
+            return () => {
+                if (sub) sub.unsubscribe();
+            };
         });
     }
 
@@ -71,7 +102,8 @@ export class ProfileComponent {
         this.editPasswordMode.update((oldValue) => !oldValue);
     }
 
-    // Calcula el estilo del heading dinámicamente
+    // BUG: el avatar y el header no se previsualizan correctamente.
+    // REVIEW: Poner una imagen por defecto si no hay heading, que no hay.
     headerBackgroundStyle = computed(() => {
         const user = this.userResource.value;
         if (user()?.heading) {
@@ -79,14 +111,6 @@ export class ProfileComponent {
         }
         return {};
     });
-
-    // REVIEW: El estilo del header se calcula dinámicamente basado en el header del usuario actual. Queremos default o no.
-
-    // headerBackgroundStyle = computed(() => {
-    //     const user = this.currentUser();
-    //     const headerUrl = user && user.heading ? user.heading : 'assets/default-header.png';
-    //     return { 'background-image': `url(${headerUrl})` };
-    // });
 
     // Permite activar/desactivar el modo edición desde el HTML
     setEditMode(value: boolean) {

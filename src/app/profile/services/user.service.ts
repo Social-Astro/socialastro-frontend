@@ -25,7 +25,7 @@ export class UserService {
     saveUserPassword(password: UserPasswordEdit): Observable<void> {
         return this.#http.put<void>('users/me/password', password);
     }
-    // Done: implementar en el back los endpoints para el email, el avatar y el header
+    // DONE: implementar en el back los endpoints para el email, el avatar y el header
     saveUserEmail(email: UserEmailEdit): Observable<void> {
         return this.#http.put<void>('users/me/email', email);
     }
