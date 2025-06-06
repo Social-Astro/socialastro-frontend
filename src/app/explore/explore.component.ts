@@ -29,6 +29,7 @@ export class ExploreComponent {
   ordenadosTag2 = signal<Post[]>([]);
 
   numAleatorio = 0;
+  postAleatorio = signal<Post | null>(null);
 
   responsiveOptions: any[] | undefined;
 
@@ -72,6 +73,7 @@ export class ExploreComponent {
         next: (resp) => {
           this.posts.set(resp);
           this.numAleatorio = Math.ceil(Math.random() * this.posts().length);
+          this.postAleatorio.set(resp[this.numAleatorio]);
         },
         error: (error) => {
           console.log(error.error.message);

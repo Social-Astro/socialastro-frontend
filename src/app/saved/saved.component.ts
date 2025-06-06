@@ -22,9 +22,7 @@ export class SavedComponent {
     tags = signal<string[]>([]);
 
     constructor() {
-        effect(() => {
-            this.getSavedPosts();
-        });
+        this.getSavedPosts();
     }
 
     getSavedPosts() {
