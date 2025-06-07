@@ -1,6 +1,6 @@
+import { isDevMode } from '@angular/core';
+
 export const environment = {
-    production: false,
-    apiBaseUrl: 'http://localhost:3000/', // de API_BASE_URL_DEV
-    apiBaseUrlPro: 'http://vps-94333546.vps.ovh.net:8080/socialastroapi', // de API_BASE_URL_PRO
-    appEnv: 'production' // de APP_ENV
+    production: !isDevMode(),
+    apiBaseUrl: isDevMode() ? 'http://localhost:3000/' : 'https://vps-94333546.vps.ovh.net:8080/socialastroapi'
 };
