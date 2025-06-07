@@ -1,5 +1,5 @@
-@if (posts?.length) {
-    @for (post of posts; track post.id) {
+@if (posts().length) {
+    @for (post of posts(); track post.id) {
         <a [routerLink]="['/home/posts', post.id]" style="text-decoration: none; color: inherit">
             <posts-card [post]="post"></posts-card>
         </a>

@@ -1,5 +1,5 @@
-@if (friends?.length) {
-    @for (friend of friends; track friend.id) {
+@if (friends().length) {
+    @for (friend of friends(); track friend.id) {
         <div class="profile-friend">
             {{ friend.name }}
             <a [routerLink]="['/profile', friend.id]" class="friend-link" title="Ver perfil">
