@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../auth/services/auth.service';
-import { NgIf } from '@angular/common';
+import { PublicityComponent } from './publicity/publicity.component';
 
 @Component({
     selector: 'left-menu-page',
-    imports: [],
+    imports: [PublicityComponent],
     templateUrl: './left-menu-page.component.html',
     styleUrl: './left-menu-page.component.scss'
 })

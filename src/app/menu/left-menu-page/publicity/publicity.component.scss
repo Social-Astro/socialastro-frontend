@@ -1,0 +1,31 @@
+.publicity-card {
+    background: #221c3a;
+    border-radius: 1.2rem;
+    box-shadow: 0 0 16px #0008;
+    padding: 1.2rem 1rem 0.7rem 1rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 220px;
+    max-width: 240px;
+}
+
+.publicity-img {
+    width: 100%;
+    max-width: 180px;
+    border-radius: 0.7rem;
+    margin-bottom: 0.7rem;
+    box-shadow: 0 0 8px #0006;
+}
+
+.publicity-title {
+    color: #ffe082;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    margin-top: 0.2rem;
+    text-shadow: 0 0 6px #0d0032;
+}

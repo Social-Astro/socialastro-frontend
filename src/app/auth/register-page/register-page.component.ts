@@ -38,10 +38,6 @@ export class RegisterPageComponent {
             nonNullable: true,
             validators: [Validators.required, Validators.minLength(4)]
         })
-        // confirmPassword: new FormControl('', {
-        //     nonNullable: true,
-        //     validators: [Validators.required, Validators.minLength(8), Validators.email, sameValue('password', 'confirmPassword')]
-        // })
     });
 
     #saved = false;

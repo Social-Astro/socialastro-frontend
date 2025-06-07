@@ -1,9 +1,11 @@
-@if (posts().length) {
-    @for (post of posts(); track post.id) {
-        <a [routerLink]="['/home/posts', post.id]" style="text-decoration: none; color: inherit">
-            <posts-card [post]="post"></posts-card>
-        </a>
+<div class="profile-posts-container">
+    @if (posts().length) {
+        @for (post of posts(); track post.id) {
+            <a [routerLink]="['/home/posts', post.id]" style="text-decoration: none; color: inherit">
+                <posts-card [post]="post" class="posts" />
+            </a>
+        }
+    } @else {
+        <span>No tienes posts aún.</span>
     }
-} @else {
-    <span>No tienes posts aún.</span>
-}
+</div>
