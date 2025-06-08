@@ -69,7 +69,7 @@ export class NotificationsComponent {
     this.#friendsService.create(friendship)
       .pipe(takeUntilDestroyed(this.#destroyRef))
       .subscribe({
-        next: () => { },
+        next: (resp) => { console.log(resp); },
         error: (error) => console.log(error.error)
       })
   }
