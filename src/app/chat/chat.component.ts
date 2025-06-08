@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, effect } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { NgIf, NgFor, DatePipe, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FriendService } from '../profile/services/friend.service';
@@ -27,13 +27,11 @@ export class ChatComponent implements OnInit {
     private chatSocket = inject(ChatSocketService);
 
     ngOnInit() {
-        effect(() => {
-            const user = this.userService.userSelected.value();
-            this.userId = user?.id || null;
-            if (this.userId) {
-                this.loadFriends(this.userId);
-            }
-        });
+        const user = this.userService.userSelected.value();
+        this.userId = user?.id || null;
+        if (this.userId) {
+            this.loadFriends(this.userId);
+        }
 
         this.chatSocket.onRoomMessage().subscribe((data: { from: number; message: string; room: string }) => {
             if (!this.selectedFriend || !this.userId) return;

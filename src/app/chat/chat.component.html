@@ -3,8 +3,8 @@
         @if (friends.length > 0) {
             @for (friend of friends; track trackByFriend) {
                 <div class="chat-friend" (click)="selectFriend(friend)" [class.active]="friend.id === selectedFriend?.id">
-                    <img [src]="friend.avatar" class="avatar" alt="Avatar" />
-                    <span>{{ friend.name }}</span>
+                    <img [src]="friend?.avatar" class="avatar" alt="Avatar" />
+                    <span>{{ friend?.name }}</span>
                 </div>
             }
         } @else {
