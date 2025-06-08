@@ -64,7 +64,6 @@ export class ChatComponent {
                 name: f.friendName,
                 avatar: f.friendAvatar || 'assets/avatars/avatar1.png'
             }));
-            console.log(this.friends);
         });
     }
 

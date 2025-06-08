@@ -12,22 +12,20 @@ import { EMPTY } from 'rxjs';
     }
 })
 export class ValidationClassesDirective implements OnInit {
-    #ngModel = inject(NgModel, { optional: true }); // Formulario de plantilla
-    #ngControl = inject(NgControl, { optional: true }); // Formulario reactivo
+    #ngModel = inject(NgModel, { optional: true });
+    #ngControl = inject(NgControl, { optional: true });
     #injector = inject(Injector);
     validationClasses = input<{ valid: string; invalid: string }>();
     valueChanges!: Signal<string>;
     touched = signal(false);
 
     ngOnInit(): void {
-        // La directiva NgControl no está lista hasta este momento del ciclo de vida
         this.valueChanges = toSignal(this.#ngModel?.valueChanges ?? this.#ngControl?.valueChanges ?? EMPTY, { injector: this.#injector });
     }
 
     inputClass = computed(() => {
-        const touched = this.touched(); // dependencia
-        const validationClasses = this.validationClasses(); // dependencia
-        this.valueChanges(); // dependencia
+        const touched = this.touched();
+        const validationClasses = this.validationClasses();
 
         return untracked(() => {
             if (touched) {

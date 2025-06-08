@@ -43,15 +43,12 @@ export class RegisterPageComponent {
     #saved = false;
 
     register() {
-        console.log(this.newUserForm.getRawValue());
         if (!this.newUserForm.valid) return;
-        console.log('pasa de aquí');
         const user: User = {
             ...this.newUserForm.getRawValue(),
             createdAt: new Date(),
             role: 'USER'
         };
-        console.log(user);
         this.#authService.register(user).subscribe({
             next: () => {
                 this.#saved = true;

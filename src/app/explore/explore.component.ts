@@ -41,7 +41,6 @@ export class ExploreComponent {
 
     effect(() => {
       this.actualUser.set(this.#authService.currentUser.value());
-      console.log('User', this.actualUser());
       this.getPostsUsuario();
     })
 

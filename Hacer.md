@@ -1,5 +1,3 @@
-## Creación del DOTENV
-
 // TODO: Implementar la función de login
 // FIXME: Corregir el error de validación en el formulario
 // HACK: Solución temporal para el bug de navegación

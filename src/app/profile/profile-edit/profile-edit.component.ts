@@ -115,7 +115,6 @@ export class ProfileEditComponent {
         };
         this.profileService.saveUserPassword(dto, this.id()).subscribe({
             next: () => {
-                console.log('Password changed successfully');
                 this.showPasswordForm = false;
                 this.cdr.detectChanges();
             },
@@ -134,7 +133,6 @@ export class ProfileEditComponent {
         for (const file of Array.from(input.files)) {
             this.changeAvatarForm.get('avatar')!.setValue(file);
             const base64 = await this.fileToBase64(file);
-            console.log('Base64:', base64?.slice(0, 30));
             avatarBase64Arr.push(base64 as string);
         }
 
@@ -152,7 +150,6 @@ export class ProfileEditComponent {
         for (const file of Array.from(input.files)) {
             this.changeHeaderForm.get('heading')!.setValue(file);
             const base64 = await this.fileToBase64(file);
-            console.log('Header Base64:', base64?.slice(0, 30));
             headerBase64Arr.push(base64 as string);
         }
 

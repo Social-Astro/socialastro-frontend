@@ -7,14 +7,12 @@ export const getObjectFromlocalStorage = (localStorageKey: string): object | und
     try {
         const valor = localStorage.getItem(localStorageKey);
         if (!valor) {
-            console.log(`No existe la clave "${localStorageKey}" en localStorage.`);
             return undefined;
         }
         const objeto = JSON.parse(valor);
         if (typeof objeto === 'object' && objeto !== null && !Array.isArray(objeto)) {
             return objeto;
         } else {
-            console.log(`La clave "${localStorageKey}" no es un objeto válido.`);
             return undefined;
         }
     } catch (error: any) {

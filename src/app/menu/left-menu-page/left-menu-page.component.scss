@@ -1,6 +1,6 @@
 .left-menu {
-    width: 300px; // ancho fijo
-    height: 100%; // alto fijo igual a la altura de la ventana
+    width: 300px;
+    height: 100%;
     min-width: 300px;
     max-width: 300px;
     left: 0;
@@ -16,7 +16,6 @@
         transform 0.3s;
 }
 
-// Overlay para móviles
 .left-menu-overlay {
     position: fixed;
     top: 0;

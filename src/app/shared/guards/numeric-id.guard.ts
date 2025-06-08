@@ -7,7 +7,6 @@ export const numericIdGuard =
         const id = +route.params[paramId];
         const router = inject(Router);
         if (isNaN(id) || id < 1) {
-            console.log(id);
             return router.createUrlTree(['/']);
         }
         return true;

@@ -36,7 +36,6 @@ export class AuthService {
     }
 
     isLogged(): Observable<boolean> {
-        console.log(localStorage.getItem('token'), this.#logged());
         if (!this.#logged() && !localStorage.getItem('token')) return of(false);
         if (this.#logged() && localStorage.getItem('token')) return of(true);
         if (!localStorage.getItem('token')) return of(false);

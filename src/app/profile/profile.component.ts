@@ -49,7 +49,6 @@ export class ProfileComponent {
     userAchievements = computed(() => (this.userResource.value() as any)?.achievements ?? []);
 
     constructor() {
-        console.log('ProfileComponent initialized with userId:');
         effect(() => {
             this.profileService.setCurrentUser(this.userId());
         });
@@ -65,7 +64,7 @@ export class ProfileComponent {
             const currentId = user.id;
             this.canEdit.set(currentId === profileUser.id || currentRole === 'ADMIN');
             this.isMe.set(currentId === profileUser.id);
-            this.setFriends(profileUser.id!, user.id!)
+            this.setFriends(profileUser.id!, user.id!);
         });
 
         effect(() => {
@@ -83,7 +82,6 @@ export class ProfileComponent {
                 if (sub) sub.unsubscribe();
             };
         });
-
     }
 
     setFriends(userId: number, currentUser: number) {
@@ -92,7 +90,6 @@ export class ProfileComponent {
             sub = this.friendService.getUserWithFriends(userId).subscribe({
                 next: (resp) => {
                     this.realFriends.set(resp[userId]);
-                    console.log(this.realFriends());
                     this.isMyFriend.set(this.realFriends().some((f) => f.friendId === currentUser));
                 },
                 error: () => this.realFriends.set([])
@@ -113,8 +110,6 @@ export class ProfileComponent {
         this.editPasswordMode.update((oldValue) => !oldValue);
     }
 
-    // DONE: el avatar y el header no se previsualizan correctamente.
-    // DONE: Poner una imagen por defecto si no hay heading, que no hay.
     headerBackgroundStyle = computed(() => {
         const user = this.userResource.value;
         if (user()?.heading) {
@@ -142,7 +137,6 @@ export class ProfileComponent {
     getPostsByUser(userId: number) {
         this.postsService.getPostsByUser(userId, this.pagePosts).subscribe({
             next: (resp) => {
-                console.log(resp.posts);
                 this.userPosts.set(resp.posts);
                 this.totalPosts.set(resp.count);
                 this.pagePosts = resp.page;
@@ -159,8 +153,9 @@ export class ProfileComponent {
     sendFriendRequest(user: number) {
         const friend: CreateFriendNotificationDto = {
             owner: user
-        }
-        this.notificationsService.generateFriendNotif(friend)
+        };
+        this.notificationsService
+            .generateFriendNotif(friend)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
                 next: () => this.friendRequest.set(true),
