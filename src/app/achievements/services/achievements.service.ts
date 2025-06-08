@@ -1,30 +1,31 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-
+import { map, Observable } from 'rxjs';
+import { Achievement } from '../interfaces/achievements';
 @Injectable({
     providedIn: 'root'
 })
 export class AchievementService {
-    #http = inject(HttpClient);
+    readonly #AchievementUrl = 'achievements';
+    readonly #http = inject(HttpClient);
 
-    getAll(): Observable<any[]> {
-        return this.#http.get<any[]>('achievements');
+    getSaved(): Observable<Achievement[]> {
+        return this.#http.get<Achievement[]>(this.#AchievementUrl).pipe(map((resp) => resp));
     }
 
-    getById(requester: number, requested: number): Observable<any> {
-        return this.#http.get<any>(`achievements/${requester}/${requested}`);
+    getAchievementByPost(id: number): Observable<Achievement[]> {
+        return this.#http.get<Achievement[]>(`${this.#AchievementUrl}/${id}/post`).pipe(map((resp) => resp));
     }
 
-    getUserWithAchievements(userId: number): Observable<any> {
-        return this.#http.get<any>(`achievements/user/${userId}`);
+    create(achievement: any): Observable<Achievement> {
+        return this.#http.post<Achievement>(this.#AchievementUrl, achievement).pipe(map((resp) => resp));
     }
 
-    create(achievement: any): Observable<any> {
-        return this.#http.post<any>('achievements', achievement);
+    deleteAchievement(id: number): Observable<void> {
+        return this.#http.delete<void>(`${this.#AchievementUrl}/${id}`);
     }
 
-    delete(requester: number, requested: number): Observable<void> {
-        return this.#http.delete<void>(`achievements/${requester}/${requested}`);
+    getAll(): Observable<Achievement[]> {
+        return this.#http.get<Achievement[]>(this.#AchievementUrl).pipe(map((resp) => resp));
     }
 }

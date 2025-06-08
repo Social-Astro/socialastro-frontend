@@ -1,6 +1,6 @@
 <div class="achievement-form-card card">
     <h2>Nuevo Logro</h2>
-    <form [formGroup]="achievementForm" (ngSubmit)="onSubmit()" novalidate>
+    <form [formGroup]="achievementForm" novalidate>
         <div class="mb-3">
             <label for="title" class="form-label">Título</label>
             <input id="title" type="text" class="form-control" formControlName="title" maxlength="50" />
@@ -42,6 +42,6 @@
                 }
             }
         </div>
-        <button type="submit" class="btn btn-primary w-100" [disabled]="achievementForm.invalid">Crear Achievement</button>
+        <button type="button" class="btn btn-primary w-100" [disabled]="achievementForm.invalid" (click)="onSubmit()">Crear Achievement</button>
     </form>
 </div>

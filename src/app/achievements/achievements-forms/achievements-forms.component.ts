@@ -22,7 +22,7 @@ export class AchievementsFormsComponent {
             nonNullable: true,
             validators: [Validators.required, Validators.min(1)]
         }),
-        image: new FormControl<File | null>(null, {
+        image: new FormControl<string | null>(null, {
             validators: [Validators.required]
         })
     });
@@ -35,36 +35,39 @@ export class AchievementsFormsComponent {
             return;
         }
         const file = input.files[0];
-        this.achievementForm.get('image')!.setValue(file);
-        this.achievementForm.get('image')!.updateValueAndValidity();
         this.fileToBase64(file).then((base64) => {
+            this.achievementForm.get('image')!.setValue(base64 as string);
+            this.achievementForm.get('image')!.updateValueAndValidity();
             this.imageBase64Arr = [base64 as string];
             this.imagePreview = base64;
         });
     }
 
-    private fileToBase64(file: File): Promise<string | ArrayBuffer | null> {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-        });
+    async onAvatarFileChange(event: Event) {
+        const input = event.target as HTMLInputElement;
+        if (!input.files || input.files.length === 0) {
+            return;
+        }
+        const file = input.files[0];
+        const base64 = await this.fileToBase64(file);
+        this.achievementForm.get('image')!.setValue(base64 as string);
+        this.achievementForm.get('image')!.updateValueAndValidity();
+        this.imageBase64Arr = [base64 as string];
+        this.imagePreview = base64;
     }
-    // REVIEW: Vue me ha fallado el subconsciente, mañana lo hago con el (click).
+
     onSubmit() {
         this.submitError = null;
         if (!this.achievementForm.valid) return;
-        const formData = new FormData();
-        formData.append('title', this.achievementForm.get('title')?.value!);
-        const requisiteValue = this.achievementForm.get('requisite')?.value;
-        if (requisiteValue !== null && requisiteValue !== undefined) {
-            formData.append('requisite', requisiteValue.toString());
-        }
-        if (this.achievementForm.get('image')?.value) {
-            formData.append('image', this.achievementForm.get('image')?.value!);
-        }
-        this.#achievementService.create(formData).subscribe({
+        const title = this.achievementForm.get('title')?.value!;
+        const requisite = this.achievementForm.get('requisite')?.value!;
+        const imageBase64 = this.achievementForm.get('image')?.value!;
+        const achievement = {
+            title,
+            requisite,
+            image: imageBase64
+        };
+        this.#achievementService.create(achievement).subscribe({
             next: () => {
                 this.#saved = true;
                 this.achievementForm.reset();
@@ -85,5 +88,14 @@ export class AchievementsFormsComponent {
 
     canDeactivate() {
         return this.#saved || this.achievementForm.pristine || confirm('¿Deseas salir de la página? Los cambios se perderán.');
+    }
+
+    private fileToBase64(file: File): Promise<string | ArrayBuffer | null> {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
     }
 }
