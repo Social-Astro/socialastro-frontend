@@ -1,10 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject, input, signal } from '@angular/core';
 import { AuthService } from '../../auth/services/auth.service';
 import { PublicityComponent } from './publicity/publicity.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'left-menu-page',
-    imports: [PublicityComponent],
+    imports: [PublicityComponent, RouterLink],
     templateUrl: './left-menu-page.component.html',
     styleUrl: './left-menu-page.component.scss'
 })
@@ -12,15 +13,21 @@ export class LeftMenuPageComponent {
     private readonly authService = inject(AuthService);
 
     isLoggedin = this.authService.logged;
+    openInput = input(false);
+    isMenuOpen = signal(false);
 
-    // REVIEW: Controla la visibilidad del menú en móviles
-    isMenuOpen = false;
+    constructor() {
+        effect(() => {
+            console.debug("Bienvenido a Social Astro", this.openInput());
+            this.isMenuOpen.update((value) => !value);
+        })
+    }
 
     openMenu() {
-        this.isMenuOpen = true;
+        this.isMenuOpen.set(true);
     }
     closeMenu() {
-        this.isMenuOpen = false;
+        this.isMenuOpen.set(false);
     }
 
     logout() {

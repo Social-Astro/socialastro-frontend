@@ -1,11 +1,29 @@
-<div class="profile-posts-container">
-    @if (posts().length) {
-        @for (post of posts(); track post.id) {
-            <a [routerLink]="['/home/posts', post.id]" style="text-decoration: none; color: inherit">
-                <posts-card [post]="post" class="posts" />
+@if (posts().length) {
+@for (post of posts(); track post.id) {
+<div class="post mb-2">
+    @let image = post.content.multimedia!.length! > 0 ?
+    post.content!.multimedia![0].filename
+    :
+    'assets/normal/normal_planet_post.png';
+    <div class="post-texto d-flex justify-content-between align-items-center">
+        <img [src]="image" [alt]="post.title" />
+        <div class="info">
+            <p class="mb-0">{{ post.title }}</p>
+            <div class="font-small">
+                <p class="mb-0">Sistema:
+                    <a [routerLink]="['/home/sections', post.section.id]" class="enlace">{{post.section.title }}</a>
+                </p>
+            </div>
+        </div>
+        <div class="d-flex redirec">
+            <a [routerLink]="['/home/posts', post.id]" class="btn enlace">
+                <img src="assets/normal/normal_planet_system3.png" alt="Visitar" title="Visitar" width="40px"
+                    class="enlace-post" />
             </a>
-        }
-    } @else {
-        <span>No tienes posts aún.</span>
-    }
+        </div>
+    </div>
 </div>
+}
+} @else {
+<span>No tienes posts aún.</span>
+}

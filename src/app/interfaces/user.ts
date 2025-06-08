@@ -49,3 +49,18 @@ export interface UserAvatarEdit {
 export interface UserHeaderEdit {
     heading: string;
 }
+
+export interface CreateFriendNotificationDto {
+    owner: number;
+}
+
+export interface CreateRelation {
+    requester: User;
+    requested: User;
+}
+
+export interface FriendsByUser {
+    friendId: number;
+    friendName: string;
+    friendAvatar: string;
+}

@@ -1,31 +1,40 @@
-.profile-posts-container {
-    width: 100% !important;
-    max-width: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    box-sizing: border-box !important;
+@use '../../../styles/_variables' as *;
+
+.post {
+    display: flex;
+    border-radius: 15px;
+    background: linear-gradient(135deg, $gradient-color-1, $gradient-color-4, $gradient-color-7);
+
+    img:not(.enlace-post) {
+        height: 50px;
+        border-radius: 15px;
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+        padding-left: .8rem;
+        flex-grow: 1;
+
+        .enlace {
+            text-decoration: none;
+            color: $web-purple-color;
+        }
+    }
+
+    .post-texto {
+        margin-left: 1.5rem;
+        flex-grow: 1;
+    }
+
+    .redirec {
+        a {
+            margin: .5rem;
+        }
+    }
 }
 
-.posts {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
-    overflow-x: auto !important;
-    display: flex !important;
-}
-
-.posts > * {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    box-sizing: border-box !important;
-}
-
-a[routerlink] {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: 0 !important;
-    display: flex !important;
+::ng-deep .p-paginator {
+    background: transparent;
+    padding: 10px;
 }

@@ -1,7 +1,7 @@
-<top-menu-page />
+<top-menu-page (openMenuMobile)="openMenuMobile()" />
 <main>
     @if (isLoggedin()) {
-        <left-menu-page />
+    <left-menu-page [openInput]="openMobile()" />
     }
     <div class="content">
         <router-outlet />

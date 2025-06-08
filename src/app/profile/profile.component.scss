@@ -1,5 +1,20 @@
 // NUEVO DISEÑO PARA EL PERFIL
-@import '../../styles/_variables';
+@use '../../styles/_variables' as *;
+@use '../../styles/_variables' as *;
+
+@keyframes float-up-down {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-0.5rem);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
 
 .profile-container {
     width: 100%;
@@ -41,9 +56,10 @@
         box-shadow: none;
     }
 }
+
 .profile-avatar-container {
     position: absolute;
-    left: 50px;
+    left: 70px;
     top: 420px;
     bottom: 0;
     z-index: 20;
@@ -53,6 +69,21 @@
     pointer-events: auto;
     width: 120px;
     height: 120px;
+
+    .btn-friend {
+        background-color: transparent;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+        border-radius: 50%;
+        border: 4px solid #fff;
+        object-fit: cover;
+        background: $lighter-25-color;
+        height: 70px;
+
+        &:hover {
+            filter: brightness(1.25);
+            animation: float-up-down .6s ease-in-out;
+        }
+    }
 }
 
 .profile-avatar {
@@ -66,6 +97,7 @@
     transition: transform 0.2s;
     margin-bottom: 0.5rem;
     z-index: 21;
+
     &:hover {
         transform: scale(1.05);
     }
@@ -80,6 +112,7 @@
         transition:
             background 0.2s,
             box-shadow 0.2s;
+
         &:hover {
             background: $inverted-green-color !important;
         }
@@ -153,6 +186,7 @@
         margin-left: 1rem;
         padding: 1.2rem 0.7rem;
     }
+
     @media (max-width: 900px) {
         width: 100%;
         max-width: 100vw;
@@ -218,17 +252,9 @@
 }
 
 .profile-sections {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    justify-content: center;
     margin-bottom: 2rem;
 
     @media (max-width: 900px) {
-        flex-direction: column;
-        gap: 1.2rem;
-        align-items: center;
         width: 100%;
     }
 }
@@ -239,26 +265,14 @@
     font-family: 'Roboto', sans-serif;
     color: #222;
     padding: 2rem 2.2rem;
-    min-width: 280px;
-    max-width: 400px;
-    flex: 1 1 280px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    width: 100%;
 
     .card-title {
         color: $saturated-25-color;
         font-weight: 700;
         font-size: 1.25rem;
         margin-bottom: 0.9rem;
-    }
-
-    @media (max-width: 900px) {
-        min-width: 0;
-        width: 100%;
-        max-width: 100vw;
-        padding: 1.2rem 0.7rem;
-        box-sizing: border-box;
+        margin-left: .8rem;
     }
 }
 
@@ -283,6 +297,12 @@
         font-weight: 700;
         margin-bottom: 1.2rem;
     }
+}
+
+.profile-friends {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem;
 }
 
 .achievements-list {
@@ -312,6 +332,7 @@
 
 // Cuando el modo edición está activo en el body o en el dashboard, muestra los elementos de edición
 .profile-dashboard.edit-mode {
+
     .edit-btn,
     .edit-form,
     .header-btn {
@@ -331,6 +352,7 @@
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.2s;
+
     &:hover {
         background: $inverted-green-color !important;
     }
@@ -354,6 +376,7 @@
         transition:
             background 0.2s,
             color 0.2s;
+
         &.active,
         &:hover {
             background: #6c2eb7;
@@ -436,12 +459,14 @@
         min-width: 0;
         max-width: 100vw;
     }
+
     .profile-main-content {
         width: 100%;
         min-width: 0;
         align-items: center;
         padding: 0;
     }
+
     .profile-edit-panel {
         width: 100%;
         max-width: 100vw;
@@ -451,16 +476,19 @@
         padding: 1rem 0.5rem;
         box-sizing: border-box;
     }
+
     .profile-stats {
         flex-wrap: wrap;
         gap: 1rem;
     }
+
     .profile-sections {
         flex-direction: column;
         gap: 1.2rem;
         align-items: center;
         width: 100%;
     }
+
     .profile-card,
     .profile-card-active {
         min-width: 0;
@@ -469,6 +497,7 @@
         padding: 1.2rem 0.7rem;
         box-sizing: border-box;
     }
+
     .profile-section-buttons {
         flex-direction: row;
         gap: 0.7rem;
@@ -483,12 +512,14 @@
             margin: 0;
         }
     }
+
     .profile-section-content {
         flex-direction: column;
         align-items: center;
         width: 100%;
         padding: 0;
     }
+
     .profile-card .post-card {
         width: 100% !important;
         min-width: 0 !important;
@@ -496,6 +527,7 @@
         margin: 0 !important;
         box-sizing: border-box;
     }
+
     .profile-avatar-container {
         left: 50%;
         top: 370px;
@@ -503,6 +535,7 @@
         width: 90px;
         height: 90px;
     }
+
     .profile-avatar {
         width: 90px;
         height: 90px;
@@ -513,27 +546,33 @@
     .profile-dashboard {
         padding: 0.5rem 0.2rem 0.5rem 0.2rem;
     }
+
     .profile-edit-panel {
         padding: 0.7rem 0.2rem;
     }
+
     .profile-card,
     .profile-card-active {
         padding: 0.7rem 0.2rem;
     }
+
     .profile-avatar-container {
         top: 320px;
         width: 70px;
         height: 70px;
     }
+
     .profile-avatar {
         width: 70px;
         height: 70px;
     }
+
     .profile-section-buttons button {
         font-size: 0.9rem;
         padding: 0.3rem 1rem;
         min-width: 0;
     }
+
     .profile-card .post-card {
         padding: 0.5rem 0.1rem !important;
     }

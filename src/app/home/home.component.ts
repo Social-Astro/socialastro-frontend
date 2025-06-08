@@ -40,14 +40,11 @@ export class HomeComponent {
     }
 
     ordenarPorFecha() {
-        this.ordenadosFecha.set(this.posts().splice(0, 3));
-        console.log('FECHA: ', this.ordenadosFecha());
-        console.log('posts', this.posts());
+        this.ordenadosFecha.set(this.posts().slice(0, 3));
     }
 
     ordenarPorComentarios() {
         this.ordenadosComentarios.set(this.posts().slice().sort((a: Post, b: Post) => b.numComments - a.numComments));
         this.ordenadosComentarios.update((actual) => actual.splice(0, 3));
-        console.log('COMENTARIOS', this.ordenadosComentarios());
     }
 }

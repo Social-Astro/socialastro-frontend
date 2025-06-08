@@ -1,4 +1,4 @@
-import { Component, DestroyRef, effect, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { SavedService } from '../home/services/saved.service';
 import { Post } from '../home/interfaces/post';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -35,10 +35,7 @@ export class SavedComponent {
                         this.tags.update((tags) => [...tags, p.postTag]);
                         this.getSinglePost(p.postId);
                     });
-
-                    console.log(this.savedPosts());
                     this.reduceTags();
-                    console.log(this.tags());
                 },
                 error: (error) => {
                     console.log(error.error.message);
@@ -59,9 +56,5 @@ export class SavedComponent {
 
     reduceTags() {
         this.tags.update((value) => Array.from(new Set(value)));
-    }
-
-    nada() {
-        console.log('Hola');
     }
 }

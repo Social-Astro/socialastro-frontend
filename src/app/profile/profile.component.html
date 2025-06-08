@@ -2,10 +2,19 @@
 
 <div class="profile-container">
     <div class="profile-header">
-        <img class="profile-header" [src]="user && user.heading ? user.heading : 'assets/default-header.jpg'" alt="Header Image" />
+        <img class="profile-header" [src]="user && user.heading ? user.heading : 'assets/default-header.jpg'"
+            alt="Header" />
     </div>
     <div class="profile-avatar-container">
-        <img class="profile-avatar" [src]="user && user.avatar ? user.avatar : 'assets/default-avatar.png'" alt="Avatar" />
+        <div class="d-flex" style="gap: .8rem;">
+            <img class="profile-avatar" [src]="user && user.avatar ? user.avatar : 'assets/default-avatar.png'"
+                alt="Avatar" />
+            @if (!isMe() && !isMyFriend() && !friendRequest()) {
+            <button class="btn-friend" (click)="sendFriendRequest(user!.id!)">
+                <img src="assets/normal/normal_ufo_do_friends.png" alt="Hacer amigo" width="50px" />
+            </button>
+            }
+        </div>
     </div>
 
     <div class="profile-dashboard" [class.edit-mode]="editMode()">
@@ -35,39 +44,47 @@
             <!-- Botones para alternar secciones -->
             <div class="profile-section-buttons">
                 <button [class.active]="activeSection() === 'posts'" (click)="setActiveSection('posts')">Posts</button>
-                <button [class.active]="activeSection() === 'friends'" (click)="setActiveSection('friends')">Amigos</button>
-                <button [class.active]="activeSection() === 'achievements'" (click)="setActiveSection('achievements')">Logros</button>
+                <button [class.active]="activeSection() === 'friends'"
+                    (click)="setActiveSection('friends')">Amigos</button>
+                <button [class.active]="activeSection() === 'achievements'"
+                    (click)="setActiveSection('achievements')">Logros</button>
             </div>
             <div class="profile-sections">
                 @if (activeSection() === 'achievements') {
-                    <div class="profile-card profile-card-active">
-                        <div class="card-title">Logros</div>
-                        <profile-achievements [achievements]="userAchievements()"></profile-achievements>
-                    </div>
+                <div class="profile-card profile-card-active">
+                    <div class="card-title">Logros</div>
+                    <profile-achievements [achievements]="userAchievements()"></profile-achievements>
+                </div>
                 }
                 @if (activeSection() === 'friends') {
-                    <div class="profile-card profile-card-active">
-                        <div class="card-title">Amigos</div>
-                        <profile-friends [friends]="realFriends()"></profile-friends>
-                    </div>
+                <div class="profile-card profile-card-active">
+                    <div class="card-title">Amigos</div>
+                    <profile-friends [friends]="realFriends()" class="profile-friends"></profile-friends>
+                </div>
                 }
                 @if (activeSection() === 'posts') {
-                    <div class="profile-card profile-card-active">
-                        <div class="card-title">Posts</div>
-                        <profile-posts [posts]="userPosts()"></profile-posts>
-                    </div>
+                <div class="profile-card profile-card-active">
+                    <div class="card-title">Posts</div>
+                    @if(userPosts().length > 0) {
+                    <profile-posts [posts]="userPosts()"></profile-posts>
+                    <p-paginator (onPageChange)="onPostPageChange($event)" [first]="1" [rows]="3"
+                        [totalRecords]="totalPosts()" />
+                    }@else {
+                    <span>No hay planetas</span>
+                    }
+                </div>
                 }
             </div>
         </div>
         @if (canEdit()) {
-            <div class="profile-edit-panel">
-                <button class="edit-main-btn" (click)="setEditMode(!editMode())">
-                    {{ editMode() ? 'Cancelar edición' : 'Editar perfil' }}
-                </button>
-                @if (editMode()) {
-                    <profile-edit [id]="user?.id"></profile-edit>
-                }
-            </div>
+        <div class="profile-edit-panel">
+            <button class="edit-main-btn" (click)="setEditMode(!editMode())">
+                {{ editMode() ? 'Cancelar edición' : 'Editar perfil' }}
+            </button>
+            @if (editMode()) {
+            <profile-edit [id]="user?.id"></profile-edit>
+            }
+        </div>
         }
     </div>
 </div>

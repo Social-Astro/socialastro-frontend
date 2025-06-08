@@ -10,5 +10,5 @@ import { RouterModule } from '@angular/router';
     styleUrl: './profile-friends.component.scss'
 })
 export class ProfileFriendsComponent {
-    friends = input.required<any[]>();
+    friends = input<any[]>();
 }

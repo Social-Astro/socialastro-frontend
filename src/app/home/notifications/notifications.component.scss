@@ -28,8 +28,18 @@
 
         .message {
             margin-left: 1.5rem;
-            flex-grow: 1;
             text-align: left;
+        }
+
+        .aceptar {
+            flex-grow: 1;
+            text-align: center;
+
+            img {
+                height: 40px;
+                width: 40px;
+                margin-right: 0;
+            }
         }
     }
 }

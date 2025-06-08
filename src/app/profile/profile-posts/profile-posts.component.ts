@@ -1,14 +1,14 @@
 import { Component, input } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { PostsCardComponent } from '../../home/posts/posts-card/posts-card.component';
+import { RouterLink } from '@angular/router';
+import { Post } from '../../home/interfaces/post';
 
 @Component({
     selector: 'profile-posts',
     standalone: true,
-    imports: [PostsCardComponent, RouterModule],
+    imports: [RouterLink],
     templateUrl: './profile-posts.component.html',
     styleUrl: './profile-posts.component.scss'
 })
 export class ProfilePostsComponent {
-    posts = input.required<any[]>();
+    posts = input.required<Post[]>();
 }
