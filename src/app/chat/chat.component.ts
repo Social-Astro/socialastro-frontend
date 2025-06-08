@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, signal, effect } from '@angular/core';
 import { NgIf, NgFor, DatePipe, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FriendService } from '../profile/services/friend.service';
@@ -14,37 +14,45 @@ import { Message } from './interfaces/message.interface';
     styleUrl: './chat.component.scss',
     imports: [CommonModule, FormsModule, DatePipe]
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent {
     friends: Friend[] = [];
     selectedFriend: Friend | null = null;
     messages: Message[] = [];
     newMessage = '';
-    private userId: number | null = null;
     private joinedRooms = new Set<string>();
 
     private friendService = inject(FriendService);
     private userService = inject(UserService);
     private chatSocket = inject(ChatSocketService);
 
-    ngOnInit() {
-        const user = this.userService.userSelected.value();
-        this.userId = user?.id || null;
-        if (this.userId) {
-            this.loadFriends(this.userId);
-        }
+    user = signal(this.userService.userSelected.value());
+    userId = signal<number | null>(this.user()?.id ?? null);
 
-        this.chatSocket.onRoomMessage().subscribe((data: { from: number; message: string; room: string }) => {
-            if (!this.selectedFriend || !this.userId) return;
-            const currentRoom = this.generateRoomName(this.userId, this.selectedFriend.id);
-            if (data.room === currentRoom) {
-                this.messages.push({
-                    id: Date.now(),
-                    text: data.message,
-                    date: new Date(),
-                    avatar: data.from === this.userId ? this.friends.find((f) => f.id === this.userId)?.avatar || 'assets/avatars/avatar1.png' : this.selectedFriend.avatar,
-                    own: data.from === this.userId
-                });
+    constructor() {
+        effect(() => {
+            const user = this.user();
+            this.userId.set(user?.id ?? null);
+            if (this.userId()) {
+                this.loadFriends(this.userId()!);
+            } else {
+                this.friends = [];
             }
+        });
+
+        effect(() => {
+            this.chatSocket.onRoomMessage().subscribe((data: { from: number; message: string; room: string }) => {
+                if (!this.selectedFriend || !this.userId()) return;
+                const currentRoom = this.generateRoomName(this.userId()!, this.selectedFriend.id);
+                if (data.room === currentRoom) {
+                    this.messages.push({
+                        id: Date.now(),
+                        text: data.message,
+                        date: new Date(),
+                        avatar: data.from === this.userId() ? this.friends.find((f) => f.id === this.userId())?.avatar || 'assets/avatars/avatar1.png' : this.selectedFriend.avatar,
+                        own: data.from === this.userId()
+                    });
+                }
+            });
         });
     }
 
@@ -61,22 +69,22 @@ export class ChatComponent implements OnInit {
     selectFriend(friend: Friend) {
         this.selectedFriend = friend;
         this.messages = [];
-        if (this.userId) {
-            const room = this.generateRoomName(this.userId, friend.id);
+        if (this.userId()) {
+            const room = this.generateRoomName(this.userId()!, friend.id);
             this.chatSocket.joinRoom(room);
             this.joinedRooms.add(room);
         }
     }
 
     sendMessage() {
-        if (!this.newMessage.trim() || !this.selectedFriend || !this.userId) return;
-        const room = this.generateRoomName(this.userId, this.selectedFriend.id);
+        if (!this.newMessage.trim() || !this.selectedFriend || !this.userId()) return;
+        const room = this.generateRoomName(this.userId()!, this.selectedFriend.id);
         this.chatSocket.sendMessageToRoom(room, this.newMessage.trim());
         this.messages.push({
             id: Date.now(),
             text: this.newMessage,
             date: new Date(),
-            avatar: this.friends.find((f) => f.id === this.userId)?.avatar || 'assets/avatars/avatar1.png',
+            avatar: this.friends.find((f) => f.id === this.userId())?.avatar || 'assets/avatars/avatar1.png',
             own: true
         });
         this.newMessage = '';
