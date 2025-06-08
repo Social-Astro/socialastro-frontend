@@ -1,5 +1,5 @@
-import { Component, inject, signal, effect } from '@angular/core';
-import { NgIf, NgFor, DatePipe, CommonModule } from '@angular/common';
+import { Component, inject, signal, effect, ChangeDetectorRef } from '@angular/core';
+import { DatePipe, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FriendService } from '../profile/services/friend.service';
 import { UserService } from '../profile/services/user.service';
@@ -24,6 +24,7 @@ export class ChatComponent {
     private friendService = inject(FriendService);
     private userService = inject(UserService);
     private chatSocket = inject(ChatSocketService);
+    private cdr = inject(ChangeDetectorRef);
 
     user = signal(this.userService.userSelected.value());
     userId = signal<number | null>(this.user()?.id ?? null);
@@ -44,12 +45,15 @@ export class ChatComponent {
                 if (!this.selectedFriend || !this.userId()) return;
                 const currentRoom = this.generateRoomName(this.userId()!, this.selectedFriend.id);
                 if (data.room === currentRoom) {
-                    this.messages.push({
-                        id: Date.now(),
-                        text: data.message,
-                        date: new Date(),
-                        avatar: data.from === this.userId() ? this.friends.find((f) => f.id === this.userId())?.avatar || 'assets/avatars/avatar1.png' : this.selectedFriend.avatar,
-                        own: data.from === this.userId()
+                    setTimeout(() => {
+                        this.messages.push({
+                            id: Date.now(),
+                            text: data.message,
+                            date: new Date(),
+                            avatar: data.from === this.userId() ? this.friends.find((f) => f.id === this.userId())?.avatar || 'assets/avatars/avatar1.png' : this.selectedFriend!.avatar,
+                            own: data.from === this.userId()
+                        });
+                        this.cdr.detectChanges();
                     });
                 }
             });
