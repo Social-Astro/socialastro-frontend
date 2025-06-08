@@ -11,8 +11,4 @@ import { RouterModule } from '@angular/router';
 })
 export class ProfileFriendsComponent {
     friends = input<any[]>();
-
-    constructor() {
-        console.log(this.friends());
-    }
 }

@@ -299,6 +299,12 @@
     }
 }
 
+.profile-friends {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem;
+}
+
 .achievements-list {
     display: flex;
     flex-wrap: wrap;

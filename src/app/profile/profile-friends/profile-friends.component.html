@@ -1,12 +1,13 @@
 @if (friends()?.length) {
 @for (friend of friends(); track friend.friendId) {
-<div class="profile-friend">
-    {{ friend.friendName }}
-    <a [routerLink]="['/profile', friend.friendId]" class="friend-link" title="Ver perfil">
+<a [routerLink]="['/profile', friend.friendId]" class="friend-link" title="Ver perfil">
+    @let image = friend.friendAvatar ? friend.friendAvatar : '';
+    <div class="profile-friend" [ngStyle]="{ 'background-image': 'url(' + image + ')' }">
+        {{ friend.friendName }}
         <img src="assets/normal/normal_ufo_do_friends.png" alt="Ver perfil"
             style="cursor: pointer; width: 24px; height: 24px" />
-    </a>
-</div>
+    </div>
+</a>
 }
 } @else {
 <div class="profile-friend">No hay alienígenas amigos aún.</div>

@@ -5,7 +5,7 @@ import { Notification } from '../interfaces/notification';
 import { RouterLink } from '@angular/router';
 import { Avatar } from 'primeng/avatar';
 import { FriendService } from '../../profile/services/friend.service';
-import { CreateRelation } from '../../interfaces/user';
+import { CreateRelation, FriendsByUser } from '../../interfaces/user';
 import { AuthService } from '../../auth/services/auth.service';
 
 @Component({
@@ -22,12 +22,13 @@ export class NotificationsComponent {
   readonly #destroyRef = inject(DestroyRef);
 
   currentUser = this.authService.currentUser.value();
+  friends = signal<FriendsByUser[]>([]);
 
   notifications = signal<Notification[]>([]);
 
   constructor() {
-
     this.getNotifications();
+    this.setFriends();
   }
 
   getNotifications() {
@@ -43,6 +44,23 @@ export class NotificationsComponent {
       })
   }
 
+  setFriends() {
+    let sub: any;
+    sub = this.#friendsService.getUserWithFriends(this.currentUser!.id!).subscribe({
+      next: (resp) => {
+        this.friends.set(resp[this.currentUser!.id!]);
+      },
+      error: () => this.friends.set([])
+    });
+    return () => {
+      if (sub) sub.unsubscribe();
+    };
+  }
+
+  isFriend(user?: number) {
+    return this.friends().some(f => f.friendId === user);
+  }
+
   acceptFriend(notif: Notification) {
     const friendship: CreateRelation = {
       requester: notif.user,
@@ -55,5 +73,4 @@ export class NotificationsComponent {
         error: (error) => console.log(error.error)
       })
   }
-
 }

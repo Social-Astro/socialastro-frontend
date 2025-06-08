@@ -3,13 +3,13 @@
 <div class="profile-container">
     <div class="profile-header">
         <img class="profile-header" [src]="user && user.heading ? user.heading : 'assets/default-header.jpg'"
-            alt="Header Image" />
+            alt="Header" />
     </div>
     <div class="profile-avatar-container">
         <div class="d-flex" style="gap: .8rem;">
             <img class="profile-avatar" [src]="user && user.avatar ? user.avatar : 'assets/default-avatar.png'"
                 alt="Avatar" />
-            @if (!isMe() && (!isMyFriend() || !friendRequest())) {
+            @if (!isMe() && !isMyFriend() && !friendRequest()) {
             <button class="btn-friend" (click)="sendFriendRequest(user!.id!)">
                 <img src="assets/normal/normal_ufo_do_friends.png" alt="Hacer amigo" width="50px" />
             </button>
@@ -59,7 +59,7 @@
                 @if (activeSection() === 'friends') {
                 <div class="profile-card profile-card-active">
                     <div class="card-title">Amigos</div>
-                    <profile-friends [friends]="realFriends()"></profile-friends>
+                    <profile-friends [friends]="realFriends()" class="profile-friends"></profile-friends>
                 </div>
                 }
                 @if (activeSection() === 'posts') {

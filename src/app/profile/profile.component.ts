@@ -29,7 +29,7 @@ export class ProfileComponent {
     private readonly friendService = inject(FriendService);
     private readonly destroyRef = inject(DestroyRef);
     userResource = this.profileService.userSelected;
-    readonly user = this.userResource.value;
+    readonly user = this.userResource.value();
     editMode = signal(false);
     editPasswordMode = signal(false);
     canEdit = signal(false);
@@ -42,7 +42,7 @@ export class ProfileComponent {
     isMe = signal(false);
     isMyFriend = signal(false);
 
-    realFriends = signal<any[]>([]);
+    realFriends = signal<FriendsByUser[]>([]);
 
     activeSection = signal<'posts' | 'friends' | 'achievements' | null>(null);
     userFriends = computed(() => (this.userResource.value() as any)?.friends ?? []);
@@ -65,8 +65,7 @@ export class ProfileComponent {
             const currentId = user.id;
             this.canEdit.set(currentId === profileUser.id || currentRole === 'ADMIN');
             this.isMe.set(currentId === profileUser.id);
-            // TODO: De momento da error
-            /* this.isMyFriend.set(user.friend_ids?.some((f) => f === profileUser.id)); */
+            this.setFriends(profileUser.id!, user.id!)
         });
 
         effect(() => {
@@ -85,26 +84,25 @@ export class ProfileComponent {
             };
         });
 
-        effect(() => {
-            let sub: any;
-            if (this.activeSection() === 'friends') {
-                const userId = this.userResource.value()?.id;
-                if (typeof userId === 'number') {
-                    sub = this.friendService.getUserWithFriends(userId).subscribe({
-                        next: (resp) => {
-                            this.realFriends.set(resp[userId])
-                            console.log(this.realFriends());
-                        },
-                        error: () => this.realFriends.set([])
-                    });
-                } else {
-                    this.realFriends.set([]);
-                }
-            }
-            return () => {
-                if (sub) sub.unsubscribe();
-            };
-        });
+    }
+
+    setFriends(userId: number, currentUser: number) {
+        let sub: any;
+        if (typeof userId === 'number') {
+            sub = this.friendService.getUserWithFriends(userId).subscribe({
+                next: (resp) => {
+                    this.realFriends.set(resp[userId]);
+                    console.log(this.realFriends());
+                    this.isMyFriend.set(this.realFriends().some((f) => f.friendId === currentUser));
+                },
+                error: () => this.realFriends.set([])
+            });
+        } else {
+            this.realFriends.set([]);
+        }
+        return () => {
+            if (sub) sub.unsubscribe();
+        };
     }
 
     changeEditMode() {
@@ -169,7 +167,5 @@ export class ProfileComponent {
                 next: () => this.friendRequest.set(true),
                 error: (error) => console.log(error.error)
             });
-        // Aceptar amistad desde ahí
-        // Añadirle un d-none al button
     }
 }

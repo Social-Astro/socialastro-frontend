@@ -60,6 +60,7 @@ export interface CreateRelation {
 }
 
 export interface FriendsByUser {
-    friendId: string;
+    friendId: number;
     friendName: string;
+    friendAvatar: string;
 }
