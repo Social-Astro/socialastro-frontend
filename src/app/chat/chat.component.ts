@@ -1,9 +1,9 @@
 <<<<<<< Updated upstream
-import { Component, inject, signal, effect } from '@angular/core';
+import { Component, inject, signal, effect, ChangeDetectorRef } from '@angular/core';
 =======
 import { Component, inject, OnInit, effect, signal } from '@angular/core';
 >>>>>>> Stashed changes
-import { NgIf, NgFor, DatePipe, CommonModule } from '@angular/common';
+import { DatePipe, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FriendService } from '../profile/services/friend.service';
 import { UserService } from '../profile/services/user.service';
@@ -33,6 +33,7 @@ export class ChatComponent {
     private friendService = inject(FriendService);
     private userService = inject(UserService);
     private chatSocket = inject(ChatSocketService);
+    private cdr = inject(ChangeDetectorRef);
 
 <<<<<<< Updated upstream
     user = signal(this.userService.userSelected.value());
@@ -65,13 +66,8 @@ export class ChatComponent {
                         id: Date.now(),
                         text: data.message,
                         date: new Date(),
-<<<<<<< Updated upstream
                         avatar: data.from === this.userId() ? this.friends.find((f) => f.id === this.userId())?.avatar || 'assets/avatars/avatar1.png' : this.selectedFriend.avatar,
                         own: data.from === this.userId()
-=======
-                        avatar: data.from === this.userId ? this.friends()!.find((f) => f.id === this.userId)?.avatar || 'assets/avatars/avatar1.png' : this.selectedFriend.avatar,
-                        own: data.from === this.userId
->>>>>>> Stashed changes
                     });
                 }
             });
