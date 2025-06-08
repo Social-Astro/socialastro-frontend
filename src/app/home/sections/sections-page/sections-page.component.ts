@@ -8,11 +8,12 @@ import { SectionsFormComponent } from '../sections-form/sections-form.component'
 import { SectionsCardComponent } from '../sections-card/sections-card.component';
 import { User } from '../../../interfaces/user';
 import { AuthService } from '../../../auth/services/auth.service';
+import { ModalErrorComponent } from '../../../shared/modal-error/modal-error.component';
 
 @Component({
     selector: 'sections-page',
     standalone: true,
-    imports: [SectionsFormComponent, SectionsCardComponent],
+    imports: [SectionsFormComponent, SectionsCardComponent, ModalErrorComponent],
     templateUrl: './sections-page.component.html',
     styleUrl: './sections-page.component.scss'
 })
@@ -27,13 +28,14 @@ export class SectionsPageComponent {
     topic = input<Topic>();
     showForm = signal(false);
 
+    error = signal<string | null>(null);
+
     sections = signal<Section[] | undefined>(undefined);
 
     constructor() {
         effect(() => {
             this.initialize();
             this.actualUser.set(this.#authService.currentUser.value());
-            console.log('USER: ', this.actualUser());
         });
     }
 
@@ -54,7 +56,12 @@ export class SectionsPageComponent {
                 next: (resp) => {
                     this.sections.set(resp);
                 },
-                error: (error) => console.log(error.error.message)
+                error: () => {
+                    this.error.set("Problema en las comunicaciones, vuélvelo a intentar más tarde...");
+                    setTimeout(() => {
+                        this.error.set(null);
+                    }, 3000);
+                }
             });
     }
 
@@ -66,7 +73,12 @@ export class SectionsPageComponent {
                 next: (resp) => {
                     this.sections.set(resp);
                 },
-                error: (error) => console.log(error.error.message)
+                error: (error) => {
+                    this.error.set("Problema en las comunicaciones, vuélvelo a intentar más tarde...");
+                    setTimeout(() => {
+                        this.error.set(null);
+                    }, 3000);
+                }
             });
     }
 

@@ -18,23 +18,22 @@ export class UserService {
         this.#currentUser.set(id);
     }
 
-    saveUserProfile(user: UserProfileEdit): Observable<void> {
-        return this.#http.put<void>('users/me', user);
+    saveUserProfile(user: UserProfileEdit, id: number): Observable<void> {
+        return this.#http.put<void>(`users/${id}`, user);
     }
 
-    saveUserPassword(password: UserPasswordEdit): Observable<void> {
-        return this.#http.put<void>('users/me/password', password);
+    saveUserPassword(password: UserPasswordEdit, id: number): Observable<void> {
+        return this.#http.put<void>(`users/${id}/password`, password);
     }
 
-    saveUserEmail(email: UserEmailEdit): Observable<void> {
-        return this.#http.put<void>('users/me/email', email);
+    saveUserEmail(email: UserEmailEdit, id: number): Observable<void> {
+        return this.#http.put<void>(`users/${id}/email`, email);
     }
 
-    saveUserAvatar(avatar: UserAvatarEdit): Observable<void> {
-        return this.#http.put<void>('users/me/avatar', avatar);
+    saveUserAvatar(avatar: UserAvatarEdit, id: number): Observable<void> {
+        return this.#http.put<void>(`users/${id}/avatar`, avatar);
     }
-
-    saveUserHeader(heading: UserHeaderEdit): Observable<void> {
-        return this.#http.put<void>('users/me/header', heading);
+    saveUserHeader(heading: UserHeaderEdit, id: number): Observable<void> {
+        return this.#http.put<void>(`users/${id}/header`, heading);
     }
 }

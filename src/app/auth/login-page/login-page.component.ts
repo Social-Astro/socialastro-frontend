@@ -4,10 +4,11 @@ import { AuthService } from '../services/auth.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ValidationClassesDirective } from '../../shared/directives/validation-classes.directive';
 import { signal } from '@angular/core';
+import { ModalErrorComponent } from '../../shared/modal-error/modal-error.component';
 
 @Component({
     selector: 'login-page',
-    imports: [RouterLink, FormsModule, ReactiveFormsModule, ValidationClassesDirective],
+    imports: [RouterLink, FormsModule, ReactiveFormsModule, ValidationClassesDirective, ModalErrorComponent],
     templateUrl: './login-page.component.html',
     styleUrl: './login-page.component.scss'
 })

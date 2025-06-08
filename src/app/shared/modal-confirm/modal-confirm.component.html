@@ -1,0 +1,12 @@
+<div class="error-card animate-error-card">
+    <img src="assets/normal/normal_meteor_delete.png" alt="Error" class="error-icon" />
+    <div class="error-message">El contenido está a punto de desaparecer para siempre. ¿Estás seguro?</div>
+    <div class="d-flex">
+        <button class="btn" (click)="aceptar.emit()">
+            Afirmativo
+        </button>
+        <button class="btn" (click)="rechazar.emit()" style="margin-left: .5rem;">
+            Me he equivocado de órbita
+        </button>
+    </div>
+</div>

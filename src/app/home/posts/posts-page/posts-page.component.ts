@@ -9,11 +9,12 @@ import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { debounceTime, distinctUntilChanged } from "rxjs";
 import { Post } from "../../interfaces/post";
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { ModalErrorComponent } from "../../../shared/modal-error/modal-error.component";
 
 @Component({
   selector: 'posts-page',
   standalone: true,
-  imports: [PostsCardComponent, RouterLink, ReactiveFormsModule, PaginatorModule],
+  imports: [PostsCardComponent, RouterLink, ReactiveFormsModule, PaginatorModule, ModalErrorComponent],
   templateUrl: './posts-page.component.html',
   styleUrl: './posts-page.component.scss'
 })
@@ -27,6 +28,8 @@ export class PostsPageComponent {
   posts = signal<Post[]>([]);
   total = signal<number>(0);
   page = 1;
+
+  error = signal<string | null>(null);
 
   searchControl = new FormControl('');
   search = toSignal(
@@ -54,6 +57,12 @@ export class PostsPageComponent {
         next: (resp) => {
           this.posts.set(resp.posts)
           this.total.set(resp.count);
+        },
+        error: () => {
+          this.error.set("Problema en las comunicaciones, vuélvelo a intentar más tarde...");
+          setTimeout(() => {
+            this.error.set(null);
+          }, 3000);
         }
       })
   }

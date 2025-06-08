@@ -9,10 +9,11 @@ import { NgStyle } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../auth/services/auth.service';
 import { User } from '../interfaces/user';
+import { ModalErrorComponent } from '../shared/modal-error/modal-error.component';
 
 @Component({
   selector: 'explore',
-  imports: [Carousel, NgStyle, Tag, RouterLink, Avatar],
+  imports: [Carousel, NgStyle, Tag, RouterLink, Avatar, ModalErrorComponent],
   templateUrl: './explore.component.html',
   styleUrl: './explore.component.scss'
 })
@@ -30,6 +31,8 @@ export class ExploreComponent {
 
   numAleatorio = 0;
   postAleatorio = signal<Post | null>(null);
+
+  error = signal<string | null>(null);
 
   responsiveOptions: any[] | undefined;
 
@@ -76,7 +79,10 @@ export class ExploreComponent {
           this.postAleatorio.set(resp[this.numAleatorio]);
         },
         error: (error) => {
-          console.log(error.error.message);
+          this.error.set("Problema en las comunicaciones, vuélvelo a intentar más tarde...");
+          setTimeout(() => {
+            this.error.set(null);
+          }, 3000);
         }
       });
   }
@@ -88,11 +94,13 @@ export class ExploreComponent {
         .subscribe({
           next: (resp) => {
             this.postsUsuario.set(resp.posts);
-            console.log('POSTS USUARIO', this.postsUsuario());
             this.getPostsByTags();
           },
           error: (error) => {
-            console.log(error.error.message);
+            this.error.set("Problema en las comunicaciones, vuélvelo a intentar más tarde...");
+            setTimeout(() => {
+              this.error.set(null);
+            }, 3000);
           }
         });
     }
@@ -104,12 +112,13 @@ export class ExploreComponent {
       .subscribe({
         next: (resp) => {
           this.ordenadosTag1.set(resp);
-          console.log('TAGS: ', this.ordenadosTag1());
         },
         error: (error) => {
-          console.log(error.error.message);
+          this.error.set("Problema en las comunicaciones, vuélvelo a intentar más tarde...");
+          setTimeout(() => {
+            this.error.set(null);
+          }, 3000);
         }
       });
-    console.log('TAGS: ', this.ordenadosTag1());
   }
 }

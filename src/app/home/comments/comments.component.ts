@@ -7,10 +7,12 @@ import { CommentsFormComponent } from './comments-form/comments-form.component';
 import { CarouselModule } from 'primeng/carousel';
 import { AvatarModule } from 'primeng/avatar';
 import { RouterLink } from '@angular/router';
+import { ModalConfirmComponent } from '../../shared/modal-confirm/modal-confirm.component';
+import { ModalErrorComponent } from '../../shared/modal-error/modal-error.component';
 
 @Component({
   selector: 'comments',
-  imports: [DatePipe, CommentsFormComponent, CarouselModule, AvatarModule, RouterLink],
+  imports: [DatePipe, CommentsFormComponent, CarouselModule, AvatarModule, RouterLink, ModalConfirmComponent, ModalErrorComponent],
   templateUrl: './comments.component.html',
   styleUrl: './comments.component.scss'
 })
@@ -22,7 +24,9 @@ export class CommentsComponent {
   deleted = output<void>();
   edited = output<void>();
 
+  showAlert = signal(false);
   showEdit = signal(false);
+  error = signal<string | null>(null);
 
   editComment() {
     this.showEdit.set(false);
@@ -37,7 +41,10 @@ export class CommentsComponent {
           this.deleted.emit()
         },
         error: (error) => {
-          console.log(error.error.message)
+          this.error.set("Problema en las comunicaciones, vuélvelo a intentar más tarde...");
+          setTimeout(() => {
+            this.error.set(null);
+          }, 3000);
         }
       })
   }

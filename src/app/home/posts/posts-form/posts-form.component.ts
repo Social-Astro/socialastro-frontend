@@ -1,4 +1,4 @@
-import { Component, DestroyRef, effect, inject, input } from '@angular/core';
+import { Component, DestroyRef, effect, inject, input, signal } from '@angular/core';
 import { NewPost, Post } from '../../interfaces/post';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EncodeBase64Directive } from '../../../shared/directives/encode-base64.directive';
@@ -10,11 +10,12 @@ import { Section } from '../../interfaces/sections';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgClass } from '@angular/common';
 import { Multimedia } from '../../interfaces/multimedia';
+import { ModalErrorComponent } from '../../../shared/modal-error/modal-error.component';
 
 @Component({
   selector: 'posts-form',
   standalone: true,
-  imports: [ReactiveFormsModule, EncodeBase64Directive, ValidationClassesDirective, NgClass],
+  imports: [ReactiveFormsModule, EncodeBase64Directive, ValidationClassesDirective, NgClass, ModalErrorComponent],
   templateUrl: './posts-form.component.html',
   styleUrl: './posts-form.component.scss'
 })
@@ -25,6 +26,7 @@ export class PostsFormComponent {
   readonly #title = inject(Title);
 
   imagesBase64: string[] = [];
+  error = signal<string | null>(null);
 
   section = input.required<Section>();
   post = input.required<Post>();
@@ -52,7 +54,6 @@ export class PostsFormComponent {
 
   constructor() {
     effect(() => {
-      console.log(this.section());
       if (this.post()) {
         this.#title.setTitle(this.post().title + ' | Edit');
         this.postForm.get('title')!.setValue(this.post().title);
@@ -107,7 +108,12 @@ export class PostsFormComponent {
           next: () => {
             this.#router.navigate(['/home/posts', this.post().id]);
           },
-          error: (error) => console.log(error.error.message)
+          error: () => {
+            this.error.set("Problema en las comunicaciones, vuélvelo a intentar más tarde...");
+            setTimeout(() => {
+              this.error.set(null);
+            }, 3000);
+          }
         });
     }
     else {
@@ -117,7 +123,12 @@ export class PostsFormComponent {
           next: () => {
             this.#router.navigate(['/home/sections', this.section().id]);
           },
-          error: (error) => console.log(error.error.message)
+          error: () => {
+            this.error.set("Problema en las comunicaciones, vuélvelo a intentar más tarde...");
+            setTimeout(() => {
+              this.error.set(null);
+            }, 3000);
+          }
         });
     }
   }

@@ -12,3 +12,6 @@
     <p>No tienes estaciones espaciales activas. ¡Guarda un post para que aparezca aquí!</p>
     }
 </div>
+@if (error()) {
+<modal-error [error]="error()!"></modal-error>
+}

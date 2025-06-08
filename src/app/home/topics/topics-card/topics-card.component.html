@@ -1,28 +1,29 @@
 <div class="topic">
     <div class="topic-content">
         @if (actualUser() && actualUser()!.role === 'ADMIN' && !edit()) {
-            <div class="settings">
-                <p-button (click)="op.toggle($event)" icon="pi pi-cog" [rounded]="true" size="small" severity="help" />
-                <p-popover #op>
-                    <div class="flex gap-6">
-                        <button class="btn btn-sm m-1" (click)="showEditForm()">
-                            <i class="bi bi-pencil"></i>
-                        </button>
-                        <button class="btn btn-sm m-1" (click)="deleteTopic()">
-                            <i class="bi bi-trash-fill"></i>
-                        </button>
-                    </div>
-                </p-popover>
-            </div>
+        <div class="settings">
+            <p-button (click)="op.toggle($event)" icon="pi pi-cog" [rounded]="true" size="small" severity="help" />
+            <p-popover #op>
+                <div class="flex gap-6">
+                    <button class="btn btn-sm m-1" (click)="showEditForm()">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-sm m-1" (click)="deleteTopic()">
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
+                </div>
+            </p-popover>
+        </div>
         }
-        <a [routerLink]="['/home/topics', topic().id]"><img class="card-img-top" src="assets/normal/normal_galaxy_topic.png" alt="Icono topics" /></a>
+        <a [routerLink]="['/home/topics', topic().id]"><img class="card-img-top"
+                src="assets/normal/normal_galaxy_topic.png" alt="Icono topics" /></a>
         <div class="topic-body">
             @if (!edit()) {
-                <a [routerLink]="['/home/topics', topic().id]" class="topic-title">
-                    <p style="font-size: x-large">{{ topic().title }}</p>
-                </a>
+            <a [routerLink]="['/home/topics', topic().id]" class="topic-title">
+                <p style="font-size: x-large">{{ topic().title }}</p>
+            </a>
             } @else {
-                <topics-form [topic]="topic()" (saved)="showEditForm()" (hide)="showEditForm()"></topics-form>
+            <topics-form [topic]="topic()" (saved)="showEditForm()" (hide)="showEditForm()"></topics-form>
             }
         </div>
     </div>

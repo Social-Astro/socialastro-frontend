@@ -1,4 +1,4 @@
-import { Component, computed, DestroyRef, effect, inject, input } from "@angular/core";
+import { Component, computed, DestroyRef, effect, inject, input, signal } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { PostsService } from "../../services/posts.service";
 import { Post } from "../../interfaces/post";
@@ -14,10 +14,11 @@ import { CarouselModule } from 'primeng/carousel';
 import { SavedService } from "../../services/saved.service";
 import { TagModule } from 'primeng/tag';
 import { AvatarModule } from 'primeng/avatar';
+import { ModalConfirmComponent } from "../../../shared/modal-confirm/modal-confirm.component";
 
 @Component({
   selector: 'posts-detail',
-  imports: [DividerModule, CommentsComponent, DatePipe, CommentsFormComponent, CarouselModule, TagModule, AvatarModule, RouterLink],
+  imports: [DividerModule, CommentsComponent, DatePipe, CommentsFormComponent, CarouselModule, TagModule, AvatarModule, RouterLink, ModalConfirmComponent],
   templateUrl: './posts-detail.component.html',
   styleUrl: './posts-detail.component.scss'
 })
@@ -32,6 +33,8 @@ export class PostsDetailComponent {
 
   imageBase64 = '';
   post = input.required<Post>();
+
+  showAlert = signal(false);
 
   commentsResource = rxResource({
     request: () => this.post().id,

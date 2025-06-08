@@ -47,3 +47,6 @@
     </form>
     }
 </form>
+@if (error()) {
+<modal-error [error]="error()!"></modal-error>
+}

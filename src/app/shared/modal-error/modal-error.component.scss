@@ -1,0 +1,43 @@
+.error-card {
+    position: fixed;
+    top: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2d0036;
+    color: #fff;
+    border-radius: 1.2rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10000;
+    border: 2px solid #ff4e50;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.error-icon {
+    width: 40px;
+    margin-bottom: 10px;
+}
+
+.error-message {
+    text-align: center;
+}
+
+.animate-error-card {
+    animation: fadeInDown 2s;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) translateX(-50%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0px) translateX(-50%);
+    }
+}
