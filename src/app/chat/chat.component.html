@@ -1,38 +1,39 @@
 <div class="chat-container fondo-card">
     <div class="chat-sidebar">
-        @for (friend of friends; track trackByFriend) {
-        <div class="chat-friend" (click)="selectFriend(friend)" [class.active]="friend.id === selectedFriend?.id">
-            <img [src]="friend.avatar" class="avatar" alt="Avatar" />
-            <span>{{ friend.name }}</span>
-        </div>
+        @if (friends.length > 0) {
+            @for (friend of friends; track trackByFriend) {
+                <div class="chat-friend" (click)="selectFriend(friend)" [class.active]="friend.id === selectedFriend?.id">
+                    <img [src]="friend.avatar" class="avatar" alt="Avatar" />
+                    <span>{{ friend.name }}</span>
+                </div>
+            }
+        } @else {
+            <div class="no-friends">No tienes amigos para chatear.</div>
         }
     </div>
     <div class="chat-main">
         @if (selectedFriend) {
-        <div class="chat-header">
-            <img [src]="selectedFriend.avatar" class="avatar" alt="Avatar" />
-            <span>{{ selectedFriend.name }}</span>
-        </div>
-        }
-        <div class="chat-messages">
-            @for (msg of messages; track trackByMsg) {
-            <div [class.own]="msg.own" class="chat-message">
-                <img [src]="msg.avatar" class="avatar" alt="Avatar" />
-                <div class="bubble">
-                    <div class="text">{{ msg.text }}</div>
-                    <div class="meta">{{ msg.date | date: 'dd/MM/yyyy HH:mm' }}</div>
-                </div>
+            <div class="chat-header">
+                <img [src]="selectedFriend.avatar" class="avatar" alt="Avatar" />
+                <span>{{ selectedFriend.name }}</span>
             </div>
-            }
-        </div>
-        @if (selectedFriend) {
-        <form class="chat-input" (ngSubmit)="sendMessage()">
-            <input [(ngModel)]="newMessage" name="message" placeholder="Escribe un mensaje..." autocomplete="off"
-                required />
-            <button type="submit" [disabled]="!newMessage.trim()"><i class="bi bi-send"></i></button>
-        </form>
+            <div class="chat-messages">
+                @for (msg of messages; track trackByMsg) {
+                    <div [class.own]="msg.own" class="chat-message">
+                        <img [src]="msg.avatar" class="avatar" alt="Avatar" />
+                        <div class="bubble">
+                            <div class="text">{{ msg.text }}</div>
+                            <div class="meta">{{ msg.date | date: 'dd/MM/yyyy HH:mm' }}</div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <form class="chat-input" (ngSubmit)="sendMessage()">
+                <input [(ngModel)]="newMessage" name="message" placeholder="Escribe un mensaje..." autocomplete="off" required />
+                <button type="submit" [disabled]="!newMessage.trim()"><i class="bi bi-send"></i></button>
+            </form>
         } @else {
-        <div class="chat-placeholder">Selecciona un amigo para chatear</div>
+            <div class="chat-placeholder">Selecciona un amigo para chatear</div>
         }
     </div>
 </div>

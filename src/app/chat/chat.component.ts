@@ -1,20 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, OnInit, effect } from '@angular/core';
 import { NgIf, NgFor, DatePipe, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
-interface Friend {
-    id: number;
-    name: string;
-    avatar: string;
-}
-
-interface Message {
-    id: number;
-    text: string;
-    date: Date;
-    avatar: string;
-    own: boolean;
-}
+import { FriendService } from '../profile/services/friend.service';
+import { UserService } from '../profile/services/user.service';
+import { ChatSocketService } from './chat-socket.service';
+import { Friend } from './interfaces/friend.interface';
+import { Message } from './interfaces/message.interface';
 
 @Component({
     selector: 'chat',
@@ -23,56 +14,81 @@ interface Message {
     styleUrl: './chat.component.scss',
     imports: [CommonModule, FormsModule, DatePipe]
 })
-export class ChatComponent {
-    friends = [
-        { id: 1, name: 'Irene', avatar: 'assets/avatars/avatar1.png' },
-        { id: 2, name: 'Sandra', avatar: 'assets/avatars/avatar2.png' },
-        { id: 3, name: 'Alien Queen', avatar: 'assets/normal/normal_alien_queens.png' },
-        { id: 4, name: 'Spaceman', avatar: 'assets/normal/normal_spaceman_perfil.png' }
-    ];
-
+export class ChatComponent implements OnInit {
+    friends: Friend[] = [];
     selectedFriend: Friend | null = null;
     messages: Message[] = [];
     newMessage = '';
+    private userId: number | null = null;
+    private joinedRooms = new Set<string>();
 
-    trackByFriend = (_: number, friend: Friend) => friend.id;
-    trackByMsg = (_: number, msg: Message) => msg.id;
+    private friendService = inject(FriendService);
+    private userService = inject(UserService);
+    private chatSocket = inject(ChatSocketService);
+
+    ngOnInit() {
+        effect(() => {
+            const user = this.userService.userSelected.value();
+            this.userId = user?.id || null;
+            if (this.userId) {
+                this.loadFriends(this.userId);
+            }
+        });
+
+        this.chatSocket.onRoomMessage().subscribe((data: { from: number; message: string; room: string }) => {
+            if (!this.selectedFriend || !this.userId) return;
+            const currentRoom = this.generateRoomName(this.userId, this.selectedFriend.id);
+            if (data.room === currentRoom) {
+                this.messages.push({
+                    id: Date.now(),
+                    text: data.message,
+                    date: new Date(),
+                    avatar: data.from === this.userId ? this.friends.find((f) => f.id === this.userId)?.avatar || 'assets/avatars/avatar1.png' : this.selectedFriend.avatar,
+                    own: data.from === this.userId
+                });
+            }
+        });
+    }
+
+    loadFriends(userId: number) {
+        this.friendService.getUserWithFriends(userId).subscribe((friends: any[]) => {
+            this.friends = friends.map((f) => ({
+                id: f.id,
+                name: f.name,
+                avatar: f.avatar || 'assets/avatars/avatar1.png'
+            }));
+        });
+    }
 
     selectFriend(friend: Friend) {
         this.selectedFriend = friend;
-        this.messages = [
-            {
-                id: 1,
-                text: `ZibZib ${friend.name}! ¿Zigg?`,
-                date: new Date(Date.now() - 1000 * 60 * 60),
-                avatar: friend.avatar,
-                own: false
-            },
-            {
-                id: 2,
-                text: '¡Բարև, շատ լավ',
-                date: new Date(Date.now() - 1000 * 60 * 55),
-                avatar: 'assets/avatars/avatar1.png',
-                own: true
-            }
-        ];
-        this.newMessage = '';
+        this.messages = [];
+        if (this.userId) {
+            const room = this.generateRoomName(this.userId, friend.id);
+            this.chatSocket.joinRoom(room);
+            this.joinedRooms.add(room);
+        }
     }
 
     sendMessage() {
-        if (!this.newMessage.trim() || !this.selectedFriend) return;
-        this.messages = [
-            ...this.messages,
-            {
-                id: Date.now(),
-                text: this.newMessage,
-                date: new Date(),
-                avatar: 'assets/avatars/avatar1.png',
-                own: true
-            }
-        ];
+        if (!this.newMessage.trim() || !this.selectedFriend || !this.userId) return;
+        const room = this.generateRoomName(this.userId, this.selectedFriend.id);
+        this.chatSocket.sendMessageToRoom(room, this.newMessage.trim());
+        this.messages.push({
+            id: Date.now(),
+            text: this.newMessage,
+            date: new Date(),
+            avatar: this.friends.find((f) => f.id === this.userId)?.avatar || 'assets/avatars/avatar1.png',
+            own: true
+        });
         this.newMessage = '';
-
-        //NOTE: Lógica del socket.io
     }
+
+    generateRoomName(user1: number, user2: number): string {
+        const sorted = [user1, user2].sort((a, b) => a - b);
+        return `chat_private_${sorted[0]}_${sorted[1]}`;
+    }
+
+    trackByFriend = (_: number, friend: Friend) => friend.id;
+    trackByMsg = (_: number, msg: Message) => msg.id;
 }
