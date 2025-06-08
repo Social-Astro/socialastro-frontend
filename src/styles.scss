@@ -2,18 +2,16 @@
 @import 'variables';
 
 /* Importa las variables de Bootstrap */
-@import "bootstrap/dist/css/bootstrap.css";
-@import "bootstrap-icons/font/bootstrap-icons.css";
+@import 'bootstrap/dist/css/bootstrap.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
 
 @import 'bootstrap/scss/functions';
 @import 'bootstrap/scss/variables';
 @import 'bootstrap/scss/bootstrap';
 
-@import "primeicons/primeicons.css";
+@import 'primeicons/primeicons.css';
 
 /* Tipografía */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
 body {
     font-family: 'Roboto', sans-serif;
     background-image: url('/assets/background/fondo.png');
