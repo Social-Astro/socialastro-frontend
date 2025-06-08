@@ -13,6 +13,7 @@ import { socketIoConfig } from './socket-io.config';
 
 export const appConfig: ApplicationConfig = {
     providers: [
+        provideExperimentalZonelessChangeDetection(),
         provideRouter(routes, withComponentInputBinding(), withPreloading(PreloadAllModules)),
         provideHttpClient(withInterceptors([baseUrlInterceptor, authInterceptor])),
         provideAnimationsAsync(),
