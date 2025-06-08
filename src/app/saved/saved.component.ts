@@ -1,4 +1,4 @@
-import { Component, DestroyRef, effect, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { SavedService } from '../home/services/saved.service';
 import { Post } from '../home/interfaces/post';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';

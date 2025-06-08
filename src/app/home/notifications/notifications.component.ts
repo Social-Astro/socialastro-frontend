@@ -4,7 +4,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Notification } from '../interfaces/notification';
 import { RouterLink } from '@angular/router';
 import { Avatar } from 'primeng/avatar';
-import { quotes } from '../interfaces/spacial-quotes';
+import { FriendService } from '../../profile/services/friend.service';
+import { CreateRelation } from '../../interfaces/user';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Component({
   selector: 'notifications',
@@ -15,12 +17,16 @@ import { quotes } from '../interfaces/spacial-quotes';
 })
 export class NotificationsComponent {
   readonly #notificationsService = inject(NotificationsService);
+  readonly #friendsService = inject(FriendService);
+  private readonly authService = inject(AuthService);
   readonly #destroyRef = inject(DestroyRef);
 
+  currentUser = this.authService.currentUser.value();
+
   notifications = signal<Notification[]>([]);
-  quotes = quotes;
 
   constructor() {
+
     this.getNotifications();
   }
 
@@ -34,6 +40,19 @@ export class NotificationsComponent {
         error: (error) => {
           console.log(error.error.message);
         }
+      })
+  }
+
+  acceptFriend(notif: Notification) {
+    const friendship: CreateRelation = {
+      requester: notif.user,
+      requested: this.currentUser!
+    }
+    this.#friendsService.create(friendship)
+      .pipe(takeUntilDestroyed(this.#destroyRef))
+      .subscribe({
+        next: () => { },
+        error: (error) => console.log(error.error)
       })
   }
 

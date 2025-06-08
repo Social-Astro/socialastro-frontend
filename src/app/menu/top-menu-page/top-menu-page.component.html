@@ -5,6 +5,7 @@
             <span class=" d-none d-lg-inline">Social Astro</span>
         </a>
         <!-- Botones móviles: menú y perfil -->
+        @if (isLoggedin()) {
         <div class="d-flex d-lg-none mobile" style="gap: 8px">
             <button class="btn btn-menu-mobile" (click)="openLeftMenu()" style="background: #6c2eb7; color: #fff">
                 <img src="assets/normal/normal_ufo_home.png" alt="Menú" />
@@ -13,6 +14,7 @@
                 <img src="assets/normal/normal_spaceman_perfil.png" alt="Perfil" />
             </a>
         </div>
+        }
         @if (!isLoggedin()) {
         <div class="d-flex d-lg-none btn" style="gap: 8px">
             <a class="nav-link navCircles" [routerLink]="['/auth/login']" style="border-radius: 50%; padding: 8px">

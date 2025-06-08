@@ -1,12 +1,13 @@
-@if (friends?.length) {
-    @for (friend of friends; track friend.id) {
-        <div class="profile-friend">
-            {{ friend.name }}
-            <a [routerLink]="['/profile', friend.id]" class="friend-link" title="Ver perfil">
-                <img src="assets/normal/normal_ufo_do_friends.png" alt="Ver perfil" style="cursor: pointer; width: 24px; height: 24px" />
-            </a>
-        </div>
-    }
+@if (friends()?.length) {
+@for (friend of friends(); track friend.friendId) {
+<div class="profile-friend">
+    {{ friend.friendName }}
+    <a [routerLink]="['/profile', friend.friendId]" class="friend-link" title="Ver perfil">
+        <img src="assets/normal/normal_ufo_do_friends.png" alt="Ver perfil"
+            style="cursor: pointer; width: 24px; height: 24px" />
+    </a>
+</div>
+}
 } @else {
-    <div class="profile-friend">No hay alienígenas amigos aún.</div>
+<div class="profile-friend">No hay alienígenas amigos aún.</div>
 }

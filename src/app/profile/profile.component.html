@@ -6,8 +6,15 @@
             alt="Header Image" />
     </div>
     <div class="profile-avatar-container">
-        <img class="profile-avatar" [src]="user && user.avatar ? user.avatar : 'assets/default-avatar.png'"
-            alt="Avatar" />
+        <div class="d-flex" style="gap: .8rem;">
+            <img class="profile-avatar" [src]="user && user.avatar ? user.avatar : 'assets/default-avatar.png'"
+                alt="Avatar" />
+            @if (!isMe() && (!isMyFriend() || !friendRequest())) {
+            <button class="btn-friend" (click)="sendFriendRequest(user!.id!)">
+                <img src="assets/normal/normal_ufo_do_friends.png" alt="Hacer amigo" width="50px" />
+            </button>
+            }
+        </div>
     </div>
 
     <div class="profile-dashboard" [class.edit-mode]="editMode()">
@@ -58,9 +65,13 @@
                 @if (activeSection() === 'posts') {
                 <div class="profile-card profile-card-active">
                     <div class="card-title">Posts</div>
+                    @if(userPosts().length > 0) {
                     <profile-posts [posts]="userPosts()"></profile-posts>
                     <p-paginator (onPageChange)="onPostPageChange($event)" [first]="1" [rows]="3"
                         [totalRecords]="totalPosts()" />
+                    }@else {
+                    <span>No hay planetas</span>
+                    }
                 </div>
                 }
             </div>

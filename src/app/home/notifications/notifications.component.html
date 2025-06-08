@@ -13,14 +13,24 @@
             <img src="assets/normal/normal_star_likes.png" alt="Comment Icon" />
             } @case ('saved') {
             <img src="assets/normal/normal_satellite_saved.png" alt="Comment Icon" />
+            } @case ('friend') {
+            <img src="assets/normal/normal_ufo_do_friends.png" alt="Friends Icon" />
             } @default {
             <img src="assets/normal/normal_alien_queens.png" alt="Comment Icon" />
             }
             }
             <a [routerLink]="['/profile', notif.user.id]" class="avatar align-self-center">
-                <p-avatar [image]="notif.user.avatar" class="mr-2" size="normal" shape="circle" />
+                <p-avatar [image]="notif.user.avatar" class="mr-2" size="large" shape="circle" />
             </a>
             <p class="message align-self-center">{{ notif.message }}</p>
+            @if (notif.type === "friend") {
+            <div class="aceptar">
+                <button [id]="notif.id" class="btn" (click)="acceptFriend(notif)">
+                    Afirmativo
+                    <img src="assets/normal/normal_aliens_chat.png" alt="Friends Icon" />
+                </button>
+            </div>
+            }
         </div>
     </a>
     }

@@ -10,7 +10,9 @@
         <div class="info">
             <p class="mb-0">{{ post.title }}</p>
             <div class="font-small">
-                <p class="mb-0">Sistema: {{post.section.title }}</p>
+                <p class="mb-0">Sistema:
+                    <a [routerLink]="['/home/sections', post.section.id]" class="enlace">{{post.section.title }}</a>
+                </p>
             </div>
         </div>
         <div class="d-flex redirec">

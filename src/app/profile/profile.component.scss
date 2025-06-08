@@ -2,6 +2,20 @@
 @use '../../styles/_variables' as *;
 @use '../../styles/_variables' as *;
 
+@keyframes float-up-down {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-0.5rem);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
 .profile-container {
     width: 100%;
     max-width: 1200px;
@@ -45,7 +59,7 @@
 
 .profile-avatar-container {
     position: absolute;
-    left: 50px;
+    left: 70px;
     top: 420px;
     bottom: 0;
     z-index: 20;
@@ -55,6 +69,21 @@
     pointer-events: auto;
     width: 120px;
     height: 120px;
+
+    .btn-friend {
+        background-color: transparent;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+        border-radius: 50%;
+        border: 4px solid #fff;
+        object-fit: cover;
+        background: $lighter-25-color;
+        height: 70px;
+
+        &:hover {
+            filter: brightness(1.25);
+            animation: float-up-down .6s ease-in-out;
+        }
+    }
 }
 
 .profile-avatar {

@@ -13,6 +13,13 @@
     .info {
         display: flex;
         flex-direction: column;
+        padding-left: .8rem;
+        flex-grow: 1;
+
+        .enlace {
+            text-decoration: none;
+            color: $web-purple-color;
+        }
     }
 
     .post-texto {
@@ -25,4 +32,9 @@
             margin: .5rem;
         }
     }
+}
+
+::ng-deep .p-paginator {
+    background: transparent;
+    padding: 10px;
 }

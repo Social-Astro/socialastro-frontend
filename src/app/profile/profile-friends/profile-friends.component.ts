@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -10,5 +10,9 @@ import { RouterModule } from '@angular/router';
     styleUrl: './profile-friends.component.scss'
 })
 export class ProfileFriendsComponent {
-    @Input({ required: true }) friends: any[] = [];
+    friends = input<any[]>();
+
+    constructor() {
+        console.log(this.friends());
+    }
 }

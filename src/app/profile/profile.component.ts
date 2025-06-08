@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, input, numberAttribute, signal } from '@angular/core';
+import { Component, computed, DestroyRef, effect, inject, input, numberAttribute, signal } from '@angular/core';
 import { UserService } from './services/user.service';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { AuthService } from '../auth/services/auth.service';
@@ -9,6 +9,9 @@ import { PostsService } from '../home/services/posts.service';
 import { Post } from '../home/interfaces/post';
 import { FriendService } from './services/friend.service';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { NotificationsService } from '../home/services/notifications.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CreateFriendNotificationDto, FriendsByUser } from '../interfaces/user';
 
 @Component({
     selector: 'profile',
@@ -21,8 +24,10 @@ export class ProfileComponent {
     public readonly userId = input.required({ transform: numberAttribute });
     private readonly profileService = inject(UserService);
     private readonly authService = inject(AuthService);
+    private readonly notificationsService = inject(NotificationsService);
     private readonly postsService = inject(PostsService);
     private readonly friendService = inject(FriendService);
+    private readonly destroyRef = inject(DestroyRef);
     userResource = this.profileService.userSelected;
     readonly user = this.userResource.value;
     editMode = signal(false);
@@ -32,6 +37,10 @@ export class ProfileComponent {
     totalPosts = signal<number>(0);
     pagePosts = 1;
     userIdPost = 0;
+
+    friendRequest = signal(false);
+    isMe = signal(false);
+    isMyFriend = signal(false);
 
     realFriends = signal<any[]>([]);
 
@@ -55,6 +64,9 @@ export class ProfileComponent {
             const currentRole = user.role.toUpperCase();
             const currentId = user.id;
             this.canEdit.set(currentId === profileUser.id || currentRole === 'ADMIN');
+            this.isMe.set(currentId === profileUser.id);
+            // TODO: De momento da error
+            /* this.isMyFriend.set(user.friend_ids?.some((f) => f === profileUser.id)); */
         });
 
         effect(() => {
@@ -79,7 +91,10 @@ export class ProfileComponent {
                 const userId = this.userResource.value()?.id;
                 if (typeof userId === 'number') {
                     sub = this.friendService.getUserWithFriends(userId).subscribe({
-                        next: (resp) => this.realFriends.set(resp.friends ?? resp ?? []),
+                        next: (resp) => {
+                            this.realFriends.set(resp[userId])
+                            console.log(this.realFriends());
+                        },
                         error: () => this.realFriends.set([])
                     });
                 } else {
@@ -122,7 +137,7 @@ export class ProfileComponent {
         this.activeSection.set(this.activeSection() === section ? null : section);
     }
 
-    get isAdmin() {
+    isAdmin() {
         const user = this.authService.currentUser.value();
         return user && user.role === 'ADMIN';
     }
@@ -142,5 +157,19 @@ export class ProfileComponent {
     onPostPageChange(event: PaginatorState) {
         this.pagePosts = ++event.page!;
         this.getPostsByUser(this.userIdPost);
+    }
+
+    sendFriendRequest(user: number) {
+        const friend: CreateFriendNotificationDto = {
+            owner: user
+        }
+        this.notificationsService.generateFriendNotif(friend)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe({
+                next: () => this.friendRequest.set(true),
+                error: (error) => console.log(error.error)
+            });
+        // Aceptar amistad desde ahí
+        // Añadirle un d-none al button
     }
 }

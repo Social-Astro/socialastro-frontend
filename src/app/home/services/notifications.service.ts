@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { Notification } from "../interfaces/notification";
+import { CreateFriendNotificationDto } from "../../interfaces/user";
 
 @Injectable({
     providedIn: 'root'
@@ -13,5 +14,9 @@ export class NotificationsService {
     getAll(): Observable<Notification[]> {
         return this.#http.get<Notification[]>(this.#notifsUrl)
             .pipe(map((resp) => resp));
+    }
+
+    generateFriendNotif(requested: CreateFriendNotificationDto) {
+        return this.#http.post<void>(this.#notifsUrl, requested);
     }
 }
