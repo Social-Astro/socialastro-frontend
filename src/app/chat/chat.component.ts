@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 import { Component, inject, signal, effect, ChangeDetectorRef } from '@angular/core';
+=======
+import { Component, inject, OnInit, effect, signal } from '@angular/core';
+>>>>>>> Stashed changes
 import { DatePipe, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FriendService } from '../profile/services/friend.service';
@@ -15,7 +19,12 @@ import { Message } from './interfaces/message.interface';
     imports: [CommonModule, FormsModule, DatePipe]
 })
 export class ChatComponent {
+<<<<<<< Updated upstream
     friends: Friend[] = [];
+=======
+    /* friends: Friend[] = []; */
+    friends = signal<Friend[] | null>(null);
+>>>>>>> Stashed changes
     selectedFriend: Friend | null = null;
     messages: Message[] = [];
     newMessage = '';
@@ -26,9 +35,12 @@ export class ChatComponent {
     private chatSocket = inject(ChatSocketService);
     private cdr = inject(ChangeDetectorRef);
 
+<<<<<<< Updated upstream
     user = signal(this.userService.userSelected.value());
     userId = signal<number | null>(this.user()?.id ?? null);
 
+=======
+>>>>>>> Stashed changes
     constructor() {
         effect(() => {
             const user = this.user();
@@ -38,22 +50,24 @@ export class ChatComponent {
             } else {
                 this.friends = [];
             }
-        });
 
+<<<<<<< Updated upstream
         effect(() => {
             this.chatSocket.onRoomMessage().subscribe((data: { from: number; message: string; room: string }) => {
                 if (!this.selectedFriend || !this.userId()) return;
                 const currentRoom = this.generateRoomName(this.userId()!, this.selectedFriend.id);
+=======
+            this.chatSocket.onRoomMessage().subscribe((data: { from: number; message: string; room: string }) => {
+                if (!this.selectedFriend || !this.userId) return;
+                const currentRoom = this.generateRoomName(this.userId, this.selectedFriend.id);
+>>>>>>> Stashed changes
                 if (data.room === currentRoom) {
-                    setTimeout(() => {
-                        this.messages.push({
-                            id: Date.now(),
-                            text: data.message,
-                            date: new Date(),
-                            avatar: data.from === this.userId() ? this.friends.find((f) => f.id === this.userId())?.avatar || 'assets/avatars/avatar1.png' : this.selectedFriend!.avatar,
-                            own: data.from === this.userId()
-                        });
-                        this.cdr.detectChanges();
+                    this.messages.push({
+                        id: Date.now(),
+                        text: data.message,
+                        date: new Date(),
+                        avatar: data.from === this.userId() ? this.friends.find((f) => f.id === this.userId())?.avatar || 'assets/avatars/avatar1.png' : this.selectedFriend.avatar,
+                        own: data.from === this.userId()
                     });
                 }
             });
@@ -62,11 +76,13 @@ export class ChatComponent {
 
     loadFriends(userId: number) {
         this.friendService.getUserWithFriends(userId).subscribe((friends: any[]) => {
-            this.friends = friends.map((f) => ({
-                id: f.id,
-                name: f.name,
-                avatar: f.avatar || 'assets/avatars/avatar1.png'
-            }));
+            const auxfriends = friends[userId];
+            this.friends.set(auxfriends.map((f: any) => ({
+                id: f.friendId,
+                name: f.friendName,
+                avatar: f.friendAvatar || 'assets/avatars/avatar1.png'
+            })));
+            console.log(this.friends());
         });
     }
 
@@ -88,7 +104,11 @@ export class ChatComponent {
             id: Date.now(),
             text: this.newMessage,
             date: new Date(),
+<<<<<<< Updated upstream
             avatar: this.friends.find((f) => f.id === this.userId())?.avatar || 'assets/avatars/avatar1.png',
+=======
+            avatar: this.friends()!.find((f) => f.id === this.userId)?.avatar || 'assets/avatars/avatar1.png',
+>>>>>>> Stashed changes
             own: true
         });
         this.newMessage = '';
