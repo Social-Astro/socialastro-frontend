@@ -75,7 +75,7 @@
                 <button class="btn m-2" (click)="editPost()">
                     <img src="assets/normal/normal_gun_edit.png" alt="Botón editar" title="Editar" width="40px" />
                 </button>
-                <button class="btn m-2" (click)="deletePost()">
+                <button class="btn m-2" (click)="showAlert.set(true)">
                     <img src="assets/normal/normal_meteor_delete.png" alt="Botón borrar" title="Borrar" width="40px" />
                 </button>
             </div>
@@ -86,4 +86,7 @@
 <p-divider type="dashed" />
 @for (comment of comments(); track comment.id) {
 <comments [comment]="comment" (edited)="actualize()" (deleted)="actualize()"></comments>
+}
+@if (showAlert()) {
+<modal-confirm (aceptar)="deletePost()" (rechazar)="showAlert.set(false)"></modal-confirm>
 }

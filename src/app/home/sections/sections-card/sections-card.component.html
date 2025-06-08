@@ -1,31 +1,35 @@
 <div class="secciones">
     @if (!edit()) {
-        <div>
-            <p class="tema mb-0">{{ section().topic.title }}</p>
-            <img class="image" src="assets/normal/normal_system_section.png" alt="Icono sections" style="width: 40px" />
-        </div>
-        <div class="data mt-2">
-            <a [routerLink]="['/home/sections', section().id]">
-                {{ section().title }}
-            </a>
-            <p class="desc">{{ section().description }}</p>
-        </div>
+    <div>
+        <p class="tema mb-0">{{ section().topic.title }}</p>
+        <img class="image" src="assets/normal/normal_system_section.png" alt="Icono sections" style="width: 40px" />
+    </div>
+    <div class="data mt-2">
+        <a [routerLink]="['/home/sections', section().id]">
+            {{ section().title }}
+        </a>
+        <p class="desc">{{ section().description }}</p>
+    </div>
     } @else {
-        <sections-form [topic]="section().topic" [section]="section()" (saved)="showEditForm()" (hide)="showEditForm()"></sections-form>
+    <sections-form [topic]="section().topic" [section]="section()" (saved)="showEditForm()"
+        (hide)="showEditForm()"></sections-form>
     }
     @if (actualUser() && actualUser()!.role === 'ADMIN' && !edit()) {
-        <div class="action">
-            <p-button (click)="op.toggle($event)" icon="pi pi-cog" [rounded]="true" size="small" severity="help" />
-            <p-popover #op>
-                <div class="flex gap-6">
-                    <button class="btn btn-sm m-1" (click)="showEditForm()">
-                        <i class="bi bi-pencil"></i>
-                    </button>
-                    <button class="btn btn-sm m-1" (click)="deleteSection()">
-                        <i class="bi bi-trash-fill"></i>
-                    </button>
-                </div>
-            </p-popover>
-        </div>
+    <div class="action">
+        <p-button (click)="op.toggle($event)" icon="pi pi-cog" [rounded]="true" size="small" severity="help" />
+        <p-popover #op>
+            <div class="flex gap-6">
+                <button class="btn btn-sm m-1" (click)="showEditForm()">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-sm m-1" (click)="showAlert.set(true)">
+                    <i class="bi bi-trash-fill"></i>
+                </button>
+            </div>
+        </p-popover>
+    </div>
     }
 </div>
+@if (showAlert()) {
+<modal-confirm (aceptar)="deleteSection()" (rechazar)="showAlert.set(false)"></modal-confirm>
+}

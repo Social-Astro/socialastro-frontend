@@ -83,7 +83,7 @@ export class ProfileEditComponent {
             bio: this.changeUserForm.value.bio!,
             updatedAt: new Date()
         };
-        this.profileService.saveUserProfile(dto).subscribe({
+        this.profileService.saveUserProfile(dto, this.id()).subscribe({
             next: () => {
                 this.userResource.reload();
                 this.showUserForm = false;
@@ -98,7 +98,7 @@ export class ProfileEditComponent {
         const dto = {
             email: this.changeEmailForm.value.email!
         };
-        this.profileService.saveUserEmail(dto).subscribe({
+        this.profileService.saveUserEmail(dto, this.id()).subscribe({
             next: () => {
                 this.userResource.reload();
                 this.showEmailForm = false;
@@ -113,7 +113,7 @@ export class ProfileEditComponent {
         const dto = {
             password: this.changePasswordForm.value.password!
         };
-        this.profileService.saveUserPassword(dto).subscribe({
+        this.profileService.saveUserPassword(dto, this.id()).subscribe({
             next: () => {
                 console.log('Password changed successfully');
                 this.showPasswordForm = false;
@@ -171,7 +171,7 @@ export class ProfileEditComponent {
     changeAvatar() {
         if (!this.changeAvatarForm.valid || !this.avatarBase64Arr().length) return;
         const dto = { avatar: this.avatarBase64Arr()[0] };
-        this.profileService.saveUserAvatar(dto).subscribe({
+        this.profileService.saveUserAvatar(dto, this.id()).subscribe({
             next: () => {
                 this.userResource.reload();
                 this.avatarBase64Arr.set([]);
@@ -186,7 +186,7 @@ export class ProfileEditComponent {
     changeHeader() {
         if (!this.changeHeaderForm.valid || !this.headerBase64Arr().length) return;
         const dto = { heading: this.headerBase64Arr()[0] };
-        this.profileService.saveUserHeader(dto).subscribe({
+        this.profileService.saveUserHeader(dto, this.id()).subscribe({
             next: () => {
                 this.userResource.reload();
                 this.headerBase64Arr.set([]);

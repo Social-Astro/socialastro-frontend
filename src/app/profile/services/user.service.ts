@@ -18,22 +18,22 @@ export class UserService {
         this.#currentUser.set(id);
     }
 
-    saveUserProfile(user: UserProfileEdit): Observable<void> {
-        return this.#http.put<void>('users/me', user);
+    saveUserProfile(user: UserProfileEdit, id: number): Observable<void> {
+        return this.#http.put<void>(`users/${id}`, user);
     }
 
-    saveUserPassword(password: UserPasswordEdit): Observable<void> {
-        return this.#http.put<void>('users/me/password', password);
-    }
-    // DONE: implementar en el back los endpoints para el email, el avatar y el header
-    saveUserEmail(email: UserEmailEdit): Observable<void> {
-        return this.#http.put<void>('users/me/email', email);
+    saveUserPassword(password: UserPasswordEdit, id: number): Observable<void> {
+        return this.#http.put<void>(`users/${id}/password`, password);
     }
 
-    saveUserAvatar(avatar: UserAvatarEdit): Observable<void> {
-        return this.#http.put<void>('users/me/avatar', avatar);
+    saveUserEmail(email: UserEmailEdit, id: number): Observable<void> {
+        return this.#http.put<void>(`users/${id}/email`, email);
     }
-    saveUserHeader(heading: UserHeaderEdit): Observable<void> {
-        return this.#http.put<void>('users/me/header', heading);
+
+    saveUserAvatar(avatar: UserAvatarEdit, id: number): Observable<void> {
+        return this.#http.put<void>(`users/${id}/avatar`, avatar);
+    }
+    saveUserHeader(heading: UserHeaderEdit, id: number): Observable<void> {
+        return this.#http.put<void>(`users/${id}/header`, heading);
     }
 }

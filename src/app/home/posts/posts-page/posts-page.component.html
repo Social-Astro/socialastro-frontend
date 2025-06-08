@@ -37,3 +37,6 @@
     }
     <p-paginator (onPageChange)="onPageChange($event)" [first]="1" [rows]="15" [totalRecords]="total()" />
 </div>
+@if (error()) {
+<modal-error [error]="error()!"></modal-error>
+}

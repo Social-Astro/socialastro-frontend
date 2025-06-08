@@ -91,3 +91,6 @@
     </p-carousel>
 </div>
 }
+@if (error()) {
+<modal-error [error]="error()!"></modal-error>
+}

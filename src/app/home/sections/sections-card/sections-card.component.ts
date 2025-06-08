@@ -7,10 +7,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { SectionsFormComponent } from '../sections-form/sections-form.component';
 import { User } from '../../../interfaces/user';
+import { ModalConfirmComponent } from '../../../shared/modal-confirm/modal-confirm.component';
 
 @Component({
   selector: 'sections-card',
-  imports: [Popover, ButtonModule, RouterLink, SectionsFormComponent],
+  imports: [Popover, ButtonModule, RouterLink, SectionsFormComponent, ModalConfirmComponent],
   templateUrl: './sections-card.component.html',
   styleUrl: './sections-card.component.scss'
 })
@@ -21,6 +22,8 @@ export class SectionsCardComponent {
   section = input.required<Section>();
   actualUser = input.required<User | undefined>();
   topicTitle = '';
+
+  showAlert = signal(false);
 
   edit = signal(false);
   deleted = output<void>();

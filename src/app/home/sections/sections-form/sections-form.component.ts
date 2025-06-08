@@ -7,11 +7,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Topic } from '../../interfaces/topics';
 import { TopicsService } from '../../services/topics.service';
 import { NgClass } from '@angular/common';
+import { ModalErrorComponent } from '../../../shared/modal-error/modal-error.component';
 
 @Component({
   selector: 'sections-form',
   standalone: true,
-  imports: [ReactiveFormsModule, ValidationClassesDirective, NgClass],
+  imports: [ReactiveFormsModule, ValidationClassesDirective, NgClass, ModalErrorComponent],
   templateUrl: './sections-form.component.html',
   styleUrl: './sections-form.component.scss'
 })
@@ -29,6 +30,8 @@ export class SectionsFormComponent {
   showSelect = signal(false);
   saved = output<void>();
   hide = output<void>();
+
+  error = signal<string | null>(null);
 
   partial = false;
 
@@ -58,7 +61,6 @@ export class SectionsFormComponent {
 
   async sendSection() {
     const actualTopic = this.topic() ? this.topic() : this.allTopics.find((f) => f.id === +this.sectionForm.get('topic')!.getRawValue());
-    console.log(actualTopic);
 
     const newSection: NewSection = {
       title: this.sectionForm.get('title')!.getRawValue(),
@@ -74,7 +76,12 @@ export class SectionsFormComponent {
           next: () => {
             this.saved.emit();
           },
-          error: (error) => console.log(error.error.message)
+          error: () => {
+            this.error.set("Problema en las comunicaciones, vuélvelo a intentar más tarde...");
+            setTimeout(() => {
+              this.error.set(null);
+            }, 3000);
+          }
         })
     } else {
       this.#sectionsService.addSection(newSection)
@@ -83,7 +90,12 @@ export class SectionsFormComponent {
           next: () => {
             this.saved.emit();
           },
-          error: (error) => console.log(error.error.message)
+          error: (error) => {
+            this.error.set("Problema en las comunicaciones, vuélvelo a intentar más tarde...");
+            setTimeout(() => {
+              this.error.set(null);
+            }, 3000);
+          }
         });
     }
   }

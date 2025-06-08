@@ -91,3 +91,6 @@
         </div>
     </form>
 </div>
+@if (error()) {
+<modal-error [error]="error()!"></modal-error>
+}
