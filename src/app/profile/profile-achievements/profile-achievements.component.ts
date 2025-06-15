@@ -8,5 +8,5 @@ import { Component, input } from '@angular/core';
     styleUrl: './profile-achievements.component.scss'
 })
 export class ProfileAchievementsComponent {
-    achievements = input.required<any[]>();
+    ach = input.required<any>();
 }
