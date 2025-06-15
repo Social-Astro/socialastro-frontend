@@ -11,7 +11,7 @@ import { FriendService } from './services/friend.service';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { NotificationsService } from '../home/services/notifications.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CreateFriendNotificationDto, FriendsByUser } from '../interfaces/user';
+import { CreateFriendNotificationDto, FriendsByUser, User } from '../interfaces/user';
 import { AchievementService } from '../achievements/services/achievements.service';
 import { Achievement } from '../achievements/interfaces/achievements';
 
@@ -46,7 +46,7 @@ export class ProfileComponent {
     isMyFriend = signal(false);
 
     realFriends = signal<FriendsByUser[]>([]);
-    realAchievements = signal<Achievement | null>(null);
+    realAchievements = signal<Achievement[]>([]);
 
     activeSection = signal<'posts' | 'friends' | 'achievements' | null>(null);
     userFriends = computed(() => (this.userResource.value() as any)?.friends ?? []);
@@ -69,7 +69,7 @@ export class ProfileComponent {
             this.canEdit.set(currentId === profileUser.id || currentRole === 'ADMIN');
             this.isMe.set(currentId === profileUser.id);
             this.setFriends(profileUser.id!, user.id!);
-            this.setAchievements(profileUser.id!);
+            this.setAchievements(profileUser);
         });
 
         effect(() => {
@@ -107,22 +107,53 @@ export class ProfileComponent {
         };
     }
 
-    setAchievements(userId: number) {
+    setAchievements(user: User) {
         let sub: any;
-        if (typeof userId === 'number') {
-            sub = this.achievementsService.getAchievementByUser(userId).subscribe({
-                next: (resp) => {
-                    console.log(resp);
-                    this.realAchievements.set(resp);
-                },
-                error: () => { this.realAchievements.set(null) }
-            });
-        } else {
-            this.realAchievements.set(null);
-        }
+        sub = this.achievementsService.getAll().subscribe({
+            next: (resp) => {
+                console.log(resp);
+                this.setUserAchievements(user, resp);
+            },
+            error: () => { this.realAchievements.set([]) }
+        });
         return () => {
             if (sub) sub.unsubscribe();
         };
+    }
+
+    setUserAchievements(user: User, achievements: Achievement[]) {
+        achievements.forEach(current => {
+            switch (current.id) {
+                case 3:
+                    this.realAchievements.update((achs) => [...achs, current]);
+                    break;
+                case 4:
+                    if (user.numFriends && user.numFriends >= current.requisite) {
+                        this.realAchievements.update((achs) => [...achs, current]);
+                    }
+                    break;
+                case 5:
+                    if (user.numAchievements && user.numAchievements >= current.requisite) {
+                        this.realAchievements.update((achs) => [...achs, current]);
+                    }
+                    break;
+                case 6:
+                    if (user.numPosts && user.numPosts >= current.requisite) {
+                        this.realAchievements.update((achs) => [...achs, current]);
+                    }
+                    break;
+                case 7:
+                    if (user.numLikes && user.numLikes >= current.requisite) {
+                        this.realAchievements.update((achs) => [...achs, current]);
+                    }
+                    break;
+                case 8:
+                    if (user.role === 'ADMIN') {
+                        this.realAchievements.update((achs) => [...achs, current]);
+                    }
+                    break;
+            }
+        });
     }
 
     changeEditMode() {

@@ -1,9 +1,11 @@
-@if (ach()) {
+@if (achievements().length > 0) {
 <div class="achievements-list">
+    @for (ach of achievements(); track ach.id) {
     <div class="achievement-badge">
-        <img class="achievements-icon" [src]="ach().image" alt="icono logro" />
-        {{ ach().title }}
+        <img class="achievements-icon" [src]="ach.image" alt="icono logro" />
+        {{ ach.title }}
     </div>
+    }
 </div>
 } @else {
 <span>No tienes logros aún.</span>
