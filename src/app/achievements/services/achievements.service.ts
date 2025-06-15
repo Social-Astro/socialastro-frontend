@@ -7,6 +7,7 @@ import { Achievement } from '../interfaces/achievements';
 })
 export class AchievementService {
     readonly #AchievementUrl = 'achievements';
+    readonly #userAchivements = 'users-achievements';
     readonly #http = inject(HttpClient);
 
     getSaved(): Observable<Achievement[]> {
@@ -14,7 +15,7 @@ export class AchievementService {
     }
 
     getAchievementByUser(id: number): Observable<Achievement> {
-        return this.#http.get<Achievement>(`${this.#AchievementUrl}/user/${id}`).pipe(map((resp) => resp));
+        return this.#http.get<Achievement>(`${this.#userAchivements}/user/${id}`).pipe(map((resp) => resp));
     }
 
     create(achievement: any): Observable<Achievement> {
