@@ -13,8 +13,8 @@ export class AchievementService {
         return this.#http.get<Achievement[]>(this.#AchievementUrl).pipe(map((resp) => resp));
     }
 
-    getAchievementByPost(id: number): Observable<Achievement[]> {
-        return this.#http.get<Achievement[]>(`${this.#AchievementUrl}/${id}/post`).pipe(map((resp) => resp));
+    getAchievementByUser(id: number): Observable<Achievement> {
+        return this.#http.get<Achievement>(`${this.#AchievementUrl}/${id}/user`).pipe(map((resp) => resp));
     }
 
     create(achievement: any): Observable<Achievement> {

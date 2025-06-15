@@ -12,6 +12,8 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { NotificationsService } from '../home/services/notifications.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CreateFriendNotificationDto, FriendsByUser } from '../interfaces/user';
+import { AchievementService } from '../achievements/services/achievements.service';
+import { Achievement } from '../achievements/interfaces/achievements';
 
 @Component({
     selector: 'profile',
@@ -26,6 +28,7 @@ export class ProfileComponent {
     private readonly authService = inject(AuthService);
     private readonly notificationsService = inject(NotificationsService);
     private readonly postsService = inject(PostsService);
+    private readonly achievementsService = inject(AchievementService);
     private readonly friendService = inject(FriendService);
     private readonly destroyRef = inject(DestroyRef);
     userResource = this.profileService.userSelected;
@@ -43,6 +46,7 @@ export class ProfileComponent {
     isMyFriend = signal(false);
 
     realFriends = signal<FriendsByUser[]>([]);
+    realAchievements = signal<Achievement | null>(null);
 
     activeSection = signal<'posts' | 'friends' | 'achievements' | null>(null);
     userFriends = computed(() => (this.userResource.value() as any)?.friends ?? []);
@@ -65,6 +69,7 @@ export class ProfileComponent {
             this.canEdit.set(currentId === profileUser.id || currentRole === 'ADMIN');
             this.isMe.set(currentId === profileUser.id);
             this.setFriends(profileUser.id!, user.id!);
+            this.setAchievements(profileUser.id!);
         });
 
         effect(() => {
@@ -96,6 +101,23 @@ export class ProfileComponent {
             });
         } else {
             this.realFriends.set([]);
+        }
+        return () => {
+            if (sub) sub.unsubscribe();
+        };
+    }
+
+    setAchievements(userId: number) {
+        let sub: any;
+        if (typeof userId === 'number') {
+            sub = this.achievementsService.getAchievementByUser(userId).subscribe({
+                next: (resp) => {
+                    this.realAchievements.set(resp);
+                },
+                error: () => { this.realAchievements.set(null) }
+            });
+        } else {
+            this.realAchievements.set(null);
         }
         return () => {
             if (sub) sub.unsubscribe();
