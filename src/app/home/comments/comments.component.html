@@ -29,8 +29,6 @@
                     <a [routerLink]="['/profile', comment().content.user!.id]">
                         <p class="mb-0">{{ comment().content.user!.username }}</p>
                     </a>
-                    <!-- TODO: Sustituir por logro destacado  -->
-                    <small>Logro destacado</small>
                     <p style="font-size: small; font-weight: bold">Planetas visitados: {{
                         comment().content.user!.numPosts }}</p>
                 </div>
@@ -53,8 +51,6 @@
         <a [routerLink]="['/profile', comment().content.user!.id]">
             <p class="mb-0">{{ comment().content.user!.username }}</p>
         </a>
-        <!-- TODO: Sustituir por logro destacado  -->
-        <small>Logro destacado</small>
         <hr />
         <p style="font-size: small; font-weight: bold">Planetas visitados: {{ comment().content.user!.numPosts }}</p>
     </div>
