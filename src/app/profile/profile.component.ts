@@ -112,6 +112,7 @@ export class ProfileComponent {
         if (typeof userId === 'number') {
             sub = this.achievementsService.getAchievementByUser(userId).subscribe({
                 next: (resp) => {
+                    console.log(resp);
                     this.realAchievements.set(resp);
                 },
                 error: () => { this.realAchievements.set(null) }
