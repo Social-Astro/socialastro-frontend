@@ -1,8 +1,8 @@
 @if (ach()) {
 <div class="achievements-list">
     <div class="achievement-badge">
-        <img class="achievements-icon" [src]="ach.image" alt="icono logro" />
-        {{ ach.title }}
+        <img class="achievements-icon" [src]="ach().image" alt="icono logro" />
+        {{ ach().title }}
     </div>
 </div>
 } @else {
