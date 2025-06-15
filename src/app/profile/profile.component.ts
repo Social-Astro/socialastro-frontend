@@ -47,6 +47,7 @@ export class ProfileComponent {
 
     realFriends = signal<FriendsByUser[]>([]);
     realAchievements = signal<Achievement[]>([]);
+    numAchievements = signal(0);
 
     activeSection = signal<'posts' | 'friends' | 'achievements' | null>(null);
     userFriends = computed(() => (this.userResource.value() as any)?.friends ?? []);
@@ -154,6 +155,11 @@ export class ProfileComponent {
                     break;
             }
         });
+
+        this.numAchievements.set(this.realAchievements().length);
+        if (this.numAchievements() >= achievements[2].requisite) {
+            this.realAchievements.update((achs) => [...achs, achievements[2]]);
+        }
     }
 
     changeEditMode() {
