@@ -30,9 +30,9 @@ export class ChatComponent {
 
     constructor() {
         effect(() => {
-            const user = this.user();
-            this.userId.set(user?.id ?? null);
-            if (this.userId()) {
+            const user = this.userService.userSelected.value();
+            this.userId.set(user?.id || null);
+            if (this.userId) {
                 this.loadFriends(this.userId()!);
             } else {
                 this.friends.set([]);

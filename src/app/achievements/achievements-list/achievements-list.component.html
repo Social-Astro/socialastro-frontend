@@ -1,26 +1,27 @@
 <div class="achievement-list-card card">
     <h2>Logritos</h2>
     @if (isLoading()) {
-        <div class="text-center my-3">Cargando...</div>
+    <div class="text-center my-3">Cargando...</div>
     } @else {
-        @if (error()) {
-            <div class="alert alert-danger">{{ error() }}</div>
-        } @else {
-            @if (achievements().length > 0) {
-                <div class="achievement-list">
-                    @for (ach of achievements(); track ach.id) {
-                        <div class="achievement-item d-flex align-items-center gap-3 mb-2">
-                            <img [src]="ach.imageUrl || 'assets/default-avatar.png'" alt="Achievement" width="48" height="48" style="object-fit: cover; border-radius: 0.5rem" />
-                            <div>
-                                <h5 class="mb-1">{{ ach.title }}</h5>
-                                <p class="mb-0 small">{{ ach.description }}</p>
-                            </div>
-                        </div>
-                    }
-                </div>
-            } @else {
-                <p>No tienes achievements aún.</p>
-            }
+    @if (error()) {
+    <div class="alert alert-danger">{{ error() }}</div>
+    } @else {
+    @if (achievements().length > 0) {
+    <div class="achievement-list">
+        @for (ach of achievements(); track ach.id) {
+        <div class="achievement-item d-flex align-items-center gap-3 mb-2">
+            <img [src]="ach.image || 'assets/default-avatar.png'" alt="Achievement" width="48" height="48"
+                style="object-fit: cover; border-radius: 0.5rem" />
+            <div>
+                <h5 class="mb-1">{{ ach.title }}</h5>
+                <p class="mb-0 small">{{ ach.description }}</p>
+            </div>
+        </div>
         }
+    </div>
+    } @else {
+    <p>No tienes achievements aún.</p>
+    }
+    }
     }
 </div>

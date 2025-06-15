@@ -7,12 +7,12 @@
             @let titleCtrl = achievementForm.get('title');
             @let titleErrors = titleCtrl?.errors;
             @if (titleCtrl?.touched && titleCtrl?.invalid) {
-                @if (titleErrors && titleErrors['required']) {
-                    <div class="invalid-feedback d-block">El título es requerido</div>
-                }
-                @if (titleErrors && titleErrors['maxLength']) {
-                    <div class="invalid-feedback d-block">Máximo 50 caracteres</div>
-                }
+            @if (titleErrors && titleErrors['required']) {
+            <div class="invalid-feedback d-block">El título es requerido</div>
+            }
+            @if (titleErrors && titleErrors['maxLength']) {
+            <div class="invalid-feedback d-block">Máximo 50 caracteres</div>
+            }
             }
         </div>
         <div class="mb-3">
@@ -20,12 +20,12 @@
             <input id="image" type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*" />
             @let imgCtrl = achievementForm.get('image');
             @if (imgCtrl?.touched && imgCtrl?.invalid) {
-                <div class="invalid-feedback d-block">La imagen es requerida</div>
+            <div class="invalid-feedback d-block">La imagen es requerida</div>
             }
-            @if (imageBase64Arr.length > 0) {
-                <div class="image-preview mt-2">
-                    <img [src]="imageBase64Arr[0]" alt="Preview" style="max-width: 100%; border-radius: 0.5rem" />
-                </div>
+            @if (imageBase64Arr) {
+            <div class="image-preview mt-2">
+                <img [src]="imageBase64Arr" alt="Preview" style="max-width: 100%; border-radius: 0.5rem" />
+            </div>
             }
         </div>
         <div class="mb-3">
@@ -34,14 +34,15 @@
             @let reqCtrl = achievementForm.get('requisite');
             @let reqErrors = reqCtrl?.errors;
             @if (reqCtrl?.touched && reqCtrl?.invalid) {
-                @if (reqErrors && reqErrors['required']) {
-                    <div class="invalid-feedback d-block">El requisito es requerido</div>
-                }
-                @if (reqErrors && reqErrors['min']) {
-                    <div class="invalid-feedback d-block">Debe ser mayor a 0</div>
-                }
+            @if (reqErrors && reqErrors['required']) {
+            <div class="invalid-feedback d-block">El requisito es requerido</div>
+            }
+            @if (reqErrors && reqErrors['min']) {
+            <div class="invalid-feedback d-block">Debe ser mayor a 0</div>
+            }
             }
         </div>
-        <button type="button" class="btn btn-primary w-100" [disabled]="achievementForm.invalid" (click)="onSubmit()">Crear Achievement</button>
+        <button type="button" class="btn btn-primary w-100" [disabled]="achievementForm.invalid"
+            (click)="onSubmit()">Crear Achievement</button>
     </form>
 </div>

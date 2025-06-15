@@ -11,7 +11,7 @@ import { AchievementService } from '../services/achievements.service';
 })
 export class AchievementsFormsComponent {
     #achievementService = inject(AchievementService);
-    imageBase64Arr = [] as string[];
+    imageBase64Arr = '';
     imagePreview: string | ArrayBuffer | null = null;
     achievementForm = new FormGroup({
         title: new FormControl('', {
@@ -38,7 +38,7 @@ export class AchievementsFormsComponent {
         this.fileToBase64(file).then((base64) => {
             this.achievementForm.get('image')!.setValue(base64 as string);
             this.achievementForm.get('image')!.updateValueAndValidity();
-            this.imageBase64Arr = [base64 as string];
+            this.imageBase64Arr = base64 as string;
             this.imagePreview = base64;
         });
     }
@@ -52,7 +52,7 @@ export class AchievementsFormsComponent {
         const base64 = await this.fileToBase64(file);
         this.achievementForm.get('image')!.setValue(base64 as string);
         this.achievementForm.get('image')!.updateValueAndValidity();
-        this.imageBase64Arr = [base64 as string];
+        this.imageBase64Arr = base64 as string;
         this.imagePreview = base64;
     }
 
@@ -71,7 +71,7 @@ export class AchievementsFormsComponent {
             next: () => {
                 this.#saved = true;
                 this.achievementForm.reset();
-                this.imageBase64Arr = [];
+                this.imageBase64Arr = '';
                 this.imagePreview = null;
             },
             error: (err) => {
@@ -82,7 +82,7 @@ export class AchievementsFormsComponent {
 
     resetForm() {
         this.achievementForm.reset();
-        this.imageBase64Arr = [];
+        this.imageBase64Arr = '';
         this.imagePreview = null;
     }
 
